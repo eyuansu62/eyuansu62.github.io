@@ -116,12 +116,12 @@ Reviewer
 
 - [Jinyang Li](https://jinyang-li.me/) (Ph.D candidate at HKU; leads the BIRD team. Visionary researcher and team leader.)
 - [Duanyu Feng](https://colfeng.github.io/) (Ph.D candidate at SCU; excels in mathematical reasoning and advanced problem-solving.)
-- [Binyuan Hui](https://huybery.github.io/) (Researcher at Qwen team; an exceptional mentor with unparalleled technical guidance, best mentor I have ever met.)
+- [Binyuan Hui](https://huybery.github.io/) (Researcher at Qwen team; an exceptional mentor with unparalleled technical guidance, best mentor!)
 - [Yequan Wang](https://www.wangyequan.com/) (Researcher in the FLM team; a profound thinker with keen insights into LLM systems.)
 - [Youcheng Huang](https://openreview.net/profile?id=~Youcheng_Huang2) (Ph.D candidate at SCU; combines strategic clarity with relentless execution.)
 - [Jiaxi Yang](https://scholar.google.com/citations?user=NqUIrccAAAAJ&hl=en) (Ph.D candidate at SIAT; a coding powerhouse with exceptional versatility, a one-man army.)
 - [Siqi Fan](https://scholar.google.com/citations?user=pybmbCYAAAAJ&hl=zh-CN) (Ph.D candidate at UESTC; known for rapid, high-quality implementation of complex ideas.)
-- [Shitao Xiao](https://scholar.google.com/citations?user=P2Q2wZEAAAAJ&hl=zh-CN) (Researcher at BAAI; creator of BGE, one of the world’s most widely adopted embedding models. Accomplished photographer—my profile picture is his work!)
+- [Shitao Xiao](https://scholar.google.com/citations?user=P2Q2wZEAAAAJ&hl=zh-CN) (Researcher at BAAI; creator of BGE, the world’s most widely adopted embedding models!)
 - [Xingrun Xing](https://scholar.google.com.hk/citations?user=sEdxu1UAAAAJ&hl=zh-CN) (Ph.D. from CAS; specializes in model quantization and efficiency optimization.)
 - [Zheqi He](https://openreview.net/profile?id=~Zheqi_He1) (Researcher in the FlagEval team; blends incisive critical analysis with pragmatic, results-driven execution.)
 
