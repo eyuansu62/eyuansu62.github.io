@@ -12,6 +12,10 @@ Throughout his academic journey, he collaborated with many talent researchers, i
 
 ## <i class="fa fa-bolt"></i> News
 
+<i class="fa fa-bolt"></i> 2023.12 We developed [[FlagJudge]](https://huggingface.co/FlagEval/flageval_judgemodel), a GenRM model that predates [[DeepMind's similar work]](https://arxiv.org/pdf/2408.15240) by one year.
+
+<i class="fa fa-bolt"></i> 2024.7 Our team secured 7th place out of over 100 global competitors in the AI Safety and Security Challenge hosted by AI Singapore (AISG) and the National University of Singapore (NUS), and was invited to attend the Singapore International Cyber Week (SICW) 2024.
+
 <i class="fa fa-bolt"></i> 2024.09 FlagEval releases the latest evaluation leaderboard, including almost 300 models. It covers subjective evaluation, objective evaluation, arena battle evaluation, debate evaluation, multimodal evaluation, text-to-image evaluation, text-to-video evaluation, and more. [[FlagEval Leaderboard]](https://flageval.baai.ac.cn/#/leaderboard)
 
 
