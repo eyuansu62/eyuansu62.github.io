@@ -9,7 +9,7 @@ last_name: Qin
 contact_note: >
   Feel free to reach out via email.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Homepage of Bowen Qin. Researcher at Beijing Academy of Artificial Intelligence (BAAI), specializing in LLM evaluation, alignment, and code intelligence.
+  Homepage of Bowen Qin. Ph.D. student at the National University of Singapore (NUS), specializing in LLM evaluation, alignment, and code intelligence.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.

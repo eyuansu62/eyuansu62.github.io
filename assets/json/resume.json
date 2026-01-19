@@ -1,15 +1,15 @@
 {
   "basics": {
     "name": "Bowen Qin (秦博文)",
-    "label": "Researcher",
+    "label": "Ph.D. Student",
     "image": "",
     "email": "eyuansu71@gmail.com",
     "url": "https://eyuansu62.github.io/",
-    "summary": "Researcher at Beijing Academy of Artificial Intelligence (BAAI), specializing in the evaluation, alignment, and code intelligence of large language models (LLMs).",
+    "summary": "Ph.D. student at the National University of Singapore (NUS), specializing in the evaluation, alignment, and code intelligence of large language models (LLMs).",
     "location": {
-      "city": "Beijing",
-      "countryCode": "CN",
-      "region": "China"
+      "city": "Singapore",
+      "countryCode": "SG",
+      "region": "Singapore"
     },
     "profiles": [
       {
@@ -30,7 +30,7 @@
       "position": "Researcher",
       "url": "https://www.baai.ac.cn/",
       "startDate": "2023-01-01",
-      "endDate": "",
+      "endDate": "2024-12-01",
       "summary": "Contributing to FlagEval platform, leading the design of its core subjective evaluation system for LLM evaluation.",
       "highlights": [
         "LLM Evaluation",
@@ -52,6 +52,19 @@
     }
   ],
   "education": [
+    {
+      "institution": "National University of Singapore",
+      "location": "Singapore",
+      "url": "https://www.nus.edu.sg/",
+      "area": "Computer Science",
+      "studyType": "Ph.D.",
+      "startDate": "2025-01-01",
+      "endDate": "Present",
+      "score": "",
+      "courses": [
+        "Advised by Prof. Yao Lu"
+      ]
+    },
     {
       "institution": "Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences",
       "location": "Shenzhen, China",
