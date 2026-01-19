@@ -1,0 +1,72 @@
+- title: General Information
+  type: map
+  contents:
+    - name: Full Name
+      value: Bowen Qin (秦博文)
+    - name: Languages
+      value: Chinese, English
+
+- title: Education
+  type: time_table
+  contents:
+    - title: M.Sc.
+      institution: Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences
+      year: 2023
+      description:
+        - Advised by Prof. Min Yang
+        - Graduated with top honors
+    - title: B.Sc.
+      institution: University
+      year: 2020
+
+- title: Experience
+  type: time_table
+  contents:
+    - title: Researcher
+      institution: Beijing Academy of Artificial Intelligence (BAAI)
+      year: 2023 - Present
+      description:
+        - Contributing to FlagEval platform
+        - Leading the design of core subjective evaluation system for LLM evaluation
+    - title: Research Intern
+      institution: Alibaba DAMO Academy
+      year: 2021 - 2022
+      description:
+        - Mentored by Binyuan Hui
+        - Research on text-to-SQL parsing and pre-trained language models
+
+- title: Honors and Awards
+  type: time_table
+  contents:
+    - year: 2023
+      items:
+        - Outstanding Student Award, University of Chinese Academy of Sciences
+        - President's Scholarship, University of Chinese Academy of Sciences
+    - year: 2022
+      items:
+        - DAMO Academy Outstanding Research Intern Award, Alibaba Group
+    - year: 2024
+      items:
+        - 7th place in AI Safety and Security Challenge (AI Singapore & NUS)
+
+- title: Professional Services
+  type: nested_list
+  contents:
+    - title: Reviewer
+      items:
+        - "ACL: Association for Computational Linguistics, 2022, 2023, 2024, 2025"
+        - "EMNLP: Empirical Methods in Natural Language Processing, 2023, 2024"
+        - "ICLR: International Conference on Learning Representations, 2025"
+        - "AAAI: Association for the Advancement of Artificial Intelligence, 2025"
+
+- title: Research Interests
+  type: nested_list
+  contents:
+    - title: LLM Evaluation & Alignment
+      items:
+        - Subjective evaluation systems
+        - Reward modeling and preference learning
+    - title: Code Intelligence
+      items:
+        - Text-to-SQL parsing
+        - Database-grounded language understanding

@@ -1,0 +1,57 @@
+# Co-authors section
+# List co-authors with their website URLs
+
+jinyang_li:
+  first_name: Jinyang
+  last_name: Li
+  url: https://jinyang-li.me/
+
+duanyu_feng:
+  first_name: Duanyu
+  last_name: Feng
+  url: https://colfeng.github.io/
+
+binyuan_hui:
+  first_name: Binyuan
+  last_name: Hui
+  url: https://huybery.github.io/
+
+yequan_wang:
+  first_name: Yequan
+  last_name: Wang
+  url: https://www.wangyequan.com/
+
+youcheng_huang:
+  first_name: Youcheng
+  last_name: Huang
+  url: https://openreview.net/profile?id=~Youcheng_Huang2
+
+jiaxi_yang:
+  first_name: Jiaxi
+  last_name: Yang
+  url: https://scholar.google.com/citations?user=NqUIrccAAAAJ
+
+siqi_fan:
+  first_name: Siqi
+  last_name: Fan
+  url: https://scholar.google.com/citations?user=pybmbCYAAAAJ
+
+shitao_xiao:
+  first_name: Shitao
+  last_name: Xiao
+  url: https://scholar.google.com/citations?user=P2Q2wZEAAAAJ
+
+xingrun_xing:
+  first_name: Xingrun
+  last_name: Xing
+  url: https://scholar.google.com.hk/citations?user=sEdxu1UAAAAJ
+
+zheqi_he:
+  first_name: Zheqi
+  last_name: He
+  url: https://openreview.net/profile?id=~Zheqi_He1
+
+min_yang:
+  first_name: Min
+  last_name: Yang
+  url: https://minyang.me/
