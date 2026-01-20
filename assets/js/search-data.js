@@ -23,6 +23,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
+        },{id: "nav-services",
+          title: "services",
+          description: "academic services and volunteer work",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/services/";
+          },
         },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
         
           title: 'Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
@@ -45,14 +52,8 @@ ninja.data = [{
             window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
           
         },
-      },{id: "news-we-developed-flagjudge-a-genrm-model-that-predates-deepmind-s-similar-work-by-one-year",
-          title: 'We developed [FlagJudge], a GenRM model that predates [DeepMind’s similar work] by one...',
-          description: "",
-          section: "News",},{id: "news-our-team-secured-7th-place-out-of-over-100-global-competitors-in-the-ai-safety-and-security-challenge-hosted-by-ai-singapore-aisg-and-the-national-university-of-singapore-nus-and-was-invited-to-attend-the-singapore-international-cyber-week-sicw-2024",
+      },{id: "news-our-team-secured-7th-place-out-of-over-100-global-competitors-in-the-ai-safety-and-security-challenge-hosted-by-ai-singapore-aisg-and-the-national-university-of-singapore-nus-and-was-invited-to-attend-the-singapore-international-cyber-week-sicw-2024",
           title: 'Our team secured 7th place out of over 100 global competitors in the...',
-          description: "",
-          section: "News",},{id: "news-flageval-releases-the-latest-evaluation-leaderboard-including-almost-300-models-it-covers-subjective-evaluation-objective-evaluation-arena-battle-evaluation-debate-evaluation-multimodal-evaluation-text-to-image-evaluation-text-to-video-evaluation-and-more-flageval-leaderboard",
-          title: 'FlagEval releases the latest evaluation leaderboard, including almost 300 models. It covers subjective...',
           description: "",
           section: "News",},{
         id: 'social-email',
