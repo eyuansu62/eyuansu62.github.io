@@ -93,6 +93,12 @@
       "summary": ""
     },
     {
+      "title": "Excellent Graduation Thesis",
+      "date": "2023-06-01",
+      "awarder": "University of Chinese Academy of Sciences",
+      "summary": ""
+    },
+    {
       "title": "DAMO Academy Outstanding Research Intern Award",
       "date": "2022-01-01",
       "awarder": "Alibaba Group",
@@ -115,37 +121,6 @@
       "language": "English",
       "fluency": "Fluent",
       "icon": ""
-    }
-  ],
-  "projects": [
-    {
-      "name": "FlagEval Platform",
-      "summary": "Led the design of the core subjective evaluation system for large language model evaluation at BAAI.",
-      "highlights": [
-        "Subjective Evaluation",
-        "300+ Models Evaluated"
-      ],
-      "startDate": "2023-01-01",
-      "url": "https://flageval.baai.ac.cn/"
-    },
-    {
-      "name": "FlagJudge",
-      "summary": "Developed a GenRM model for LLM evaluation that predates DeepMind's similar work by one year.",
-      "highlights": [
-        "GenRM Model"
-      ],
-      "startDate": "2023-12-01",
-      "url": "https://huggingface.co/FlagEval/flageval_judgemodel"
-    },
-    {
-      "name": "BIRD Benchmark",
-      "summary": "Member of the BIRD team driving the development of text-to-SQL for real-world database applications.",
-      "highlights": [
-        "Text-to-SQL",
-        "Database"
-      ],
-      "startDate": "2022-01-01",
-      "url": "https://huggingface.co/birdsql"
     }
   ]
 }
