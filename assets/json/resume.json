@@ -3,9 +3,9 @@
     "name": "Bowen Qin (秦博文)",
     "label": "Ph.D. Student",
     "image": "",
-    "email": "eyuansu71@gmail.com",
+    "email": "qin.bowen@u.nus.edu",
     "url": "https://eyuansu62.github.io/",
-    "summary": "Ph.D. student at the National University of Singapore (NUS), specializing in the evaluation, alignment, and code intelligence of large language models (LLMs).",
+    "summary": "A PhD student at School of Computing (SoC), National University of Singapore (NUS).",
     "location": {
       "city": "Singapore",
       "countryCode": "SG",
@@ -57,22 +57,22 @@
       "name": "Beijing Academy of Artificial Intelligence (BAAI)",
       "position": "Researcher",
       "url": "https://www.baai.ac.cn/",
-      "startDate": "2023-01-01",
-      "endDate": "2024-12-01",
-      "summary": "Contributing to FlagEval platform, leading the design of its core subjective evaluation system for LLM evaluation.",
+      "startDate": "2023-07-01",
+      "endDate": "2025-12-31",
+      "summary": "Contributing to FlagEval platform, leading the design of its evaluation system for LLM.",
       "highlights": [
+        "Agent Evaluation",
         "LLM Evaluation",
-        "FlagEval Platform",
-        "Subjective Evaluation"
+        "LLM Alignment"
       ]
     },
     {
       "name": "Alibaba DAMO Academy",
       "position": "Research Intern",
       "url": "https://damo.alibaba.com/",
-      "startDate": "2021-01-01",
-      "endDate": "2022-12-01",
-      "summary": "Research on text-to-SQL parsing and pre-trained language models, mentored by Binyuan Hui.",
+      "startDate": "2021-05-01",
+      "endDate": "2023-05-01",
+      "summary": "Research on text-to-SQL parsing and pre-trained language models.",
       "highlights": [
         "Text-to-SQL",
         "Pre-trained Language Models"
@@ -105,20 +105,6 @@
       "summary": "Invited to attend the Singapore International Cyber Week (SICW) 2024."
     }
   ],
-  "skills": [
-    {
-      "name": "Research Areas",
-      "level": "Expert",
-      "icon": "fa-solid fa-hashtag",
-      "keywords": [
-        "LLM Evaluation",
-        "LLM Alignment",
-        "Text-to-SQL",
-        "Code Intelligence",
-        "Reward Modeling"
-      ]
-    }
-  ],
   "languages": [
     {
       "language": "Chinese",
@@ -129,18 +115,6 @@
       "language": "English",
       "fluency": "Fluent",
       "icon": ""
-    }
-  ],
-  "interests": [
-    {
-      "name": "LLM Research",
-      "icon": "fa-solid fa-tag",
-      "keywords": [
-        "Evaluation",
-        "Alignment",
-        "Text-to-SQL",
-        "Preference Learning"
-      ]
     }
   ],
   "projects": [
