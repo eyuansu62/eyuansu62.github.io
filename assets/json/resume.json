@@ -24,33 +24,6 @@
       }
     ]
   },
-  "work": [
-    {
-      "name": "Beijing Academy of Artificial Intelligence (BAAI)",
-      "position": "Researcher",
-      "url": "https://www.baai.ac.cn/",
-      "startDate": "2023-01-01",
-      "endDate": "2024-12-01",
-      "summary": "Contributing to FlagEval platform, leading the design of its core subjective evaluation system for LLM evaluation.",
-      "highlights": [
-        "LLM Evaluation",
-        "FlagEval Platform",
-        "Subjective Evaluation"
-      ]
-    },
-    {
-      "name": "Alibaba DAMO Academy",
-      "position": "Research Intern",
-      "url": "https://damo.alibaba.com/",
-      "startDate": "2021-01-01",
-      "endDate": "2022-12-01",
-      "summary": "Research on text-to-SQL parsing and pre-trained language models, mentored by Binyuan Hui.",
-      "highlights": [
-        "Text-to-SQL",
-        "Pre-trained Language Models"
-      ]
-    }
-  ],
   "education": [
     {
       "institution": "National University of Singapore",
@@ -76,6 +49,33 @@
       "score": "Top Honors",
       "courses": [
         "Advised by Prof. Min Yang"
+      ]
+    }
+  ],
+  "work": [
+    {
+      "name": "Beijing Academy of Artificial Intelligence (BAAI)",
+      "position": "Researcher",
+      "url": "https://www.baai.ac.cn/",
+      "startDate": "2023-01-01",
+      "endDate": "2024-12-01",
+      "summary": "Contributing to FlagEval platform, leading the design of its core subjective evaluation system for LLM evaluation.",
+      "highlights": [
+        "LLM Evaluation",
+        "FlagEval Platform",
+        "Subjective Evaluation"
+      ]
+    },
+    {
+      "name": "Alibaba DAMO Academy",
+      "position": "Research Intern",
+      "url": "https://damo.alibaba.com/",
+      "startDate": "2021-01-01",
+      "endDate": "2022-12-01",
+      "summary": "Research on text-to-SQL parsing and pre-trained language models, mentored by Binyuan Hui.",
+      "highlights": [
+        "Text-to-SQL",
+        "Pre-trained Language Models"
       ]
     }
   ],
