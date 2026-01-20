@@ -82,13 +82,13 @@
   "awards": [
     {
       "title": "Outstanding Student Award",
-      "date": "2023-01-01",
+      "date": "2023-06-01",
       "awarder": "University of Chinese Academy of Sciences",
       "summary": ""
     },
     {
       "title": "President's Scholarship",
-      "date": "2023-01-01",
+      "date": "2023-06-01",
       "awarder": "University of Chinese Academy of Sciences",
       "summary": ""
     },
@@ -103,12 +103,6 @@
       "date": "2022-01-01",
       "awarder": "Alibaba Group",
       "summary": ""
-    },
-    {
-      "title": "7th Place in AI Safety and Security Challenge",
-      "date": "2024-07-01",
-      "awarder": "AI Singapore & National University of Singapore",
-      "summary": "Invited to attend the Singapore International Cyber Week (SICW) 2024."
     }
   ],
   "languages": [

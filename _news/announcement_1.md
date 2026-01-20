@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2023-12-01
+date: 2024-07-01
 inline: true
 related_posts: false
 ---
 
-We developed [[FlagJudge]](https://huggingface.co/FlagEval/flageval_judgemodel), a GenRM model that predates [[DeepMind's similar work]](https://arxiv.org/pdf/2408.15240) by one year.
+Our team secured **7th place** out of over 100 global competitors in the AI Safety and Security Challenge hosted by AI Singapore (AISG) and the National University of Singapore (NUS), and was invited to attend the **Singapore International Cyber Week (SICW) 2024**.

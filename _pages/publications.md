@@ -9,9 +9,12 @@ nav_order: 2
 
 <!-- _pages/publications.md -->
 
+
+The latest publication list can be found in my profile in [Google Scholar](https://scholar.google.com/citations?user=75pkx3YAAAAJ).
+
 <!-- Bibsearch Feature -->
 
-{% include bib_search.liquid %}
+
 
 <div class="publications">
 
