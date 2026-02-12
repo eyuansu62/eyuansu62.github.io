@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Sentence Cards</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <noscript>
+      This app needs JavaScript enabled.
+    </noscript>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">SC</div>
+        <div class="titles">
+          <div class="h1">Sentence Cards</div>
+          <div class="sub">
+            Capture sentences from YouTube or anywhere. Extract target words. Review with spaced repetition.
+          </div>
+        </div>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="Views">
+        <button class="tab" type="button" data-route="capture">Capture</button>
+        <button class="tab" type="button" data-route="review">Review</button>
+        <button class="tab" type="button" data-route="deck">Deck</button>
+        <button class="tab" type="button" data-route="io">Import/Export</button>
+        <button class="tab" type="button" data-route="about">About</button>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="view" id="view-capture" data-view="capture" aria-label="Capture">
+        <div class="grid">
+          <div class="panel">
+            <div class="panel-title">New Sentence Card</div>
+
+            <form id="captureForm" class="form">
+              <label class="field">
+                <div class="label">Sentence</div>
+                <textarea
+                  id="captureSentence"
+                  rows="5"
+                  placeholder="Paste a sentence you want to remember..."
+                  autocomplete="off"
+                  spellcheck="true"
+                ></textarea>
+                <div class="hint">
+                  Tip: paste from YouTube subtitles, podcasts, articles, books. Use "One card per line" for transcripts.
+                </div>
+              </label>
+
+              <div class="row2">
+                <label class="field">
+                  <div class="label">Source (optional)</div>
+                  <input
+                    id="captureSource"
+                    type="url"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    autocomplete="off"
+                  />
+                </label>
+
+                <label class="field">
+                  <div class="label">One card per line</div>
+                  <div class="toggle">
+                    <input id="captureBulk" type="checkbox" />
+                    <span class="toggle-ui" aria-hidden="true"></span>
+                    <span class="toggle-text">Split the textarea by newline</span>
+                  </div>
+                </label>
+              </div>
+
+              <label class="field">
+                <div class="label">Sentence Translation (optional)</div>
+                <textarea
+                  id="captureTranslation"
+                  rows="2"
+                  placeholder="Your translation / paraphrase (helps recall)..."
+                  autocomplete="off"
+                  spellcheck="true"
+                ></textarea>
+                <div class="actions">
+                  <button class="btn chip" id="captureAutoTranslateSentence" type="button">Auto-fill (online)</button>
+                  <button class="btn chip" id="openTranslateSentenceGoogle" type="button">Google Translate (to Chinese)</button>
+                  <button class="btn chip" id="openTranslateSentenceBing" type="button">Bing Translate (to Chinese)</button>
+                </div>
+              </label>
+
+              <label class="field">
+                <div class="label">Notes (optional)</div>
+                <textarea
+                  id="captureNotes"
+                  rows="3"
+                  placeholder="Context, why it's good, usage notes..."
+                  autocomplete="off"
+                  spellcheck="true"
+                ></textarea>
+              </label>
+
+              <div class="actions">
+                <button class="btn primary" id="captureSave" type="submit">Save Card</button>
+                <button class="btn ghost" id="captureClear" type="button">Clear</button>
+              </div>
+            </form>
+
+            <div class="divider"></div>
+            <div class="panel-sub">Want a starter deck?</div>
+            <div class="actions">
+              <button class="btn" id="loadSampleDeck" type="button">Load 50 sample cards (intermediate)</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Target Words</div>
+            <div class="panel-sub">
+              Auto-extracted from your sentence. Add translations for the words you want to remember.
+            </div>
+
+            <div class="word-actions">
+              <button class="btn chip" type="button" id="wordsSelectAll">Select all</button>
+              <button class="btn chip" type="button" id="wordsSelectNone">Select none</button>
+              <button class="btn chip" type="button" id="wordsFromLexicon">Prefill from saved words</button>
+              <button class="btn chip" type="button" id="wordsAutoTranslate">Auto-translate selected (online)</button>
+            </div>
+
+            <div id="suggestedWords" class="words" aria-live="polite"></div>
+
+            <div class="divider"></div>
+
+            <div class="panel-sub">
+              Not seeing a word? Add it manually:
+            </div>
+            <form id="addWordForm" class="row3">
+              <input id="addWordText" type="text" placeholder="word" autocomplete="off" />
+              <input id="addWordTrans" type="text" placeholder="translation (optional)" autocomplete="off" />
+              <button class="btn" type="submit">Add</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-review" data-view="review" aria-label="Review">
+        <div class="grid review-grid">
+          <div class="panel">
+            <div class="panel-title">Review</div>
+            <div class="stats" id="reviewStats"></div>
+
+            <div class="actions">
+              <button class="btn primary" type="button" id="reviewStart">Start Review</button>
+              <button class="btn ghost" type="button" id="reviewShuffle">Shuffle</button>
+            </div>
+
+            <div class="hint">
+              Shortcuts: Space to reveal. 1 Again, 2 Hard, 3 Good, 4 Easy.
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Current Card</div>
+
+            <div id="reviewCard" class="card" aria-live="polite">
+              <div class="card-sentence" id="reviewSentence">No card loaded.</div>
+
+              <div class="card-meta" id="reviewMeta"></div>
+
+              <div class="card-actions">
+                <button class="btn" type="button" id="reviewReveal">Show Answer</button>
+                <button class="btn chip" type="button" id="reviewAutoSentence">Auto sentence (online)</button>
+                <button class="btn chip" type="button" id="reviewAutoWords">Auto words (online)</button>
+                <button class="btn chip" type="button" id="reviewTranslateGoogle">Translate sentence</button>
+                <button class="btn chip" type="button" id="reviewTranslateBing">Bing</button>
+                <button class="btn chip" type="button" id="reviewEditCard">Edit</button>
+              </div>
+
+              <div class="card-answer hidden" id="reviewAnswer">
+                <div class="answer-block" id="reviewTranslationBlock">
+                  <div class="answer-label">Translation</div>
+                  <div class="answer-text" id="reviewTranslation"></div>
+                </div>
+
+                <div class="answer-block" id="reviewNotesBlock">
+                  <div class="answer-label">Notes</div>
+                  <div class="answer-text" id="reviewNotes"></div>
+                </div>
+
+                <div class="answer-block" id="reviewWordsBlock">
+                  <div class="answer-label">Target words</div>
+                  <div class="wordlist" id="reviewWords"></div>
+                </div>
+              </div>
+
+              <div class="grade hidden" id="reviewGrade">
+                <button class="btn danger" type="button" data-grade="again">Again</button>
+                <button class="btn" type="button" data-grade="hard">Hard</button>
+                <button class="btn primary" type="button" data-grade="good">Good</button>
+                <button class="btn" type="button" data-grade="easy">Easy</button>
+              </div>
+            </div>
+
+            <div class="panel-sub" id="reviewProgress"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-deck" data-view="deck" aria-label="Deck">
+        <div class="grid deck-grid">
+          <div class="panel">
+            <div class="panel-title">Deck</div>
+            <div class="panel-sub">
+              Search and manage your cards.
+            </div>
+
+            <div class="row2">
+              <input id="deckSearch" type="search" placeholder="Search sentence / notes / source..." autocomplete="off" />
+              <div class="row2-right">
+                <button class="btn chip" type="button" id="deckDueOnly">Due only</button>
+                <button class="btn chip" type="button" id="deckAll">All</button>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div id="deckList" class="deck" aria-live="polite"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Lexicon (Saved Words)</div>
+            <div class="panel-sub">
+              Words you've added translations for. Used to prefill future cards.
+            </div>
+            <div class="row2">
+              <input id="lexSearch" type="search" placeholder="Search words..." autocomplete="off" />
+              <button class="btn" id="lexExport" type="button">Export CSV</button>
+            </div>
+            <div class="divider"></div>
+            <div id="lexList" class="lex" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-io" data-view="io" aria-label="Import Export">
+        <div class="grid io-grid">
+          <div class="panel">
+            <div class="panel-title">Export</div>
+            <div class="panel-sub">
+              Download a JSON backup of your cards + word translations.
+            </div>
+            <div class="actions">
+              <button class="btn primary" id="exportJson" type="button">Download Backup (.json)</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Import</div>
+            <div class="panel-sub">
+              Restore from a JSON backup.
+            </div>
+
+            <label class="field">
+              <div class="label">Backup file</div>
+              <input id="importFile" type="file" accept="application/json" />
+            </label>
+
+            <div class="radio-row">
+              <label class="radio">
+                <input type="radio" name="importMode" value="merge" checked />
+                <span>Merge (recommended)</span>
+              </label>
+              <label class="radio">
+                <input type="radio" name="importMode" value="replace" />
+                <span>Replace everything</span>
+              </label>
+            </div>
+
+            <div class="actions">
+              <button class="btn primary" id="importRun" type="button">Import</button>
+            </div>
+
+            <div class="divider"></div>
+            <div class="panel-title">Danger Zone</div>
+            <div class="panel-sub">This deletes all local data in this browser.</div>
+            <div class="actions">
+              <button class="btn danger" id="resetAll" type="button">Reset Local Data</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-about" data-view="about" aria-label="About">
+        <div class="panel about">
+          <div class="panel-title">How It Works</div>
+          <div class="prose">
+            <p>
+              This is a small offline-first app: everything is saved in your browser's <code>localStorage</code>.
+              It uses a spaced-repetition scheduler (SM-2 style) so your cards "refresh" over time.
+            </p>
+            <p>
+              Suggested workflow:
+            </p>
+            <ol>
+              <li>Capture a sentence you love (from YouTube subtitles, books, articles).</li>
+              <li>Pick 1-5 target words and add translations/notes.</li>
+              <li>Review daily: try to recall meaning + usage, then grade yourself.</li>
+            </ol>
+            <p>
+              Notes:
+            </p>
+            <ul>
+              <li>Translations are manual (no external APIs used).</li>
+              <li>Word translations are stored in the Lexicon so future cards can prefill them.</li>
+              <li>Use Import/Export to back up data across browsers/devices.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bottombar">
+      <div id="footerStatus" class="footer-status"></div>
+      <div class="footer-actions">
+        <button class="btn chip" type="button" id="gotoToday">Jump to due cards</button>
+      </div>
+    </footer>
+
+    <dialog id="editDialog" class="dialog">
+      <form method="dialog" id="editForm" class="dialog-inner">
+        <div class="dialog-head">
+          <div class="dialog-title">Edit Card</div>
+          <button class="btn chip" type="submit" value="cancel">Close</button>
+        </div>
+
+        <input type="hidden" id="editId" />
+
+        <label class="field">
+          <div class="label">Sentence</div>
+          <textarea id="editSentence" rows="4"></textarea>
+        </label>
+
+        <label class="field">
+          <div class="label">Source</div>
+          <input id="editSource" type="url" />
+        </label>
+
+        <label class="field">
+          <div class="label">Translation</div>
+          <textarea id="editTranslation" rows="2"></textarea>
+        </label>
+
+        <label class="field">
+          <div class="label">Notes</div>
+          <textarea id="editNotes" rows="3"></textarea>
+        </label>
+
+        <div class="panel-title">Target Words</div>
+        <div class="panel-sub">Edit translations (stored in Lexicon).</div>
+        <div id="editWords" class="words"></div>
+
+        <div class="panel-sub">Add a word:</div>
+        <form id="editAddWordForm" class="row3">
+          <input id="editAddWordText" type="text" placeholder="word" autocomplete="off" />
+          <input id="editAddWordTrans" type="text" placeholder="translation (optional)" autocomplete="off" />
+          <button class="btn" type="submit">Add</button>
+        </form>
+
+        <div class="divider"></div>
+
+        <div class="actions">
+          <button class="btn primary" id="editSave" type="button">Save Changes</button>
+          <button class="btn danger" id="editDelete" type="button">Delete Card</button>
+          <button class="btn ghost" id="editReviewNow" type="button">Review Now</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
