@@ -1745,6 +1745,13 @@ function boot() {
   setRoute(currentRoute(), false);
   rebuildSuggestionsFromSentence();
   renderAll();
+
+  // PWA: register service worker for offline cache + installability.
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch((e) => {
+      console.warn("serviceWorker registration failed", e);
+    });
+  }
 }
 
 boot();
