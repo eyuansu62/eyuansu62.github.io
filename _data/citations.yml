@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-02-18'
+  last_updated: '2026-02-20'
 papers:
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 9
@@ -30,7 +30,7 @@ papers:
     title: An improved method to determine basic probability assignment with interval number and its application in classification
     year: '2019'
   75pkx3YAAAAJ:LkGwnXOMwfcC:
-    citations: 70
+    citations: 71
     title: 'Towards analyzing and understanding the limitations of dpo: A theoretical perspective'
     year: '2024'
   75pkx3YAAAAJ:M3ejUd6NZC8C:
@@ -46,7 +46,7 @@ papers:
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 89
+    citations: 90
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
@@ -58,7 +58,7 @@ papers:
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 153
+    citations: 154
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
@@ -98,7 +98,7 @@ papers:
     title: Are Large Language Models Ready for Multi-Turn Tabular Data Analysis?
     year: '2025'
   75pkx3YAAAAJ:d1gkVwhDpl0C:
-    citations: 183
+    citations: 184
     title: 'Graphix-t5: Mixing pre-trained transformers with graph-aware layers for text-to-sql parsing'
     year: '2023'
   75pkx3YAAAAJ:dhFuZR0502QC:
@@ -106,11 +106,11 @@ papers:
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2025'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 916
+    citations: 925
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
-    citations: 27
+    citations: 28
     title: Hanfei-1.0
     year: '2023'
   75pkx3YAAAAJ:mVmsd5A6BfQC:
@@ -130,10 +130,10 @@ papers:
     title: Towards understanding the influence of reward margin on preference model performance
     year: '2024'
   75pkx3YAAAAJ:u5HHmVD_uO8C:
-    citations: 66
+    citations: 67
     title: 'Proton: Probing schema linking information from pre-trained language models for text-to-sql parsing'
     year: '2022'
   75pkx3YAAAAJ:zYLM7Y9cAGgC:
-    citations: 70
+    citations: 71
     title: A fuzzy preference-based Dempster-Shafer evidence theory for decision fusion
     year: '2021'
