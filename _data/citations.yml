@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-03-18'
+  last_updated: '2026-04-06'
 papers:
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 9
@@ -34,7 +34,7 @@ papers:
     title: 'BIRD-INTERACT: Re-imagining Text-to-SQL Evaluation via Lens of Dynamic Interactions'
     year: Unknown Year
   75pkx3YAAAAJ:LkGwnXOMwfcC:
-    citations: 72
+    citations: 75
     title: 'Towards analyzing and understanding the limitations of dpo: A theoretical perspective'
     year: '2024'
   75pkx3YAAAAJ:M3ejUd6NZC8C:
@@ -50,19 +50,19 @@ papers:
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 95
+    citations: 99
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
-    citations: 120
+    citations: 122
     title: 'S2sql: Injecting syntax to question-schema interaction graph encoder for text-to-sql parsers'
     year: '2022'
   75pkx3YAAAAJ:ULOm3_A8WrAC:
-    citations: 4
+    citations: 5
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 162
+    citations: 166
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
@@ -78,7 +78,7 @@ papers:
     title: A non-parametric method to determine basic probability assignment based on kernel density estimation
     year: '2018'
   75pkx3YAAAAJ:Wp0gIr-vW9MC:
-    citations: 0
+    citations: 1
     title: 'Beyond Multiple Choice: Verifiable OpenQA for Robust Vision-Language RFT'
     year: '2025'
   75pkx3YAAAAJ:YOwf2qJgpHMC:
@@ -90,7 +90,7 @@ papers:
     title: A weighted combination method for conflicting evidence in multi-sensor data fusion
     year: '2018'
   75pkx3YAAAAJ:Zph67rFs4hoC:
-    citations: 9
+    citations: 10
     title: 'SHARE: An SLM-based hierarchical action CorREction assistant for text-to-SQL'
     year: '2025'
   75pkx3YAAAAJ:_FxGoFyzp5QC:
@@ -98,11 +98,11 @@ papers:
     title: 'Flm-101b: An open llm and how to train it with $100 k budget'
     year: '2023'
   75pkx3YAAAAJ:_kc_bZDykSQC:
-    citations: 3
+    citations: 4
     title: Are Large Language Models Ready for Multi-Turn Tabular Data Analysis?
     year: '2025'
   75pkx3YAAAAJ:d1gkVwhDpl0C:
-    citations: 189
+    citations: 194
     title: 'Graphix-t5: Mixing pre-trained transformers with graph-aware layers for text-to-sql parsing'
     year: '2023'
   75pkx3YAAAAJ:dhFuZR0502QC:
@@ -110,7 +110,7 @@ papers:
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2025'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 973
+    citations: 1021
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
@@ -126,15 +126,15 @@ papers:
     title: "FR\u2013KDE: a hybrid fuzzy rule-based information fusion method with its application in biomedical classification"
     year: '2021'
   75pkx3YAAAAJ:qxL8FJ1GzNcC:
-    citations: 16
+    citations: 15
     title: 'THE PRICE OF A SECOND THOUGHT: ON THE EVAL-UATION OF REASONING EFFICIENCY IN LARGE LAN-GUAGE MODELS'
     year: '2025'
   75pkx3YAAAAJ:roLk4NBRz8UC:
-    citations: 6
+    citations: 7
     title: Towards understanding the influence of reward margin on preference model performance
     year: '2024'
   75pkx3YAAAAJ:u5HHmVD_uO8C:
-    citations: 69
+    citations: 70
     title: 'Proton: Probing schema linking information from pre-trained language models for text-to-sql parsing'
     year: '2022'
   75pkx3YAAAAJ:zYLM7Y9cAGgC:
