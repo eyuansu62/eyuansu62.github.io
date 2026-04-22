@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-04-10'
+  last_updated: '2026-04-22'
 papers:
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 9
@@ -50,19 +50,19 @@ papers:
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 100
+    citations: 103
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
-    citations: 122
+    citations: 124
     title: 'S2sql: Injecting syntax to question-schema interaction graph encoder for text-to-sql parsers'
     year: '2022'
   75pkx3YAAAAJ:ULOm3_A8WrAC:
-    citations: 5
+    citations: 6
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 166
+    citations: 167
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
@@ -70,7 +70,7 @@ papers:
     title: 'Legend: Leveraging representation engineering to annotate safety margin for preference datasets'
     year: '2025'
   75pkx3YAAAAJ:W7OEmFMy1HYC:
-    citations: 9
+    citations: 10
     title: 'Sdcup: Schema dependency-enhanced curriculum pre-training for table semantic parsing'
     year: '2021'
   75pkx3YAAAAJ:WF5omc3nYNoC:
@@ -110,11 +110,11 @@ papers:
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2025'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 1025
+    citations: 1049
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
-    citations: 29
+    citations: 31
     title: Hanfei-1.0
     year: '2023'
   75pkx3YAAAAJ:mVmsd5A6BfQC:
@@ -126,11 +126,11 @@ papers:
     title: "FR\u2013KDE: a hybrid fuzzy rule-based information fusion method with its application in biomedical classification"
     year: '2021'
   75pkx3YAAAAJ:qxL8FJ1GzNcC:
-    citations: 15
+    citations: 14
     title: 'THE PRICE OF A SECOND THOUGHT: ON THE EVAL-UATION OF REASONING EFFICIENCY IN LARGE LAN-GUAGE MODELS'
     year: '2025'
   75pkx3YAAAAJ:roLk4NBRz8UC:
-    citations: 7
+    citations: 8
     title: Towards understanding the influence of reward margin on preference model performance
     year: '2024'
   75pkx3YAAAAJ:u5HHmVD_uO8C:
