@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-07-13'
+  last_updated: '2026-07-22'
 papers:
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 10
@@ -50,7 +50,7 @@ papers:
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 122
+    citations: 123
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
@@ -62,7 +62,7 @@ papers:
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 186
+    citations: 188
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
@@ -98,7 +98,7 @@ papers:
     title: 'SHARE: An SLM-based hierarchical action CorREction assistant for text-to-SQL'
     year: '2025'
   75pkx3YAAAAJ:_FxGoFyzp5QC:
-    citations: 45
+    citations: 47
     title: 'Flm-101b: An open llm and how to train it with $100 k budget'
     year: '2023'
   75pkx3YAAAAJ:_kc_bZDykSQC:
@@ -106,7 +106,7 @@ papers:
     title: Are Large Language Models Ready for Multi-Turn Tabular Data Analysis?
     year: '2025'
   75pkx3YAAAAJ:d1gkVwhDpl0C:
-    citations: 222
+    citations: 226
     title: 'Graphix-t5: Mixing pre-trained transformers with graph-aware layers for text-to-sql parsing'
     year: '2023'
   75pkx3YAAAAJ:dhFuZR0502QC:
@@ -114,7 +114,7 @@ papers:
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2026'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 1293
+    citations: 1319
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
