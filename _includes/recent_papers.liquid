@@ -1,0 +1,13 @@
+<div class="publications">
+  {%- comment -%}
+    Newest entries, chosen by date rather than by hand, so a new paper reaches
+    the homepage without also having to be marked selected={true}.
+
+    --max truncates after sorting (jekyll-scholar sorts in entries, then slices
+    in the bibliography tag), so this really is the most recent N and not the
+    first N encountered. --group_by none keeps it a flat list, which is why the
+    site-wide sort_by has to lead with year: without a year group to hold the
+    ordering, a Jul 2026 paper would sort below Oct 2025.
+  {%- endcomment -%}
+  {% bibliography --group_by none --max 5 %}
+</div>

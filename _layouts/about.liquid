@@ -57,6 +57,14 @@ layout: default
       {% include latest_posts.liquid %}
     {% endif %}
 
+    <!-- Recent papers, by date -->
+    {% if page.recent_papers %}
+      <h2>
+        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">recent publications</a>
+      </h2>
+      {% include recent_papers.liquid %}
+    {% endif %}
+
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2>
