@@ -258,6 +258,41 @@
       {% if entry.website %}
         <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
       {% endif %}
+      {% comment %}
+        Citation count as a native button alongside PDF/Code/etc. rather than a
+        shields.io image in the .badges row below: same height and style as its
+        siblings, sharp at any DPI, theme-aware, and no external request per entry.
+      {% endcomment %}
+      {% if site.enable_publication_badges.google_scholar and entry.google_scholar_id %}
+        {% assign citation_count = 0 %}
+        {% assign scholar_id_key = site.scholar_userid | append: ':' | append: entry.google_scholar_id %}
+        {% if site.data.citations.papers[scholar_id_key] %}
+          {% assign citation_count = site.data.citations.papers[scholar_id_key].citations %}
+        {% elsif site.data.citations.papers[entry.google_scholar_id] %}
+          {% assign citation_count = site.data.citations.papers[entry.google_scholar_id].citations %}
+        {% else %}
+          {% for paper in site.data.citations.papers %}
+            {% if paper[0] contains entry.google_scholar_id %}
+              {% assign citation_count = paper[1].citations %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% comment %}
+          Hide at zero. As a text button "Cited by 0" reads far louder than the
+          small badge it replaced, and it is the default state for every new paper.
+        {% endcomment %}
+        {% if citation_count > 0 %}
+          <a
+            href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user={{ site.data.socials.scholar_userid }}&citation_for_view={{ site.data.socials.scholar_userid }}:{{ entry.google_scholar_id }}"
+            class="btn btn-sm z-depth-0"
+            role="button"
+            aria-label="{{ citation_count }} Google Scholar citations"
+          >
+            Cited by {{ citation_count }}
+          </a>
+        {% endif %}
+      {% endif %}
     </div>
     {% if site.enable_publication_badges %}
       {% assign entry_has_altmetric_badge = false %}
@@ -270,16 +305,15 @@
         {% assign entry_has_dimensions_badge = true %}
       {% endif %}
 
-      {% assign entry_has_google_scholar_badge = false %}
-      {% if entry.google_scholar_id %}
-        {% assign entry_has_google_scholar_badge = true %}
-      {% endif %}
+      {% comment %}
+        Google Scholar is rendered as a button in .links above, not as a badge here.
+      {% endcomment %}
 
       {% assign entry_has_inspirehep_badge = false %}
       {% if entry.inspirehep_id %}
         {% assign entry_has_inspirehep_badge = true %}
       {% endif %}
-      {% if entry_has_altmetric_badge or entry_has_dimensions_badge or entry_has_google_scholar_badge or entry_has_inspirehep_badge %}
+      {% if entry_has_altmetric_badge or entry_has_dimensions_badge or entry_has_inspirehep_badge %}
         <div class="badges">
           {% if site.enable_publication_badges.altmetric and entry_has_altmetric_badge %}
             <span
@@ -315,36 +349,6 @@
               data-legend="hover-right"
               style="margin-bottom: 3px;"
             ></span>
-          {% endif %}
-          {% if site.enable_publication_badges.google_scholar and entry_has_google_scholar_badge %}
-            <a
-              href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user={{ site.data.socials.scholar_userid }}&citation_for_view={{ site.data.socials.scholar_userid }}:{{ entry.google_scholar_id }}"
-              aria-label="Google Scholar link"
-              role="button"
-            >
-              {% assign citation_count = 0 %}
-              {% assign scholar_id_key = site.scholar_userid | append: ':' | append: entry.google_scholar_id %}
-              {% assign publication_key = entry.google_scholar_id %}
-
-              {% if site.data.citations.papers[scholar_id_key] %}
-                {% assign citation_count = site.data.citations.papers[scholar_id_key].citations %}
-              {% elsif site.data.citations.papers[publication_key] %}
-                {% assign citation_count = site.data.citations.papers[publication_key].citations %}
-              {% else %}
-                {% for paper in site.data.citations.papers %}
-                  {% assign paper_key = paper[0] %}
-                  {% if paper_key contains entry.google_scholar_id %}
-                    {% assign citation_count = paper[1].citations %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-
-              <img
-                src="https://img.shields.io/badge/scholar-{{ citation_count }}-4285F4?logo=googlescholar&labelColor=beige"
-                alt="{{ citation_count }} Google Scholar citations"
-              >
-            </a>
           {% endif %}
           {% if site.enable_publication_badges.inspirehep and entry_has_inspirehep_badge %}
             <a
