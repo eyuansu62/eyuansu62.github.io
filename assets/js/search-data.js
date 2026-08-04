@@ -30,7 +30,25 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/services/";
           },
-        },{id: "news-our-team-secured-7th-place-out-of-over-100-global-competitors-in-the-ai-safety-and-security-challenge-hosted-by-ai-singapore-aisg-and-the-national-university-of-singapore-nus-and-was-invited-to-attend-the-singapore-international-cyber-week-sicw-2024",
+        },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "post-一条招募推文-意外成了中文-agent-harness-生态的一次普查",
+        
+          title: "一条招募推文，意外成了中文 Agent Harness 生态的一次普查",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/agent-harness/";
+          
+        },
+      },{id: "news-our-team-secured-7th-place-out-of-over-100-global-competitors-in-the-ai-safety-and-security-challenge-hosted-by-ai-singapore-aisg-and-the-national-university-of-singapore-nus-and-was-invited-to-attend-the-singapore-international-cyber-week-sicw-2024",
           title: 'Our team secured 7th place out of over 100 global competitors in the...',
           description: "",
           section: "News",},{
