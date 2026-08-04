@@ -11,16 +11,33 @@ Nothing volatile is written into the generated front matter (no sync timestamp,
 no last_edited_time), so an unchanged Notion page produces an unchanged file and
 git reports no diff. That keeps the workflow from committing on every run.
 
+The root may be either a database or an ordinary page; a Notion URL exposes the
+same ID shape for both, so the type is detected rather than configured.
+
+  database root  each row that passes the status filter becomes a post
+  page root      each child page becomes a post; a page with no children is
+                 itself the post
+
+Publishing to notion.site does not help here. A published page is readable by a
+browser but its body is rendered by JavaScript, so there is no HTML to scrape,
+and the API still requires a token and an explicit connection either way.
+
 Required environment:
-  NOTION_TOKEN        Internal integration token; the database must be shared
-                      with that integration.
-  NOTION_DATABASE_ID  Database whose pages become posts.
+  NOTION_TOKEN   Personal access token (starts with ntn_). The page or database
+                 must be shared with it: ••• menu → Add connections.
+  NOTION_ROOT_ID The 32-character ID from the Notion URL. Database or page.
+                 NOTION_DATABASE_ID is accepted as a fallback name.
 
 Optional environment:
-  NOTION_STATUS_PROPERTY  Property gating publication (default "Status").
-  NOTION_STATUS_VALUE     Value that means published (default "Published").
-                          Set NOTION_STATUS_PROPERTY to an empty string to
-                          publish every page in the database.
+  NOTION_STATUS_PROPERTY   Database root only. Property gating publication
+                           (default "Status"). Set to an empty string to import
+                           every row.
+  NOTION_STATUS_VALUE      Database root only. Value meaning published
+                           (default "Published").
+  NOTION_IMPORT_ALL        Page root only. Must be true to write anything, since
+                           a child page has no status property to filter on.
+  NOTION_SKIP_TITLE_PREFIX Page root only. Comma-separated title prefixes to
+                           hold back, for example "draft,WIP".
 """
 
 import os
@@ -49,9 +66,18 @@ IMAGE_DIR = os.path.join("assets", "img", "notion")
 PAGE_SIZE = 100
 
 TOKEN = os.environ.get("NOTION_TOKEN", "").strip()
-DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "").strip()
+# Accepts a database ID or an ordinary page ID; a Notion URL looks the same for
+# both. NOTION_DATABASE_ID is kept as a fallback for the earlier name.
+ROOT_ID = (
+    os.environ.get("NOTION_ROOT_ID", "") or os.environ.get("NOTION_DATABASE_ID", "")
+).strip()
 STATUS_PROPERTY = os.environ.get("NOTION_STATUS_PROPERTY", "Status").strip()
 STATUS_VALUE = os.environ.get("NOTION_STATUS_VALUE", "Published").strip()
+# Page-root mode only; see gate_page_root().
+IMPORT_ALL = os.environ.get("NOTION_IMPORT_ALL", "").strip().lower() in ("1", "true", "yes")
+SKIP_TITLE_PREFIXES = [
+    p.strip() for p in os.environ.get("NOTION_SKIP_TITLE_PREFIX", "").split(",") if p.strip()
+]
 
 # Block types that carry no content worth importing. Anything not handled and
 # not listed here is reported, so a silently half-imported post is impossible.
@@ -60,8 +86,14 @@ IGNORED_BLOCKS = {"table_of_contents", "breadcrumb", "column_list", "column"}
 unsupported_seen: set[str] = set()
 
 
-def request(method: str, path: str, body: dict | None = None) -> dict:
-    """Call the Notion API and return the decoded JSON response."""
+def request(method: str, path: str, body: dict | None = None, allow_404: bool = False):
+    """Call the Notion API and return the decoded JSON response.
+
+    Any failure is fatal, because a partial import is worse than none. The one
+    exception is allow_404, used to probe whether an ID names a database or a
+    page: Notion answers 404 object_not_found for both a wrong type and a
+    missing connection, so the caller distinguishes them.
+    """
     data = json.dumps(body).encode() if body is not None else None
     req = urllib.request.Request(
         f"{API}{path}",
@@ -77,29 +109,103 @@ def request(method: str, path: str, body: dict | None = None) -> dict:
         with urllib.request.urlopen(req, timeout=60) as resp:
             return json.load(resp)
     except urllib.error.HTTPError as e:
+        if e.code == 404 and allow_404:
+            return None
         detail = e.read().decode(errors="replace")
         print(f"❌ {method} {path} failed: HTTP {e.code}\n   {detail}")
+        if e.code == 404:
+            print(
+                "   A 404 also means the connection cannot see this content.\n"
+                "   In Notion open the page, ••• menu → Add connections, and pick your token."
+            )
         sys.exit(1)
     except urllib.error.URLError as e:
         print(f"❌ {method} {path} failed: {e.reason}")
         sys.exit(1)
 
 
-def resolve_data_source_id(database_id: str) -> str:
-    """Map a database ID to its data source ID.
+def resolve_root(root_id: str) -> tuple[str, str]:
+    """Detect whether the configured ID names a database or an ordinary page.
 
-    Since API version 2025-09-03 pages are queried through a data source rather
-    than the database itself. A single-source database has exactly one.
+    A Notion URL exposes the same 32-character ID shape for both, and asking
+    the user which they have is a question the API can answer. Returns
+    ("database", data_source_id) or ("page", page_id).
     """
-    db = request("GET", f"/databases/{database_id}")
-    sources = db.get("data_sources") or []
-    if not sources:
-        print(f"❌ Database {database_id} exposes no data sources.")
-        sys.exit(1)
-    if len(sources) > 1:
-        names = ", ".join(s.get("name", "?") for s in sources)
-        print(f"⚠️  Database has {len(sources)} data sources ({names}); using the first.")
-    return sources[0]["id"]
+    db = request("GET", f"/databases/{root_id}", allow_404=True)
+    if db is not None:
+        sources = db.get("data_sources") or []
+        if not sources:
+            print(f"❌ Database {root_id} exposes no data sources.")
+            sys.exit(1)
+        if len(sources) > 1:
+            names = ", ".join(s.get("name", "?") for s in sources)
+            print(f"⚠️  Database has {len(sources)} data sources ({names}); using the first.")
+        return "database", sources[0]["id"]
+
+    # Not a database. A page probe failing is fatal and reports the sharing hint.
+    request("GET", f"/pages/{root_id}")
+    return "page", root_id
+
+
+def pages_under_page(root_id: str) -> list[dict]:
+    """Collect posts when the root is an ordinary page rather than a database.
+
+    Child pages become one post each. A root with no child pages is itself the
+    article, which is the shape of a single published Notion write-up.
+    """
+    children, cursor = [], None
+    while True:
+        query = f"?page_size={PAGE_SIZE}" + (f"&start_cursor={cursor}" if cursor else "")
+        result = request("GET", f"/blocks/{root_id}/children{query}")
+        children.extend(result.get("results", []))
+        if not result.get("has_more"):
+            break
+        cursor = result.get("next_cursor")
+
+    child_pages = [b for b in children if b.get("type") == "child_page"]
+    if not child_pages:
+        print("No child pages found; treating the root page itself as a single post.")
+        return [request("GET", f"/pages/{root_id}")]
+
+    print(f"Found {len(child_pages)} child page(s) under the root page.")
+    return [request("GET", f"/pages/{b['id']}") for b in child_pages]
+
+
+def gate_page_root(pages: list[dict]) -> list[dict]:
+    """Apply the opt-in gate that page-root mode needs instead of a status property.
+
+    A child page carries only a title, so there is nothing to filter on and the
+    default would be to publish everything under that parent to a public site.
+    That has to be an explicit choice, not a default.
+    """
+    titles = [extract_metadata(p)["title"] for p in pages]
+    skipped = []
+    if SKIP_TITLE_PREFIXES:
+        keep = []
+        for page, title in zip(pages, titles):
+            if any(title.lower().startswith(p.lower()) for p in SKIP_TITLE_PREFIXES):
+                skipped.append(title)
+            else:
+                keep.append(page)
+        pages = keep
+
+    print("\nPages this run would publish:")
+    for title in [extract_metadata(p)["title"] for p in pages]:
+        print(f"  • {title}")
+    for title in skipped:
+        print(f"  – {title} (skipped by NOTION_SKIP_TITLE_PREFIX)")
+
+    if not IMPORT_ALL:
+        print(
+            "\n⛔ Nothing written. The root is a page, not a database, so there is no\n"
+            "   Status property to gate publication and every page listed above would\n"
+            "   go live. Review the list, then opt in explicitly:\n"
+            "     NOTION_IMPORT_ALL=true\n"
+            "   To hold some back, set NOTION_SKIP_TITLE_PREFIX to a comma-separated\n"
+            "   list of title prefixes, for example: draft,WIP,TODO"
+        )
+        sys.exit(0)
+    return pages
 
 
 def query_pages(data_source_id: str) -> list[dict]:
@@ -491,28 +597,34 @@ def generated_posts() -> dict[str, str]:
 
 
 def main() -> None:
-    if not TOKEN or not DATABASE_ID:
+    if not TOKEN or not ROOT_ID:
         print(
-            "❌ NOTION_TOKEN and NOTION_DATABASE_ID must both be set.\n"
-            "   Create an internal integration at https://www.notion.so/my-integrations,\n"
-            "   share the database with it, then store the token as a repository secret."
+            "❌ NOTION_TOKEN and NOTION_ROOT_ID must both be set.\n"
+            "   Create a personal access token under Personal access tokens in Notion's\n"
+            "   developer portal, store it as a repository secret, and share the target\n"
+            "   page or database with it: ••• menu → Add connections.\n"
+            "   NOTION_ROOT_ID is the 32-character ID from the Notion URL and may name\n"
+            "   either a database or an ordinary page."
         )
         sys.exit(1)
 
     os.makedirs(POSTS_DIR, exist_ok=True)
     before = generated_posts()
 
-    data_source_id = resolve_data_source_id(DATABASE_ID)
-    print(f"Querying data source {data_source_id}")
-    pages = query_pages(data_source_id)
-    filter_note = f" matching {STATUS_PROPERTY} = {STATUS_VALUE}" if STATUS_PROPERTY else ""
-    print(f"Found {len(pages)} page(s){filter_note}")
-
-    if STATUS_PROPERTY and not pages:
-        print(
-            f"⚠️  No pages matched. Check that the “{STATUS_PROPERTY}” property exists and "
-            f"that at least one page is set to “{STATUS_VALUE}”."
-        )
+    kind, resolved = resolve_root(ROOT_ID)
+    if kind == "database":
+        print(f"Root is a database; querying data source {resolved}")
+        pages = query_pages(resolved)
+        filter_note = f" matching {STATUS_PROPERTY} = {STATUS_VALUE}" if STATUS_PROPERTY else ""
+        print(f"Found {len(pages)} page(s){filter_note}")
+        if STATUS_PROPERTY and not pages:
+            print(
+                f"⚠️  No pages matched. Check that the “{STATUS_PROPERTY}” property exists and "
+                f"that at least one page is set to “{STATUS_VALUE}”."
+            )
+    else:
+        print(f"Root is a page ({resolved})")
+        pages = gate_page_root(pages_under_page(resolved))
 
     seen: set[str] = set()
     for page in pages:

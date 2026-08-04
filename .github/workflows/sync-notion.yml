@@ -3,11 +3,18 @@ name: Sync Notion Posts
 # Imports published Notion pages into _posts/ as markdown, so the site serves
 # them itself rather than linking out.
 #
+# The root may be a database or an ordinary page; the script detects which.
+#
 # Setup:
-#   1. Create an internal integration at https://www.notion.so/my-integrations
-#   2. Store its token as the repository secret NOTION_TOKEN
-#   3. Store the database ID as the repository variable NOTION_DATABASE_ID
-#   4. Share the database with the integration (••• → Connections)
+#   1. Create a personal access token (Notion developer portal → Personal
+#      access tokens); it starts with ntn_
+#   2. Store it as the repository secret NOTION_TOKEN
+#   3. Store the 32-character ID from the Notion URL as the repository
+#      variable NOTION_ROOT_ID
+#   4. Share that page or database with the token: ••• menu → Add connections
+#   5. For a page root, also set the variable NOTION_IMPORT_ALL to true; a
+#      child page has no Status property, so publishing everything under the
+#      parent has to be an explicit choice
 
 on:
   # Runs an hour before the 02:00 deploy on the same days, because the commit
@@ -44,12 +51,14 @@ jobs:
       - name: Sync posts from Notion
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
+          NOTION_ROOT_ID: ${{ vars.NOTION_ROOT_ID }}
           NOTION_STATUS_PROPERTY: ${{ vars.NOTION_STATUS_PROPERTY }}
           NOTION_STATUS_VALUE: ${{ vars.NOTION_STATUS_VALUE }}
+          NOTION_IMPORT_ALL: ${{ vars.NOTION_IMPORT_ALL }}
+          NOTION_SKIP_TITLE_PREFIX: ${{ vars.NOTION_SKIP_TITLE_PREFIX }}
         run: |
-          if [ -z "$NOTION_TOKEN" ] || [ -z "$NOTION_DATABASE_ID" ]; then
-            echo "⏭️ NOTION_TOKEN or NOTION_DATABASE_ID is not configured; skipping sync." \
+          if [ -z "$NOTION_TOKEN" ] || [ -z "$NOTION_ROOT_ID" ]; then
+            echo "⏭️ NOTION_TOKEN or NOTION_ROOT_ID is not configured; skipping sync." \
               | tee -a $GITHUB_STEP_SUMMARY
             exit 0
           fi

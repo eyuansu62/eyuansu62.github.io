@@ -202,6 +202,103 @@ with tempfile.TemporaryDirectory() as tmp:
     sync.POSTS_DIR = original
     check("only notion_page_id files are owned", sorted(owned), ["abc123"])
 
+print("\nroot type detection")
+
+
+def fake_api(responses: dict):
+    """Stub sync.request against a {(method, path_prefix): payload} table.
+
+    A payload of None stands for a 404 that the caller is allowed to absorb.
+    """
+    calls: list[str] = []
+
+    def request(method, path, body=None, allow_404=False):
+        calls.append(f"{method} {path}")
+        for (m, prefix), payload in responses.items():
+            if m == method and path.startswith(prefix):
+                if payload is None and not allow_404:
+                    raise AssertionError(f"unexpected fatal 404 for {method} {path}")
+                return payload
+        raise AssertionError(f"no stub for {method} {path}")
+
+    return request, calls
+
+
+original_request = sync.request
+
+# A database root resolves through data_sources.
+sync.request, calls = fake_api(
+    {("GET", "/databases/"): {"data_sources": [{"id": "DS1", "name": "Posts"}]}}
+)
+check("database root detected", sync.resolve_root("ROOT"), ("database", "DS1"))
+
+# A page root: the database probe 404s, then the page probe succeeds.
+sync.request, calls = fake_api(
+    {("GET", "/databases/"): None, ("GET", "/pages/"): {"id": "ROOT", "object": "page"}}
+)
+check("page root detected after 404", sync.resolve_root("ROOT"), ("page", "ROOT"))
+check("probed database before page", calls[0].startswith("GET /databases/"), True)
+
+# Page root holding child pages: one post per child.
+sync.request, calls = fake_api(
+    {
+        ("GET", "/blocks/ROOT/children"): {
+            "results": [
+                {"type": "paragraph", "id": "b1"},
+                {"type": "child_page", "id": "c1", "child_page": {"title": "First"}},
+                {"type": "child_page", "id": "c2", "child_page": {"title": "Second"}},
+            ],
+            "has_more": False,
+        },
+        ("GET", "/pages/c1"): {"id": "c1", "properties": {"title": {"type": "title", "title": rt("First")}}},
+        ("GET", "/pages/c2"): {"id": "c2", "properties": {"title": {"type": "title", "title": rt("Second")}}},
+    }
+)
+found = sync.pages_under_page("ROOT")
+check("child pages become posts", [p["id"] for p in found], ["c1", "c2"])
+check(
+    "page-parented title is read from properties.title",
+    [sync.extract_metadata(p)["title"] for p in found],
+    ["First", "Second"],
+)
+
+# Page root with no child pages: the root itself is the post.
+sync.request, calls = fake_api(
+    {
+        ("GET", "/blocks/ROOT/children"): {
+            "results": [{"type": "paragraph", "id": "b1"}],
+            "has_more": False,
+        },
+        ("GET", "/pages/ROOT"): {"id": "ROOT", "properties": {"title": {"type": "title", "title": rt("Solo")}}},
+    }
+)
+found = sync.pages_under_page("ROOT")
+check("childless root is a single post", [p["id"] for p in found], ["ROOT"])
+
+sync.request = original_request
+
+print("\npage-root publish gate")
+pages = [
+    {"id": "p1", "properties": {"title": {"type": "title", "title": rt("Real post")}}},
+    {"id": "p2", "properties": {"title": {"type": "title", "title": rt("draft: not ready")}}},
+]
+
+
+def gate(pages, import_all, prefixes):
+    saved = (sync.IMPORT_ALL, sync.SKIP_TITLE_PREFIXES)
+    sync.IMPORT_ALL, sync.SKIP_TITLE_PREFIXES = import_all, prefixes
+    try:
+        return [p["id"] for p in sync.gate_page_root(list(pages))]
+    except SystemExit as e:
+        return f"exit {e.code}"
+    finally:
+        sync.IMPORT_ALL, sync.SKIP_TITLE_PREFIXES = saved
+
+
+check("writes nothing without an explicit opt-in", gate(pages, False, []), "exit 0")
+check("opt-in imports everything", gate(pages, True, []), ["p1", "p2"])
+check("prefix holds a draft back", gate(pages, True, ["draft"]), ["p1"])
+
 print("\nyaml safety")
 front = sync.yaml.safe_dump(
     {"title": 'Why: "judges" drift', "tags": ["a", "b"]}, allow_unicode=True, sort_keys=False
