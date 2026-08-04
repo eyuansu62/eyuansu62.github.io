@@ -21,6 +21,14 @@ layout: default
       {% if page.author %}by {{ page.author }}{% endif %}
       {% if page.last_updated %}, last updated on {{ page.last_updated | date: '%B %d, %Y' }}{% endif %}
       {% if page.meta %}• {{ page.meta }}{% endif %}
+      {%- comment -%}
+        Set by bin/sync_notion_posts.py on imported posts. The body above is a
+        full local copy, so this is attribution and a way back to the source,
+        not the canonical location of the text.
+      {%- endcomment -%}
+      {% if page.notion_url %}
+        • <a href="{{ page.notion_url }}" rel="external nofollow noopener" target="_blank">source in Notion</a>
+      {% endif %}
     </p>
     <p class="post-tags">
       {% if url_beginning == '/blog/' %}

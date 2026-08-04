@@ -1,0 +1,79 @@
+name: Sync Notion Posts
+
+# Imports published Notion pages into _posts/ as markdown, so the site serves
+# them itself rather than linking out.
+#
+# Setup:
+#   1. Create an internal integration at https://www.notion.so/my-integrations
+#   2. Store its token as the repository secret NOTION_TOKEN
+#   3. Store the database ID as the repository variable NOTION_DATABASE_ID
+#   4. Share the database with the integration (••• → Connections)
+
+on:
+  # Runs an hour before the 02:00 deploy on the same days, because the commit
+  # below is made with the default GITHUB_TOKEN and therefore cannot trigger
+  # deploy.yml itself.
+  schedule:
+    - cron: "0 1 * * 1,3,5"
+  workflow_dispatch:
+
+jobs:
+  sync-notion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          echo "🔧 Installing dependencies..."
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify converter before touching any posts
+        run: |
+          echo "🧪 Running converter tests..."
+          python bin/test_sync_notion_posts.py
+
+      - name: Sync posts from Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
+          NOTION_STATUS_PROPERTY: ${{ vars.NOTION_STATUS_PROPERTY }}
+          NOTION_STATUS_VALUE: ${{ vars.NOTION_STATUS_VALUE }}
+        run: |
+          if [ -z "$NOTION_TOKEN" ] || [ -z "$NOTION_DATABASE_ID" ]; then
+            echo "⏭️ NOTION_TOKEN or NOTION_DATABASE_ID is not configured; skipping sync." \
+              | tee -a $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+          python bin/sync_notion_posts.py
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          echo "🔧 Git configured."
+
+      - name: Commit and push if changed
+        run: |
+          # Both paths can be absent on a fresh checkout: git does not track
+          # empty directories, and assets/img/notion only exists once a synced
+          # page has contained an image. git add fails on a missing pathspec.
+          for path in _posts assets/img/notion; do
+            if [ -d "$path" ]; then git add "$path"; fi
+          done
+          if git diff --staged --quiet; then
+            echo "ℹ️ No post changes." | tee -a $GITHUB_STEP_SUMMARY
+          else
+            echo "📤 Committing and pushing changes..."
+            git diff --staged --name-status | tee -a $GITHUB_STEP_SUMMARY
+            git commit -m "Sync posts from Notion"
+            git push
+          fi
