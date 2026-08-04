@@ -13,7 +13,7 @@ description: > # the ">" symbol means to ignore newlines until "footer_text:"
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-keywords: Bowen Qin, BAAI, LLM evaluation, text-to-SQL, NLP, machine learning # add your own keywords or leave empty
+keywords: Bowen Qin, NUS, LLM evaluation, alignment, text-to-SQL, code intelligence, BAAI, NLP, machine learning # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🎓 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
@@ -130,16 +130,6 @@ disqus_shortname: al-folio # put your disqus shortname
 # you can display them in your blog by adding a link to the RSS feed.
 # Optional: Set default categories and tags for posts from each source.
 external_sources:
-  - name: medium.com
-    rss_url: https://medium.com/@al-folio/feed
-    categories: [external-posts]
-    tags: [medium]
-  - name: Google Blog
-    posts:
-      - url: https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/
-        published_date: 2024-05-14
-    categories: [external-posts]
-    tags: [google]
 
 # -----------------------------------------------------------------------------
 # Newsletter
@@ -201,6 +191,16 @@ exclude:
   - package.json
   - package-lock.json
   - _pages/about_einstein.md
+  # Unused al-folio template pages. They were nav: false but still built,
+  # reachable, and listed in sitemap.xml with placeholder copy. Delete a line
+  # here to bring a page back once it has real content.
+  - _pages/blog.md
+  - _pages/books.md
+  - _pages/dropdown.md
+  - _pages/profiles.md
+  - _pages/projects.md
+  - _pages/repositories.md
+  - _pages/teaching.md
   - purgecss.config.js
   - README.md
   - readme_preview/
@@ -303,7 +303,10 @@ scholar:
   query: "@*"
   group_by: year
   group_order: descending
-  sort_by: month, title
+  # year must lead: the homepage renders with --group_by none, so without it
+  # entries sort by month alone and a Jul 2026 paper lands below Oct 2025.
+  # Within the year-grouped /publications/ page the extra key is a no-op.
+  sort_by: year, month, title
   order: descending
 
 # Display different badges withs stats for your publications
