@@ -73,6 +73,12 @@ ROOT_ID = (
 ).strip()
 STATUS_PROPERTY = os.environ.get("NOTION_STATUS_PROPERTY", "Status").strip()
 STATUS_VALUE = os.environ.get("NOTION_STATUS_VALUE", "Published").strip()
+# "link"  writes a stub carrying only title, date, summary and a redirect to
+#         Notion, so readers see the page exactly as Notion renders it.
+# "full"  converts the body to markdown and serves it from this site instead,
+#         which gains search, RSS and the site's own styling but never looks
+#         identical to Notion.
+LINK_ONLY = os.environ.get("NOTION_IMPORT_MODE", "link").strip().lower() != "full"
 # Page-root mode only; see gate_page_root().
 IMPORT_ALL = os.environ.get("NOTION_IMPORT_ALL", "").strip().lower() in ("1", "true", "yes")
 SKIP_TITLE_PREFIXES = [
@@ -473,6 +479,40 @@ def blocks_to_markdown(blocks: list[dict], page_id: str) -> str:
     return re.sub(r"\n{3,}", "\n\n", body).strip() + "\n"
 
 
+def blocks_to_plain_text(blocks: list[dict]) -> list[str]:
+    """Flatten a page to plain paragraphs, ignoring formatting and layout.
+
+    Used by link mode, which needs a word count for the reading estimate and an
+    opening paragraph for the list summary, but not the markdown body.
+    """
+    out: list[str] = []
+    for block in blocks:
+        btype = block.get("type", "")
+        data = block.get(btype, {}) if isinstance(block.get(btype), dict) else {}
+        text = plain_text(data.get("rich_text", []) or []).strip()
+        if text:
+            out.append(text)
+        if btype == "table_row":
+            cells = data.get("cells", []) or []
+            joined = " ".join(plain_text(c) for c in cells).strip()
+            if joined:
+                out.append(joined)
+        out.extend(blocks_to_plain_text(block.get("_children", [])))
+    return out
+
+
+def summarise(paragraphs: list[str], limit: int = 200) -> str:
+    """Take the opening prose as the list summary.
+
+    Headings and table rows make poor summaries, so prefer the first paragraph
+    long enough to read like one.
+    """
+    for text in paragraphs:
+        if len(text) >= 40:
+            return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
+    return paragraphs[0][:limit] if paragraphs else ""
+
+
 def property_value(props: dict, names: list[str], kinds: list[str]):
     """Read the first property matching one of `names` with one of `kinds`."""
     for name in names:
@@ -546,19 +586,48 @@ def write_post(page: dict) -> str:
     page_id = page["id"].replace("-", "")
     meta = extract_metadata(page)
 
-    print(f"...importing “{meta['title']}”")
-    body = blocks_to_markdown(fetch_blocks(page["id"]), page_id)
+    blocks = fetch_blocks(page["id"])
+    # public_url is set only while the page is published to the web, and it is
+    # the one a reader can actually open. `url` points into the private
+    # workspace app, so linking that would send readers to a login screen.
+    notion_url = page.get("public_url") or page.get("url", "")
 
     front: dict = {
         "layout": "post",
         "title": meta["title"],
         "date": format_date(meta["date"]),
         "notion_page_id": page_id,
-        # public_url is set only while the page is published to the web, and it
-        # is the one a reader can actually open. `url` points into the private
-        # workspace app, so linking that would send readers to a login screen.
-        "notion_url": page.get("public_url") or page.get("url", ""),
+        "notion_url": notion_url,
     }
+
+    if LINK_ONLY:
+        print(f"...linking “{meta['title']}”")
+        paragraphs = blocks_to_plain_text(blocks)
+        if not notion_url.startswith("http"):
+            print(
+                f"⚠️  “{meta['title']}” has no public URL, so there is nothing to link to.\n"
+                "   Publish the page to the web in Notion, or set NOTION_IMPORT_MODE=full."
+            )
+        # redirect makes /blog/ link straight out and turns the generated post
+        # page into a forwarding stub; external_source labels it in the list.
+        front["redirect"] = notion_url
+        front["external_source"] = "Notion"
+        # Only the estimate is kept, not the text it was derived from. al-folio
+        # normally word-counts feed_content, but storing the body in front
+        # matter would put it in the repository after all, which is the thing
+        # link mode exists to avoid.
+        words = sum(len(p.split()) + len(re.findall(r"[一-鿿]", p)) for p in paragraphs)
+        front["reading_time"] = max(1, round(words / 180))
+        if not meta["description"]:
+            meta["description"] = summarise(paragraphs)
+        body = (
+            f"This post lives in Notion and is rendered there.\n\n"
+            f"[Open it on Notion]({notion_url})\n"
+        )
+    else:
+        print(f"...importing “{meta['title']}”")
+        body = blocks_to_markdown(blocks, page_id)
+
     if meta["description"]:
         front["description"] = meta["description"]
     if meta["tags"]:

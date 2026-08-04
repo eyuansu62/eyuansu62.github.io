@@ -76,7 +76,9 @@ pagination:
 <h3 class="card-title text-lowercase">{{ post.title }}</h3>
 <p class="card-text">{{ post.description }}</p>
 
-                    {% if post.external_source == blank %}
+                    {% if post.reading_time %}
+                      {% assign read_time = post.reading_time %}
+                    {% elsif post.external_source == blank %}
                       {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
                     {% else %}
                       {% assign read_time = post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}
@@ -111,7 +113,14 @@ pagination:
 
     {% for post in postlist %}
 
-    {% if post.external_source == blank %}
+    {% comment %}
+      reading_time is set by bin/sync_notion_posts.py on link-only posts, whose
+      body lives in Notion: there is no local text to count, and keeping a copy
+      in front matter purely to count it would defeat the point.
+    {% endcomment %}
+    {% if post.reading_time %}
+      {% assign read_time = post.reading_time %}
+    {% elsif post.external_source == blank %}
       {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
     {% else %}
       {% assign read_time = post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}

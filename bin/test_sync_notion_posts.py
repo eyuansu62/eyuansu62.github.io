@@ -308,6 +308,54 @@ check("writes nothing without an explicit opt-in", gate(pages, False, []), "exit
 check("opt-in imports everything", gate(pages, True, []), ["p1", "p2"])
 check("prefix holds a draft back", gate(pages, True, ["draft"]), ["p1"])
 
+print("\nplain text and summary (link mode)")
+plain_blocks = [
+    block("heading_2", {"rich_text": rt("Short heading")}),
+    block("paragraph", {"rich_text": rt("x" * 50)}),
+    block("paragraph", {"rich_text": rt("second paragraph")}),
+    block(
+        "table",
+        {},
+        children=[{"type": "table_row", "table_row": {"cells": [rt("cell a"), rt("cell b")]}}],
+    ),
+]
+flat = sync.blocks_to_plain_text(plain_blocks)
+check("table cells are counted", "cell a cell b" in flat, True)
+check(
+    "summary skips the short heading for real prose",
+    sync.summarise(flat),
+    "x" * 50,
+)
+check("summary truncates with an ellipsis", sync.summarise(["y" * 400]).endswith("…"), True)
+check("summary respects the limit", len(sync.summarise(["y" * 400])), 200)
+
+print("\nlink mode writes a stub, not the body")
+with tempfile.TemporaryDirectory() as tmp:
+    posts = os.path.join(tmp, "_posts")
+    os.makedirs(posts)
+    saved = (sync.POSTS_DIR, sync.LINK_ONLY, sync.fetch_blocks)
+    sync.POSTS_DIR, sync.LINK_ONLY = posts, True
+    sync.fetch_blocks = lambda pid: plain_blocks
+    path = sync.write_post(
+        {
+            "id": "abc-def",
+            "url": "https://app.notion.com/p/private",
+            "public_url": "https://x.notion.site/Post-abcdef",
+            "created_time": "2026-05-01T00:00:00.000Z",
+            "properties": {"title": {"type": "title", "title": rt("A linked post")}},
+        }
+    )
+    written = open(path, encoding="utf-8").read()
+    sync.POSTS_DIR, sync.LINK_ONLY, sync.fetch_blocks = saved
+    front = sync.yaml.safe_load(written.split("---")[1])
+
+check("redirects to the public URL", front["redirect"], "https://x.notion.site/Post-abcdef")
+check("labels the source", front["external_source"], "Notion")
+check("stores a reading estimate", isinstance(front.get("reading_time"), int), True)
+check("body text is not copied into front matter", "feed_content" in front, False)
+check("body is a short stub", len(written.split("---", 2)[2].strip()) < 200, True)
+check("body is not the article", "x" * 50 in written.split("---", 2)[2], False)
+
 print("\nyaml safety")
 front = sync.yaml.safe_dump(
     {"title": 'Why: "judges" drift', "tags": ["a", "b"]}, allow_unicode=True, sort_keys=False
