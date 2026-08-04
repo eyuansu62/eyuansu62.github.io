@@ -563,12 +563,23 @@ footer.sticky-bottom {
 .header-bar {
   border-bottom: 1px solid var(--global-divider-color);
   text-align: center;
-  padding-top: 2rem;
-  padding-bottom: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
 
+  // al-folio ships 5rem, twice the 2.5rem Bootstrap h1 that every other page
+  // title on this site uses. At that size the header alone filled the viewport
+  // and pushed the post list below the fold.
   h1 {
     color: var(--global-theme-color);
-    font-size: 5rem;
+    font-size: 2.5rem;
+  }
+
+  // Had no size of its own, so it fell back to the default h2 and competed
+  // with the title.
+  h2 {
+    color: var(--global-text-color-light);
+    font-size: 1.1rem;
+    margin-bottom: 0;
   }
 }
 
