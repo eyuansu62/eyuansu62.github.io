@@ -86,13 +86,14 @@ IGNORED_BLOCKS = {"table_of_contents", "breadcrumb", "column_list", "column"}
 unsupported_seen: set[str] = set()
 
 
-def request(method: str, path: str, body: dict | None = None, allow_404: bool = False):
+def request(
+    method: str, path: str, body: dict | None = None, allow_status: tuple[int, ...] = ()
+):
     """Call the Notion API and return the decoded JSON response.
 
-    Any failure is fatal, because a partial import is worse than none. The one
-    exception is allow_404, used to probe whether an ID names a database or a
-    page: Notion answers 404 object_not_found for both a wrong type and a
-    missing connection, so the caller distinguishes them.
+    Any failure is fatal, because a partial import is worse than none. The
+    exception is allow_status, whose codes return None so the caller can react;
+    it exists for the database-or-page probe in resolve_root().
     """
     data = json.dumps(body).encode() if body is not None else None
     req = urllib.request.Request(
@@ -109,7 +110,7 @@ def request(method: str, path: str, body: dict | None = None, allow_404: bool = 
         with urllib.request.urlopen(req, timeout=60) as resp:
             return json.load(resp)
     except urllib.error.HTTPError as e:
-        if e.code == 404 and allow_404:
+        if e.code in allow_status:
             return None
         detail = e.read().decode(errors="replace")
         print(f"❌ {method} {path} failed: HTTP {e.code}\n   {detail}")
@@ -131,7 +132,10 @@ def resolve_root(root_id: str) -> tuple[str, str]:
     the user which they have is a question the API can answer. Returns
     ("database", data_source_id) or ("page", page_id).
     """
-    db = request("GET", f"/databases/{root_id}", allow_404=True)
+    # Both codes mean "not a database": 404 when the connection cannot see it,
+    # and 400 validation_error when the ID resolves to a page, which is what
+    # Notion actually returns for a page ID ("is a page, not a database").
+    db = request("GET", f"/databases/{root_id}", allow_status=(400, 404))
     if db is not None:
         sources = db.get("data_sources") or []
         if not sources:
@@ -550,7 +554,10 @@ def write_post(page: dict) -> str:
         "title": meta["title"],
         "date": format_date(meta["date"]),
         "notion_page_id": page_id,
-        "notion_url": page.get("url", ""),
+        # public_url is set only while the page is published to the web, and it
+        # is the one a reader can actually open. `url` points into the private
+        # workspace app, so linking that would send readers to a login screen.
+        "notion_url": page.get("public_url") or page.get("url", ""),
     }
     if meta["description"]:
         front["description"] = meta["description"]

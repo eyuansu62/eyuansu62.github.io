@@ -205,19 +205,24 @@ with tempfile.TemporaryDirectory() as tmp:
 print("\nroot type detection")
 
 
-def fake_api(responses: dict):
+def fake_api(responses: dict, error_code: int = 404):
     """Stub sync.request against a {(method, path_prefix): payload} table.
 
-    A payload of None stands for a 404 that the caller is allowed to absorb.
+    A payload of None stands for an HTTP error the caller may absorb; the stub
+    asserts the caller actually passed that status in allow_status, so a rename
+    or a narrowed tuple fails here instead of at runtime against Notion.
     """
     calls: list[str] = []
 
-    def request(method, path, body=None, allow_404=False):
+    def request(method, path, body=None, allow_status=()):
         calls.append(f"{method} {path}")
         for (m, prefix), payload in responses.items():
             if m == method and path.startswith(prefix):
-                if payload is None and not allow_404:
-                    raise AssertionError(f"unexpected fatal 404 for {method} {path}")
+                if payload is None and error_code not in allow_status:
+                    raise AssertionError(
+                        f"HTTP {error_code} for {method} {path} would be fatal; "
+                        f"allow_status={allow_status}"
+                    )
                 return payload
         raise AssertionError(f"no stub for {method} {path}")
 
@@ -232,11 +237,15 @@ sync.request, calls = fake_api(
 )
 check("database root detected", sync.resolve_root("ROOT"), ("database", "DS1"))
 
-# A page root: the database probe 404s, then the page probe succeeds.
-sync.request, calls = fake_api(
-    {("GET", "/databases/"): None, ("GET", "/pages/"): {"id": "ROOT", "object": "page"}}
-)
-check("page root detected after 404", sync.resolve_root("ROOT"), ("page", "ROOT"))
+# A page root. Notion answers 400 validation_error ("is a page, not a
+# database") for a page ID, not 404 — a live run found this after the fixtures
+# had only covered 404, so both codes are now asserted.
+for code in (400, 404):
+    sync.request, calls = fake_api(
+        {("GET", "/databases/"): None, ("GET", "/pages/"): {"id": "ROOT", "object": "page"}},
+        error_code=code,
+    )
+    check(f"page root detected after {code}", sync.resolve_root("ROOT"), ("page", "ROOT"))
 check("probed database before page", calls[0].startswith("GET /databases/"), True)
 
 # Page root holding child pages: one post per child.
