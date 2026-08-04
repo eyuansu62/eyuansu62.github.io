@@ -14,18 +14,14 @@
     <link rel="stylesheet" href="./app.css" />
   </head>
   <body>
-    <noscript>
-      This app needs JavaScript enabled.
-    </noscript>
+    <noscript> This app needs JavaScript enabled. </noscript>
 
     <header class="topbar">
       <div class="brand">
         <div class="mark" aria-hidden="true">SC</div>
         <div class="titles">
           <div class="h1">Sentence Cards</div>
-          <div class="sub">
-            Capture sentences from YouTube or anywhere. Extract target words. Review with spaced repetition.
-          </div>
+          <div class="sub">Capture sentences from YouTube or anywhere. Extract target words. Review with spaced repetition.</div>
         </div>
       </div>
 
@@ -54,20 +50,13 @@
                   autocomplete="off"
                   spellcheck="true"
                 ></textarea>
-                <div class="hint">
-                  Tip: paste from YouTube subtitles, podcasts, articles, books. Use "One card per line" for transcripts.
-                </div>
+                <div class="hint">Tip: paste from YouTube subtitles, podcasts, articles, books. Use "One card per line" for transcripts.</div>
               </label>
 
               <div class="row2">
                 <label class="field">
                   <div class="label">Source (optional)</div>
-                  <input
-                    id="captureSource"
-                    type="url"
-                    placeholder="https://www.youtube.com/watch?v=..."
-                    autocomplete="off"
-                  />
+                  <input id="captureSource" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" />
                 </label>
 
                 <label class="field">
@@ -122,9 +111,7 @@
 
           <div class="panel">
             <div class="panel-title">Target Words</div>
-            <div class="panel-sub">
-              Auto-extracted from your sentence. Add translations for the words you want to remember.
-            </div>
+            <div class="panel-sub">Auto-extracted from your sentence. Add translations for the words you want to remember.</div>
 
             <div class="word-actions">
               <button class="btn chip" type="button" id="wordsSelectAll">Select all</button>
@@ -137,9 +124,7 @@
 
             <div class="divider"></div>
 
-            <div class="panel-sub">
-              Not seeing a word? Add it manually:
-            </div>
+            <div class="panel-sub">Not seeing a word? Add it manually:</div>
             <form id="addWordForm" class="row3">
               <input id="addWordText" type="text" placeholder="word" autocomplete="off" />
               <input id="addWordTrans" type="text" placeholder="translation (optional)" autocomplete="off" />
@@ -160,9 +145,7 @@
               <button class="btn ghost" type="button" id="reviewShuffle">Shuffle</button>
             </div>
 
-            <div class="hint">
-              Shortcuts: Space to reveal. 1 Again, 2 Hard, 3 Good, 4 Easy.
-            </div>
+            <div class="hint">Shortcuts: Space to reveal. 1 Again, 2 Hard, 3 Good, 4 Easy.</div>
           </div>
 
           <div class="panel">
@@ -216,9 +199,7 @@
         <div class="grid deck-grid">
           <div class="panel">
             <div class="panel-title">Deck</div>
-            <div class="panel-sub">
-              Search and manage your cards.
-            </div>
+            <div class="panel-sub">Search and manage your cards.</div>
 
             <div class="row2">
               <input id="deckSearch" type="search" placeholder="Search sentence / notes / source..." autocomplete="off" />
@@ -235,9 +216,7 @@
 
           <div class="panel">
             <div class="panel-title">Lexicon (Saved Words)</div>
-            <div class="panel-sub">
-              Words you've added translations for. Used to prefill future cards.
-            </div>
+            <div class="panel-sub">Words you've added translations for. Used to prefill future cards.</div>
             <div class="row2">
               <input id="lexSearch" type="search" placeholder="Search words..." autocomplete="off" />
               <button class="btn" id="lexExport" type="button">Export CSV</button>
@@ -252,9 +231,7 @@
         <div class="grid io-grid">
           <div class="panel">
             <div class="panel-title">Export</div>
-            <div class="panel-sub">
-              Download a JSON backup of your cards + word translations.
-            </div>
+            <div class="panel-sub">Download a JSON backup of your cards + word translations.</div>
             <div class="actions">
               <button class="btn primary" id="exportJson" type="button">Download Backup (.json)</button>
             </div>
@@ -262,9 +239,7 @@
 
           <div class="panel">
             <div class="panel-title">Import</div>
-            <div class="panel-sub">
-              Restore from a JSON backup.
-            </div>
+            <div class="panel-sub">Restore from a JSON backup.</div>
 
             <label class="field">
               <div class="label">Backup file</div>
@@ -301,20 +276,16 @@
           <div class="panel-title">How It Works</div>
           <div class="prose">
             <p>
-              This is a small offline-first app: everything is saved in your browser's <code>localStorage</code>.
-              It uses a spaced-repetition scheduler (SM-2 style) so your cards "refresh" over time.
+              This is a small offline-first app: everything is saved in your browser's <code>localStorage</code>. It uses a spaced-repetition
+              scheduler (SM-2 style) so your cards "refresh" over time.
             </p>
-            <p>
-              Suggested workflow:
-            </p>
+            <p>Suggested workflow:</p>
             <ol>
               <li>Capture a sentence you love (from YouTube subtitles, books, articles).</li>
               <li>Pick 1-5 target words and add translations/notes.</li>
               <li>Review daily: try to recall meaning + usage, then grade yourself.</li>
             </ol>
-            <p>
-              Notes:
-            </p>
+            <p>Notes:</p>
             <ul>
               <li>Translations are manual (no external APIs used).</li>
               <li>Word translations are stored in the Lexicon so future cards can prefill them.</li>
