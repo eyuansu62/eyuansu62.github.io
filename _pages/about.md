@@ -25,7 +25,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a 1st-year Ph.D. student at the National University of Singapore (NUS), advised by [Prof. Yao Lu](https://yao.lu/). 
+I am a 1st-year Ph.D. student at the National University of Singapore (NUS), advised by [Prof. Yao Lu](https://yao.lu/).
 
 Previously, I was a researcher at the Beijing Academy of Artificial Intelligence ([BAAI](https://www.baai.ac.cn/en/)), specializing in the evaluation, alignment, and code intelligence of large language models (LLMs). Previously, I obtained my master's degree with top honors from the Shenzhen Institute of Advanced Technology (SIAT), Chinese Academy of Sciences (CAS), under the guidance of [Prof. Min Yang](https://minyang.me/) in 2023. I was a research intern at Alibaba DAMO Academy mentored by [Binyuan Hui](https://huybery.github.io/).
 

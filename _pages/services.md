@@ -9,5 +9,5 @@ nav_order: 4
 
 ## Reviewer
 
-*   **Conferences:** ACL, EMNLP, NAACL, COLING, AAAI, ICLR
-*   **Journals:** IEEE Transactions on Knowledge and Data Engineering (TKDE), Knowledge-based Systems (KBS)
+- **Conferences:** ACL, EMNLP, NAACL, COLING, AAAI, ICLR
+- **Journals:** IEEE Transactions on Knowledge and Data Engineering (TKDE), Knowledge-based Systems (KBS)

@@ -225,7 +225,7 @@ const SAMPLE_SENTENCES_INTERMEDIATE_V1 = [
   "If I had started earlier, I wouldn't be rushing right now.",
   "She asked for help, which took a lot of courage.",
   "The more you listen, the more nuances you start to notice.",
-  "I learned to say \"I don't know\" without feeling embarrassed.",
+  'I learned to say "I don\'t know" without feeling embarrassed.',
   "This habit is hard to build, but easy to lose.",
   "The idea is compelling, but we should test it before we commit.",
   "I don't want to waste your time, so I'll get straight to the point.",
@@ -235,7 +235,7 @@ const SAMPLE_SENTENCES_INTERMEDIATE_V1 = [
   "Don't take it for granted that people know what you want.",
   "I had to put up with a few glitches before it stabilized.",
   "She stepped up when things got messy.",
-  "I don't want to settle for \"good enough\" if we can do better.",
+  'I don\'t want to settle for "good enough" if we can do better.',
   "The sooner we align on goals, the smoother the project will go.",
   "I rewrote the sentence until it sounded like something I'd actually say.",
   "I prefer to learn in context rather than memorize isolated vocabulary.",
@@ -292,7 +292,9 @@ function clamp(n, lo, hi) {
 }
 
 function stableTrim(s) {
-  return String(s ?? "").replace(/\r\n/g, "\n").trim();
+  return String(s ?? "")
+    .replace(/\r\n/g, "\n")
+    .trim();
 }
 
 function normalizeApostrophes(s) {
@@ -759,14 +761,10 @@ function createCard({ sentence, source, translation, notes, targets }) {
 }
 
 function loadSampleDeckIntermediate() {
-  const ok = confirm(
-    "Load 50 sample cards (intermediate) into your deck? This will not delete existing cards."
-  );
+  const ok = confirm("Load 50 sample cards (intermediate) into your deck? This will not delete existing cards.");
   if (!ok) return;
 
-  const existing = new Set(
-    state.cards.map((c) => stableTrim(normalizeApostrophes(c.sentence)).toLowerCase())
-  );
+  const existing = new Set(state.cards.map((c) => stableTrim(normalizeApostrophes(c.sentence)).toLowerCase()));
 
   let added = 0;
   let skipped = 0;

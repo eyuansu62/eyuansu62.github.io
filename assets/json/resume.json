@@ -34,9 +34,7 @@
       "startDate": "2026-01-12",
       "endDate": "Present",
       "score": "",
-      "courses": [
-        "Advised by Prof. Yao Lu"
-      ]
+      "courses": ["Advised by Prof. Yao Lu"]
     },
     {
       "institution": "Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences",
@@ -47,9 +45,7 @@
       "startDate": "2020-09-01",
       "endDate": "2023-06-01",
       "score": "Top Honors",
-      "courses": [
-        "Advised by Prof. Min Yang"
-      ]
+      "courses": ["Advised by Prof. Min Yang"]
     }
   ],
   "work": [
@@ -60,11 +56,7 @@
       "startDate": "2023-07-01",
       "endDate": "2025-12-31",
       "summary": "Contributing to FlagEval platform, leading the design of its evaluation system for LLM.",
-      "highlights": [
-        "Agent Evaluation",
-        "LLM Evaluation",
-        "LLM Alignment"
-      ]
+      "highlights": ["Agent Evaluation", "LLM Evaluation", "LLM Alignment"]
     },
     {
       "name": "Alibaba DAMO Academy",
@@ -73,10 +65,7 @@
       "startDate": "2021-05-01",
       "endDate": "2023-05-01",
       "summary": "Research on text-to-SQL parsing and pre-trained language models.",
-      "highlights": [
-        "Text-to-SQL",
-        "Pre-trained Language Models"
-      ]
+      "highlights": ["Text-to-SQL", "Pre-trained Language Models"]
     }
   ],
   "awards": [
