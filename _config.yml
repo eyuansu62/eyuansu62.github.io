@@ -194,7 +194,6 @@ exclude:
   # Unused al-folio template pages. They were nav: false but still built,
   # reachable, and listed in sitemap.xml with placeholder copy. Delete a line
   # here to bring a page back once it has real content.
-  - _pages/blog.md
   - _pages/books.md
   - _pages/dropdown.md
   - _pages/profiles.md
@@ -272,8 +271,12 @@ jekyll-archives:
   books:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
-display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] # these tags will be displayed on the front page of your blog
-display_categories: ["external-services"] # these categories will be displayed on the front page of your blog
+# Chips shown at the top of /blog/. jekyll-archives only generates an archive
+# page for a tag or category that exists on a real post, so anything listed
+# here without a matching post is a 404. Left empty until there are posts to
+# group; the al-folio demo values were pointing at six nonexistent pages.
+display_tags: []
+display_categories: []
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
