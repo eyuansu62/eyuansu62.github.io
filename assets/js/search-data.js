@@ -39,13 +39,13 @@ ninja.data = [{
           },
         },{id: "post-一条招募推文-意外成了中文-agent-harness-生态的一次普查",
         
-          title: "一条招募推文，意外成了中文 Agent Harness 生态的一次普查",
+          title: '一条招募推文，意外成了中文 Agent Harness 生态的一次普查 <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
         
-        description: "",
+        description: "8 月 1 日，DeepSeek Harness 团队的 Tianyi 在 X 上发了一条很短的推文：如果你是 Agent Harness 相关开源项目的开发者，想参加 DeepSeek Harness 内测，回复我，附上 GitHub id 和开源代表作。（原推文链接待补）",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2026/agent-harness/";
+            window.open("https://ruddy-engineer-594.notion.site/Agent-Harness-3b28111ab86481e48f5be1c99e929d8a", "_blank");
           
         },
       },{id: "news-our-team-secured-7th-place-out-of-over-100-global-competitors-in-the-ai-safety-and-security-challenge-hosted-by-ai-singapore-aisg-and-the-national-university-of-singapore-nus-and-was-invited-to-attend-the-singapore-international-cyber-week-sicw-2024",
