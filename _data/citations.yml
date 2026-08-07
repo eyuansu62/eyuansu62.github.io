@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-07-31'
+  last_updated: '2026-08-07'
 papers:
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 10
@@ -19,12 +19,16 @@ papers:
     year: '2025'
   75pkx3YAAAAJ:8k81kl-MbHgC:
     citations: 1
-    title: Benchmarking Intelligent LLM Agents for Conversational Data Analysis
-    year: Unknown Year
+    title: Benchmarking intelligent LLM agents for conversational data analysis
+    year: '2025'
   75pkx3YAAAAJ:9yKSN-GCB0IC:
     citations: 14
     title: 'SUN: Exploring intrinsic uncertainties in text-to-SQL parsers'
     year: '2022'
+  75pkx3YAAAAJ:IWHjjKOFINEC:
+    citations: 70
+    title: others. 2023. Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
+    year: '1'
   75pkx3YAAAAJ:KlAtU1dfN6UC:
     citations: 17
     title: An improved method to determine basic probability assignment with interval number and its application in classification
@@ -32,37 +36,37 @@ papers:
   75pkx3YAAAAJ:L8Ckcad2t8MC:
     citations: 0
     title: 'BIRD-INTERACT: Re-imagining Text-to-SQL Evaluation via Lens of Dynamic Interactions'
-    year: Unknown Year
+    year: '2026'
   75pkx3YAAAAJ:LkGwnXOMwfcC:
     citations: 83
     title: 'Towards analyzing and understanding the limitations of dpo: A theoretical perspective'
     year: '2024'
   75pkx3YAAAAJ:M3ejUd6NZC8C:
-    citations: 4
-    title: 'BIRD-INTERACT: Re-imagining Text-to-SQL Evaluation for Large Language Models via Lens of Dynamic Interactions'
+    citations: 8
+    title: 'Bird-interact: Re-imagining text-to-sql evaluation for large language models via lens of dynamic interactions'
     year: '2025'
   75pkx3YAAAAJ:MXK_kJrjxJIC:
     citations: 1
     title: 'Conversational few-shot prompting: Rethinking few-shot prompting for chat language model'
     year: '2025'
   75pkx3YAAAAJ:QIV2ME_5wuYC:
-    citations: 4
+    citations: 6
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 124
+    citations: 122
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
-    citations: 128
+    citations: 129
     title: 'S2sql: Injecting syntax to question-schema interaction graph encoder for text-to-sql parsers'
     year: '2022'
   75pkx3YAAAAJ:ULOm3_A8WrAC:
-    citations: 7
+    citations: 6
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 188
+    citations: 192
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
@@ -79,14 +83,14 @@ papers:
     year: '2018'
   75pkx3YAAAAJ:Wp0gIr-vW9MC:
     citations: 1
-    title: 'Beyond Multiple Choice: Verifiable OpenQA for Robust Vision-Language RFT'
-    year: '2025'
+    title: 'Beyond multiple choice: Verifiable openqa for robust vision-language RFT'
+    year: '2026'
   75pkx3YAAAAJ:YOwf2qJgpHMC:
     citations: 7
     title: 'Swe-sql: Illuminating llm pathways to solve user sql issues in real-world applications'
     year: '2026'
   75pkx3YAAAAJ:YsMSGLbcyi4C:
-    citations: 94
+    citations: 92
     title: A weighted combination method for conflicting evidence in multi-sensor data fusion
     year: '2018'
   75pkx3YAAAAJ:ZeXyd9-uunAC:
@@ -94,19 +98,19 @@ papers:
     title: 'Hint Tuning: Less Data Makes Better Reasoners'
     year: '2026'
   75pkx3YAAAAJ:Zph67rFs4hoC:
-    citations: 17
+    citations: 18
     title: 'SHARE: An SLM-based hierarchical action CorREction assistant for text-to-SQL'
     year: '2025'
   75pkx3YAAAAJ:_FxGoFyzp5QC:
-    citations: 46
+    citations: 47
     title: 'Flm-101b: An open llm and how to train it with $100 k budget'
     year: '2023'
   75pkx3YAAAAJ:_kc_bZDykSQC:
     citations: 5
-    title: Are Large Language Models Ready for Multi-Turn Tabular Data Analysis?
+    title: Are large language models ready for multi-turn tabular data analysis?
     year: '2025'
   75pkx3YAAAAJ:d1gkVwhDpl0C:
-    citations: 227
+    citations: 231
     title: 'Graphix-t5: Mixing pre-trained transformers with graph-aware layers for text-to-sql parsing'
     year: '2023'
   75pkx3YAAAAJ:dhFuZR0502QC:
@@ -114,23 +118,23 @@ papers:
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2026'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 1333
+    citations: 1289
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
-    citations: 36
+    citations: 37
     title: Hanfei-1.0
     year: '2023'
   75pkx3YAAAAJ:mVmsd5A6BfQC:
     citations: 1
-    title: 'FlagEval-Arena: A Side-by-Side Comparative Evaluation Platform for Large Language Models and Text-Driven AIGC'
+    title: 'FlagEval-Arena: A side-by-side comparative evaluation platform for large language models and text-driven AIGC'
     year: '2025'
   75pkx3YAAAAJ:qjMakFHDy7sC:
-    citations: 20
-    title: "FR\u2013KDE: a hybrid fuzzy rule-based information fusion method with its application in biomedical classification"
+    citations: 18
+    title: "FR\u2013KDE: A Hybrid Fuzzy Rule-Based Information Fusion Method with its Application in Biomedical Classification: X. Song et al."
     year: '2021'
   75pkx3YAAAAJ:qxL8FJ1GzNcC:
-    citations: 15
+    citations: 16
     title: 'THE PRICE OF A SECOND THOUGHT: ON THE EVAL-UATION OF REASONING EFFICIENCY IN LARGE LAN-GUAGE MODELS'
     year: '2025'
   75pkx3YAAAAJ:roLk4NBRz8UC:
@@ -138,7 +142,7 @@ papers:
     title: Towards understanding the influence of reward margin on preference model performance
     year: '2024'
   75pkx3YAAAAJ:u5HHmVD_uO8C:
-    citations: 74
+    citations: 73
     title: 'Proton: Probing schema linking information from pre-trained language models for text-to-sql parsing'
     year: '2022'
   75pkx3YAAAAJ:zYLM7Y9cAGgC:
