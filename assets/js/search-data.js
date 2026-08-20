@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-一条招募推文-意外成了中文-agent-harness-生态的一次普查",
+        },{id: "post-上下文压缩之后-ai-编程助手会-quot-变笨-quot-吗",
+        
+          title: "上下文压缩之后，AI 编程助手会&quot;变笨&quot;吗？",
+        
+        description: "基于 40 万轮真实编码轨迹（TraceLab + 自有 Codex / Claude Code 日志）的实证分析：compact 后正确率基本不退化，但模型要交一笔&quot;效率税&quot;——用更多编辑与重读补救丢失的细节。",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/does-context-compaction-make-ai-dumber/";
+          
+        },
+      },{id: "post-一条招募推文-意外成了中文-agent-harness-生态的一次普查",
         
           title: '一条招募推文，意外成了中文 Agent Harness 生态的一次普查 <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
         
