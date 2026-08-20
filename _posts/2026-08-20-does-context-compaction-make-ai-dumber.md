@@ -6,6 +6,12 @@ description: 基于 40 万轮真实编码轨迹（TraceLab + 自有 Codex / Clau
 tags: [llm, coding-agent, context-compaction, evaluation, methodology]
 toc:
   beginning: true
+_styles: |
+  .post-content table { border-collapse: collapse; width: 100%; margin: 1.4em 0; font-size: 0.92em; line-height: 1.65; }
+  .post-content th, .post-content td { border: 1px solid var(--global-divider-color, #e0e0e0); padding: 0.55em 0.8em; text-align: left; vertical-align: top; }
+  .post-content th { background: var(--global-code-bg-color, #f7f7f7); font-weight: 600; }
+  .post-content tr:nth-child(even) td { background: var(--global-code-bg-color, #f7f7f7); }
+  .post-content pre { background: var(--global-code-bg-color, #f7f7f7); border: 1px solid var(--global-divider-color, #e0e0e0); border-radius: 6px; padding: 1em; overflow-x: auto; }
 ---
 
 *基于 40 万轮真实编码轨迹的分析*
