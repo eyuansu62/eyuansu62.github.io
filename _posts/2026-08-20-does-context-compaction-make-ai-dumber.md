@@ -75,5 +75,7 @@ tags: [llm, coding-agent, context-compaction, evaluation, methodology]
     <li><strong>警惕静默遗失</strong>：可见的重读是冰山一角，压缩摘要的质量决定了看不见的风险。</li>
   </ol>
 
+  <p style="margin:44px 0 0;padding:22px 8px;border-top:1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-size:1.12em;line-height:1.8;color:#111;">压缩没有让模型变笨——它只是让模型<strong>更费力地保持聪明</strong>。<br>而真正危险的，从来不是看得见的错误，而是<strong>看不见的遗失</strong>。</p>
+
   <p style="margin-top:40px;padding-top:16px;border-top:1px solid #eee;font-size:0.8em;color:#999;">数据与方法详见第〇节：<a href="https://github.com/uw-syfi/TraceLab">TraceLab</a> 聚合轨迹集（UW SYFI，357,161 轮）、作者自有 Codex（495 会话，含原生 compacted 事件）与 Claude Code（5856 会话，token 突降检测）日志。</p>
 </div>

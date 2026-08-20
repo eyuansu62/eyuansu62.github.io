@@ -75,5 +75,7 @@ tags: [llm, coding-agent, context-compaction, evaluation, methodology]
     <li><strong>Beware silent loss</strong>: visible re-reads are the tip of the iceberg; summary quality determines the invisible risk.</li>
   </ol>
 
+  <p style="margin:44px 0 0;padding:22px 8px;border-top:1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-size:1.12em;line-height:1.8;color:#111;">Compaction doesn't make models dumber — it makes them <strong>work harder to stay smart</strong>.<br>And the real danger was never the errors you can see, but the <strong>details you lose without noticing</strong>.</p>
+
   <p style="margin-top:40px;padding-top:16px;border-top:1px solid #eee;font-size:0.8em;color:#999;">Data &amp; methods in §0: <a href="https://github.com/uw-syfi/TraceLab">TraceLab</a> aggregated traces (UW SYFI, 357,161 turns); the author's own Codex (495 sessions, native compacted events) and Claude Code (5,856 sessions, token-drop detection) logs.</p>
 </div>
