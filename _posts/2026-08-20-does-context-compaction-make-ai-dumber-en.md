@@ -10,6 +10,7 @@ tags: [llm, coding-agent, context-compaction, evaluation, methodology]
   <p style="font-size:1.05em;color:#666;margin:0 0 28px;">— An empirical analysis of ~400,000 real coding-agent turns</p>
 
   <p>Long-session AI coding assistants inevitably hit a wall: the context window. As a conversation grows, the system "compacts" the history into a summary to free up space. This raises a natural question: <strong>after compaction, does the model still remember what it was doing? Does it get dumber?</strong></p>
+  <p style="margin:24px 0 0;padding:20px 8px;border-top:1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-size:1.12em;line-height:1.8;color:#111;"><span style="display:block;font-size:0.7em;letter-spacing:3px;color:#888;margin-bottom:6px;">TL;DR</span>Compaction doesn't make models dumber — it makes them <strong>work harder to stay smart</strong>.<br>And the real danger was never the errors you can see, but the <strong>details you lose without noticing</strong>.</p>
   <p>We analyzed three real datasets — an aggregated trace set from <a href="https://github.com/uw-syfi/TraceLab">TraceLab</a> (UW SYFI; ~357K turns, 4,265 sessions), plus the author's own Codex (495 sessions) and Claude Code (5,856 sessions) raw logs. Along the way we fell into two methodological traps and reached some counter-intuitive conclusions.</p>
 
   <h2 style="font-size:1.3em;border-bottom:2px solid #eee;padding-bottom:6px;margin-top:36px;">0. Data: three mutually corroborating traces</h2>

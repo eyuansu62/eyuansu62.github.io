@@ -10,6 +10,7 @@ tags: [llm, coding-agent, context-compaction, evaluation, methodology]
   <p style="font-size:1.05em;color:#666;margin:0 0 28px;">——基于 40 万轮真实编码轨迹的分析</p>
 
   <p>长会话的 AI 编程助手迟早会撞上一堵墙：上下文窗口。当对话越来越长，系统会把历史"压缩"（compact）成一段摘要，腾出空间继续工作。这带来一个自然的问题：<strong>压缩之后，模型还记得自己在干什么吗？它会不会变笨？</strong></p>
+  <p style="margin:24px 0 0;padding:20px 8px;border-top:1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-size:1.12em;line-height:1.8;color:#111;"><span style="display:block;font-size:0.7em;letter-spacing:3px;color:#888;margin-bottom:6px;">结论先行</span>压缩没有让模型变笨——它只是让模型<strong>更费力地保持聪明</strong>。<br>而真正危险的，从来不是看得见的错误，而是<strong>看不见的遗失</strong>。</p>
   <p>我们分析了三份真实数据——一份来自 <a href="https://github.com/uw-syfi/TraceLab">TraceLab</a>（UW SYFI）的聚合编码轨迹集（约 35.7 万轮、4265 个会话），以及作者自己的 Codex（495 个会话）与 Claude Code（5856 个会话）原始日志。过程中我们踩了两个方法论的坑，也得到了一些反直觉的结论。</p>
 
   <h2 style="font-size:1.3em;border-bottom:2px solid #eee;padding-bottom:6px;margin-top:36px;">〇、数据：三份互相印证的轨迹</h2>
