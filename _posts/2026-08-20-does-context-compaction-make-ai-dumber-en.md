@@ -12,7 +12,7 @@ tags: [llm, coding-agent, context-compaction, evaluation, methodology]
   <p>Long-session AI coding assistants inevitably hit a wall: the context window. As a conversation grows, the system "compacts" the history into a summary to free up space. This raises a natural question: <strong>after compaction, does the model still remember what it was doing? Does it get dumber?</strong></p>
   <div style="margin:28px 0;padding:16px 20px;background:#f5f5f2;border-left:4px solid #222;">
     <p style="margin:0 0 6px;font-size:0.72em;letter-spacing:2px;color:#888;font-family:-apple-system,sans-serif;">TL;DR</p>
-    <p style="margin:0;font-size:1.08em;line-height:1.8;color:#111;">Compaction doesn't make models dumber — it makes them <strong>work harder to stay smart</strong>. And the real danger was never the errors you can see, but the <strong>details you lose without noticing</strong>.</p>
+    <p style="margin:0;font-size:1.08em;line-height:1.8;color:#111;">Compaction doesn't make models dumber — <strong>same correctness, double the effort</strong>. And the real danger was never the errors you can see, but the <strong>details you lose without noticing</strong>.</p>
   </div>
   <p>We analyzed three real datasets — an aggregated trace set from <a href="https://github.com/uw-syfi/TraceLab">TraceLab</a> (UW SYFI; ~357K turns, 4,265 sessions), plus the author's own Codex (495 sessions) and Claude Code (5,856 sessions) raw logs. Along the way we fell into two methodological traps and reached some counter-intuitive conclusions.</p>
 
@@ -79,7 +79,7 @@ tags: [llm, coding-agent, context-compaction, evaluation, methodology]
     <li><strong>Beware silent loss</strong>: visible re-reads are the tip of the iceberg; summary quality determines the invisible risk.</li>
   </ol>
 
-  <p style="margin:44px 0 0;text-align:center;font-size:1.12em;line-height:1.8;color:#111;">Compaction doesn't make models dumber — it makes them <strong>work harder to stay smart</strong>.<br>And the real danger was never the errors you can see, but the <strong>details you lose without noticing</strong>.</p>
+  <p style="margin:44px 0 0;text-align:center;font-size:1.12em;line-height:1.8;color:#111;">Compaction doesn't make models dumber — <strong>same correctness, double the effort</strong>.<br>And the real danger was never the errors you can see, but the <strong>details you lose without noticing</strong>.</p>
 
   <p style="margin-top:40px;padding-top:16px;border-top:1px solid #eee;font-size:0.8em;color:#999;">Data &amp; methods in §0: <a href="https://github.com/uw-syfi/TraceLab">TraceLab</a> aggregated traces (UW SYFI, 357,161 turns); the author's own Codex (495 sessions, native compacted events) and Claude Code (5,856 sessions, token-drop detection) logs.</p>
 </div>
