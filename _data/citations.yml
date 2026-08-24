@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-08-07'
+  last_updated: '2026-08-24'
 papers:
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 10
@@ -26,7 +26,7 @@ papers:
     title: 'SUN: Exploring intrinsic uncertainties in text-to-SQL parsers'
     year: '2022'
   75pkx3YAAAAJ:IWHjjKOFINEC:
-    citations: 70
+    citations: 75
     title: others. 2023. Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '1'
   75pkx3YAAAAJ:KlAtU1dfN6UC:
@@ -34,11 +34,11 @@ papers:
     title: An improved method to determine basic probability assignment with interval number and its application in classification
     year: '2019'
   75pkx3YAAAAJ:L8Ckcad2t8MC:
-    citations: 0
+    citations: 2
     title: 'BIRD-INTERACT: Re-imagining Text-to-SQL Evaluation via Lens of Dynamic Interactions'
     year: '2026'
   75pkx3YAAAAJ:LkGwnXOMwfcC:
-    citations: 83
+    citations: 84
     title: 'Towards analyzing and understanding the limitations of dpo: A theoretical perspective'
     year: '2024'
   75pkx3YAAAAJ:M3ejUd6NZC8C:
@@ -50,23 +50,23 @@ papers:
     title: 'Conversational few-shot prompting: Rethinking few-shot prompting for chat language model'
     year: '2025'
   75pkx3YAAAAJ:QIV2ME_5wuYC:
-    citations: 6
+    citations: 7
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 122
+    citations: 126
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
-    citations: 129
+    citations: 130
     title: 'S2sql: Injecting syntax to question-schema interaction graph encoder for text-to-sql parsers'
     year: '2022'
   75pkx3YAAAAJ:ULOm3_A8WrAC:
-    citations: 6
+    citations: 8
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 192
+    citations: 195
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
@@ -86,7 +86,7 @@ papers:
     title: 'Beyond multiple choice: Verifiable openqa for robust vision-language RFT'
     year: '2026'
   75pkx3YAAAAJ:YOwf2qJgpHMC:
-    citations: 7
+    citations: 8
     title: 'Swe-sql: Illuminating llm pathways to solve user sql issues in real-world applications'
     year: '2026'
   75pkx3YAAAAJ:YsMSGLbcyi4C:
@@ -94,11 +94,11 @@ papers:
     title: A weighted combination method for conflicting evidence in multi-sensor data fusion
     year: '2018'
   75pkx3YAAAAJ:ZeXyd9-uunAC:
-    citations: 0
+    citations: 1
     title: 'Hint Tuning: Less Data Makes Better Reasoners'
     year: '2026'
   75pkx3YAAAAJ:Zph67rFs4hoC:
-    citations: 18
+    citations: 20
     title: 'SHARE: An SLM-based hierarchical action CorREction assistant for text-to-SQL'
     year: '2025'
   75pkx3YAAAAJ:_FxGoFyzp5QC:
@@ -106,11 +106,11 @@ papers:
     title: 'Flm-101b: An open llm and how to train it with $100 k budget'
     year: '2023'
   75pkx3YAAAAJ:_kc_bZDykSQC:
-    citations: 5
+    citations: 6
     title: Are large language models ready for multi-turn tabular data analysis?
     year: '2025'
   75pkx3YAAAAJ:d1gkVwhDpl0C:
-    citations: 231
+    citations: 235
     title: 'Graphix-t5: Mixing pre-trained transformers with graph-aware layers for text-to-sql parsing'
     year: '2023'
   75pkx3YAAAAJ:dhFuZR0502QC:
@@ -118,7 +118,7 @@ papers:
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2026'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 1289
+    citations: 1366
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
@@ -146,6 +146,6 @@ papers:
     title: 'Proton: Probing schema linking information from pre-trained language models for text-to-sql parsing'
     year: '2022'
   75pkx3YAAAAJ:zYLM7Y9cAGgC:
-    citations: 76
+    citations: 77
     title: A fuzzy preference-based Dempster-Shafer evidence theory for decision fusion
     year: '2021'
