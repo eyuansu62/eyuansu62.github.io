@@ -26,6 +26,9 @@ Required environment:
   NOTION_TOKEN   Personal access token (starts with ntn_). The page or database
                  must be shared with it: ••• menu → Add connections.
   NOTION_ROOT_ID The 32-character ID from the Notion URL. Database or page.
+                 Several may be given, comma separated, for a workspace that
+                 keeps each article as its own top-level page; every one of them
+                 must be shared with the token separately.
                  NOTION_DATABASE_ID is accepted as a fallback name.
 
 Optional environment:
@@ -68,9 +71,17 @@ PAGE_SIZE = 100
 TOKEN = os.environ.get("NOTION_TOKEN", "").strip()
 # Accepts a database ID or an ordinary page ID; a Notion URL looks the same for
 # both. NOTION_DATABASE_ID is kept as a fallback for the earlier name.
-ROOT_ID = (
-    os.environ.get("NOTION_ROOT_ID", "") or os.environ.get("NOTION_DATABASE_ID", "")
-).strip()
+#
+# More than one root may be given, comma separated. Notion has no notion of "all
+# my top-level pages", so a workspace that keeps each article as its own page
+# rather than as rows of one database has to name them individually.
+ROOT_IDS = [
+    part.strip()
+    for part in (
+        os.environ.get("NOTION_ROOT_ID", "") or os.environ.get("NOTION_DATABASE_ID", "")
+    ).split(",")
+    if part.strip()
+]
 STATUS_PROPERTY = os.environ.get("NOTION_STATUS_PROPERTY", "Status").strip()
 STATUS_VALUE = os.environ.get("NOTION_STATUS_VALUE", "Published").strip()
 # "link"  writes a stub carrying only title, date, summary and a redirect to
@@ -673,34 +684,57 @@ def generated_posts() -> dict[str, str]:
 
 
 def main() -> None:
-    if not TOKEN or not ROOT_ID:
+    if not TOKEN or not ROOT_IDS:
         print(
             "❌ NOTION_TOKEN and NOTION_ROOT_ID must both be set.\n"
             "   Create a personal access token under Personal access tokens in Notion's\n"
             "   developer portal, store it as a repository secret, and share the target\n"
             "   page or database with it: ••• menu → Add connections.\n"
             "   NOTION_ROOT_ID is the 32-character ID from the Notion URL and may name\n"
-            "   either a database or an ordinary page."
+            "   either a database or an ordinary page. Several may be given, comma\n"
+            "   separated; each one must be shared with the token separately."
         )
         sys.exit(1)
 
     os.makedirs(POSTS_DIR, exist_ok=True)
     before = generated_posts()
 
-    kind, resolved = resolve_root(ROOT_ID)
-    if kind == "database":
-        print(f"Root is a database; querying data source {resolved}")
-        pages = query_pages(resolved)
-        filter_note = f" matching {STATUS_PROPERTY} = {STATUS_VALUE}" if STATUS_PROPERTY else ""
-        print(f"Found {len(pages)} page(s){filter_note}")
-        if STATUS_PROPERTY and not pages:
-            print(
-                f"⚠️  No pages matched. Check that the “{STATUS_PROPERTY}” property exists and "
-                f"that at least one page is set to “{STATUS_VALUE}”."
-            )
-    else:
-        print(f"Root is a page ({resolved})")
-        pages = gate_page_root(pages_under_page(resolved))
+    # Database roots are already gated by their status property. Page roots are
+    # gated by gate_page_root, which runs once over the combined list so that its
+    # "pages this run would publish" report covers the whole sync rather than one
+    # root at a time.
+    pages: list[dict] = []
+    from_page_roots: list[dict] = []
+    for root_id in ROOT_IDS:
+        kind, resolved = resolve_root(root_id)
+        if kind == "database":
+            print(f"Root {root_id} is a database; querying data source {resolved}")
+            rows = query_pages(resolved)
+            filter_note = f" matching {STATUS_PROPERTY} = {STATUS_VALUE}" if STATUS_PROPERTY else ""
+            print(f"Found {len(rows)} page(s){filter_note}")
+            if STATUS_PROPERTY and not rows:
+                print(
+                    f"⚠️  No pages matched. Check that the “{STATUS_PROPERTY}” property exists and "
+                    f"that at least one page is set to “{STATUS_VALUE}”."
+                )
+            pages.extend(rows)
+        else:
+            print(f"Root {root_id} is a page ({resolved})")
+            from_page_roots.extend(pages_under_page(resolved))
+
+    if from_page_roots:
+        pages.extend(gate_page_root(from_page_roots))
+
+    # Two roots can reach the same page: a page named directly and also reachable
+    # as a child of another named root. Writing it twice is harmless but the
+    # duplicate would be reported in the count, so collapse on ID.
+    deduped, seen_ids = [], set()
+    for page in pages:
+        pid = page["id"].replace("-", "")
+        if pid not in seen_ids:
+            seen_ids.add(pid)
+            deduped.append(page)
+    pages = deduped
 
     seen: set[str] = set()
     for page in pages:

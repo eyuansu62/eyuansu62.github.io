@@ -10,7 +10,9 @@ name: Sync Notion Posts
 #      access tokens); it starts with ntn_
 #   2. Store it as the repository secret NOTION_TOKEN
 #   3. Store the 32-character ID from the Notion URL as the repository
-#      variable NOTION_ROOT_ID
+#      variable NOTION_ROOT_ID. Several IDs may be listed comma separated when
+#      each article is its own top-level page instead of a row in one database;
+#      step 4 then has to be repeated for every one of them.
 #   4. Share that page or database with the token: ••• menu → Add connections
 #   5. For a page root, also set the variable NOTION_IMPORT_ALL to true; a
 #      child page has no Status property, so publishing everything under the
