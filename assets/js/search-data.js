@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-上下文压缩之后-ai-编程助手会-quot-变笨-quot-吗",
+        },{id: "post-no-safe-exit",
+        
+          title: 'No Safe Exit <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "When impossible tasks turn persistence into misalignment.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://ruddy-engineer-594.notion.site/No-Safe-Exit-3da8111ab86481479a30e1434f23907f", "_blank");
+          
+        },
+      },{id: "post-上下文压缩之后-ai-编程助手会-quot-变笨-quot-吗",
         
           title: "上下文压缩之后，AI 编程助手会&quot;变笨&quot;吗？",
         
