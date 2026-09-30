@@ -17,6 +17,8 @@ name: Sync Notion Posts
 #   5. For a page root, also set the variable NOTION_IMPORT_ALL to true; a
 #      child page has no Status property, so publishing everything under the
 #      parent has to be an explicit choice
+#   6. Optional: set the variable NOTION_IMPORT_MODE to full to render posts on
+#      this site instead of redirecting to Notion (a manual run can override it)
 
 on:
   # Runs an hour before the 02:00 deploy on the same days, because the commit
@@ -25,6 +27,13 @@ on:
   schedule:
     - cron: "0 1 * * 1,3,5"
   workflow_dispatch:
+    inputs:
+      import_mode:
+        description: "link = posts redirect to Notion; full = render the text on this site"
+        required: false
+        default: ""
+        type: choice
+        options: ["", "link", "full"]
 
 jobs:
   sync-notion:
@@ -58,6 +67,8 @@ jobs:
           NOTION_STATUS_VALUE: ${{ vars.NOTION_STATUS_VALUE }}
           NOTION_IMPORT_ALL: ${{ vars.NOTION_IMPORT_ALL }}
           NOTION_SKIP_TITLE_PREFIX: ${{ vars.NOTION_SKIP_TITLE_PREFIX }}
+          # A manual run's choice wins over the repository variable; unset means link.
+          NOTION_IMPORT_MODE: ${{ inputs.import_mode || vars.NOTION_IMPORT_MODE }}
         run: |
           if [ -z "$NOTION_TOKEN" ] || [ -z "$NOTION_ROOT_ID" ]; then
             echo "⏭️ NOTION_TOKEN or NOTION_ROOT_ID is not configured; skipping sync." \
