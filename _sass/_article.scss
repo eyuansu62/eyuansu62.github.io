@@ -141,6 +141,7 @@ body:has(.ar-page) {
 
 .ar-lang {
   display: inline-flex;
+  margin-left: auto; // pinned to the right end of the eyebrow
   border: 1px solid var(--ar-rule);
   border-radius: 2px;
   overflow: hidden;
