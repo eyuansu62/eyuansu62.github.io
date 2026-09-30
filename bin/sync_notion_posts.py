@@ -363,9 +363,11 @@ def block_to_markdown(block: dict, page_id: str, counters: dict, depth: int = 0)
         lines.extend(children())
 
     elif btype in ("heading_1", "heading_2", "heading_3"):
-        # The post title is the page's h1, so headings shift down one level.
-        hashes = {"heading_1": "##", "heading_2": "###", "heading_3": "####"}[btype]
-        lines.append(f"{hashes} {rich_text_to_markdown(spans)}")
+        # The post title is the page's h1, so the largest heading the page
+        # actually uses becomes h2 (see blocks_to_markdown); a page written
+        # with only heading_2 and heading_3 still gets h2 sections.
+        level = int(btype[-1]) - counters.get("heading_top", 1) + 2
+        lines.append(f"{'#' * level} {rich_text_to_markdown(spans)}")
         lines.extend(children())
 
     elif btype == "bulleted_list_item":
@@ -397,9 +399,19 @@ def block_to_markdown(block: dict, page_id: str, counters: dict, depth: int = 0)
             lines.append(f"> {line}" if line else ">")
 
     elif btype == "callout":
+        # A boxed note rather than a quotation, so it is not a blockquote.
+        # markdown="1" lets kramdown parse the text and nested blocks inside.
         icon = (data.get("icon") or {}).get("emoji", "")
         body = rich_text_to_markdown(spans)
-        lines.append(f"> {icon} {body}".rstrip())
+        lines.append('<div class="ar-callout" markdown="1">')
+        lines.append("")
+        if body or icon:
+            lines.append(f"{icon} {body}".strip())
+        if block.get("_children"):
+            lines.append("")
+            lines.extend(blocks_to_markdown(block["_children"], page_id).rstrip("\n").split("\n"))
+        lines.append("")
+        lines.append("</div>")
 
     elif btype == "divider":
         lines.append("---")
@@ -471,13 +483,14 @@ def blocks_to_markdown(blocks: list[dict], page_id: str) -> str:
     list that directly follows a bulleted one as a continuation of it.
     """
     out: list[str] = []
-    counters: dict = {}
+    heading_levels = [int(b["type"][-1]) for b in blocks if b.get("type", "").startswith("heading_")]
+    counters: dict = {"heading_top": min(heading_levels, default=1)}
     previous = ""
     for block in blocks:
         btype = block.get("type", "")
         # Numbering restarts whenever another kind of block interrupts the run.
         if btype != "numbered_list_item" and previous == "numbered_list_item":
-            counters = {k: v for k, v in counters.items() if k == "images"}
+            counters = {k: v for k, v in counters.items() if k in ("images", "heading_top")}
 
         rendered = block_to_markdown(block, page_id, counters)
         if rendered:

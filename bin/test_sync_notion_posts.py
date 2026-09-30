@@ -124,7 +124,11 @@ print(2)
 
 > quoted
 
-> 💡 note
+<div class="ar-callout" markdown="1">
+
+💡 note
+
+</div>
 
 ---
 
@@ -363,6 +367,33 @@ front = sync.yaml.safe_dump(
 check("round trips a quoted colon title", sync.yaml.safe_load(front)["title"], 'Why: "judges" drift')
 
 print()
+print("\nheadings and callouts")
+check(
+    "a page without heading_1 still gets h2 sections",
+    sync.blocks_to_markdown(
+        [block("heading_2", {"rich_text": rt("Section")}), block("heading_3", {"rich_text": rt("Sub")})],
+        "P",
+    ),
+    "## Section\n\n### Sub\n",
+)
+check(
+    "callout keeps its nested blocks",
+    sync.blocks_to_markdown(
+        [
+            block(
+                "callout",
+                {"rich_text": rt("A rubric might say:"), "icon": {"emoji": "📋"}},
+                children=[
+                    block("bulleted_list_item", {"rich_text": rt("is correct")}),
+                    block("bulleted_list_item", {"rich_text": rt("is clear")}),
+                ],
+            )
+        ],
+        "P",
+    ),
+    '<div class="ar-callout" markdown="1">\n\n📋 A rubric might say:\n\n- is correct\n- is clear\n\n</div>\n',
+)
+
 if failures:
     print(f"❌ {len(failures)} failure(s):\n")
     for f in failures:

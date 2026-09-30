@@ -585,6 +585,31 @@ html[data-theme="dark"] .ar-page {
     }
   }
 
+  // Notion callouts, emitted by bin/sync_notion_posts.py.
+  .ar-callout {
+    margin: 28px 0;
+    padding: 16px 20px;
+    background: var(--ar-wash);
+    border: 1px solid var(--ar-rule-2);
+    border-left: 2px solid var(--ar-accent);
+    border-radius: 2px;
+
+    p,
+    li {
+      font-size: 16.5px;
+      line-height: 1.65;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    > :last-child,
+    > :last-child > li:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   // Boxed aside: `{: .ar-aside}` on a paragraph or a <div class="ar-aside">.
   .ar-aside {
     margin: 28px 0;
