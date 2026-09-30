@@ -22,7 +22,7 @@
   --ar-accent-soft: rgba(122, 26, 26, 0.07);
   --ar-link-line: rgba(122, 26, 26, 0.38);
 
-  --ar-serif: "Newsreader", "Iowan Old Style", Georgia, "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+  --ar-serif: "Source Serif 4", "Noto Serif SC", "Source Han Serif SC", "Noto Serif CJK SC", Georgia, "Songti SC", serif;
   --ar-sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
   --ar-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
@@ -39,6 +39,12 @@ html[data-theme="dark"] .ar-page {
   --ar-accent-hover: #f0a79e;
   --ar-accent-soft: rgba(224, 138, 128, 0.1);
   --ar-link-line: rgba(224, 138, 128, 0.45);
+}
+
+// CJK fonts have no italic, so browsers slant the glyphs artificially. Keep
+// the dek and pull quotes upright in Chinese posts; their size sets them apart.
+.ar-page:lang(zh) :is(.ar-head .ar-dek, blockquote) {
+  font-style: normal;
 }
 
 // ---------------------------------------------------------------- grid ----
@@ -155,7 +161,7 @@ html[data-theme="dark"] .ar-page {
   text-wrap: balance;
 }
 
-.ar-dek {
+.ar-head .ar-dek {
   margin: 14px 0 0;
   font-family: var(--ar-serif);
   font-style: italic;
