@@ -8,7 +8,6 @@ lang: en
 translation_key: context-compaction
 cite_key: qin2026compaction
 subtitle: "An empirical analysis of ~400,000 real coding-agent turns"
-tldr: "Compaction doesn't make models dumber — **same correctness, double the effort**. And the real danger was never the errors you can see, but the **details you lose without noticing**."
 ---
 
 Long-session AI coding assistants inevitably hit a wall: the context window. As a conversation grows, the system "compacts" the history into a summary to free up space. This raises a natural question: **after compaction, does the model still remember what it was doing? Does it get dumber?**
