@@ -107,9 +107,10 @@ body:has(.ar-page) {
 
 // --------------------------------------------------------------- header ----
 
-// Title, dek, then one quiet line of metadata, closed by a hairline.
+// Title, dek, then one quiet line of metadata, centred and closed by a hairline.
 .ar-head {
   padding: 24px 0 32px;
+  text-align: center;
   border-bottom: 1px solid var(--ar-rule);
 }
 
@@ -126,7 +127,7 @@ body:has(.ar-page) {
 
 .ar-head .ar-dek {
   max-width: 760px;
-  margin: 16px 0 0;
+  margin: 16px auto 0;
   font-family: var(--ar-serif);
   font-style: italic;
   font-size: clamp(18px, 1.7vw, 21px);
@@ -138,6 +139,7 @@ body:has(.ar-page) {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  justify-content: center;
   gap: 6px 12px;
   margin-top: 22px;
   font-family: var(--ar-mono);
@@ -179,7 +181,8 @@ body:has(.ar-page) {
 // Optional TL;DR: body-sized and unboxed, so it does not compete with the title.
 .ar-standfirst {
   max-width: 720px;
-  margin: 28px 0 0;
+  margin: 28px auto 0;
+  text-align: left;
   font-family: var(--ar-serif);
   font-size: 18px;
   line-height: 1.65;
@@ -759,10 +762,6 @@ body:has(.ar-page) {
   // A date needs less room than the contents rail, so the text column widens.
   // Same overall width as an article; the narrow view below still wins.
   grid-template-columns: 110px minmax(0, 820px);
-
-  .ar-head {
-    text-align: center;
-  }
 
   .ar-lede {
     max-width: 760px;
