@@ -394,6 +394,21 @@ check(
     '<div class="ar-callout" markdown="1">\n\n📋 A rubric might say:\n\n- is correct\n- is clear\n\n</div>\n',
 )
 
+print("\nintro lines")
+byline = block("paragraph", {"rich_text": rt("Author：Bowen ｜ ") + rt("homepage", href="https://e.com")})
+dek = block("paragraph", {"rich_text": rt("When tasks turn hard.", italic=True)})
+body_para = block("paragraph", {"rich_text": rt("Body text.")})
+rest, sub = sync.split_intro([byline, block("divider", {}), dek, body_para])
+check("byline and divider dropped, italic line lifted", (sub, [b["type"] for b in rest]), ("When tasks turn hard.", ["paragraph"]))
+check("remaining block is the body", sync.plain_text(rest[0]["paragraph"]["rich_text"]), "Body text.")
+rest, sub = sync.split_intro([body_para, dek])
+check("a page without intro lines is untouched", (sub, len(rest)), ("", 2))
+mixed = block("paragraph", {"rich_text": rt("Partly ", italic=True) + rt("plain")})
+rest, sub = sync.split_intro([mixed])
+check("a partly italic opening stays in the body", (sub, len(rest)), ("", 1))
+rest, sub = sync.split_intro([block("paragraph", {"rich_text": rt("作者：Bowen")}), body_para])
+check("Chinese byline is dropped", (sub, len(rest)), ("", 1))
+
 if failures:
     print(f"❌ {len(failures)} failure(s):\n")
     for f in failures:

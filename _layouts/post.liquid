@@ -15,12 +15,6 @@ layout: default
 {% assign is_zh = false %}
 {% if page.lang == 'zh' %}{% assign is_zh = true %}{% endif %}
 
-{% if page.author %}
-  {% assign author = page.author %}
-{% else %}
-  {% assign author = site.first_name | append: ' ' | append: site.last_name %}
-{% endif %}
-
 {% if page.reading_time %}
   {% assign read_time = page.reading_time %}
 {% else %}
@@ -48,14 +42,6 @@ layout: default
   {% endif %}
 >
   <header class="ar-head" id="top">
-    <nav class="ar-crumb" aria-label="Breadcrumb">
-      <a href="{{ '/blog/' | relative_url }}">
-        {%- if is_zh %}博客{% else %}Blog{% endif -%}
-      </a>
-      <span aria-hidden="true">›</span>
-      <span>{{ page.title }}</span>
-    </nav>
-
     <div class="ar-eyebrow">
       <time datetime="{{ page.date | date_to_xmlschema }}">
         {%- if is_zh -%}
@@ -74,6 +60,11 @@ layout: default
           {%- if is_zh %}更新于 {% else %}Updated {% endif -%}
           {{- page.last_updated | date: '%Y-%m-%d' -}}
         </span>
+      {% endif %}
+
+      {% if page.notion_url %}
+        <span class="ar-dot" aria-hidden="true">·</span>
+        <a class="ar-src" href="{{ page.notion_url }}" rel="external nofollow noopener" target="_blank">Notion ↗</a>
       {% endif %}
 
       {% if page.translation_key %}
@@ -106,20 +97,6 @@ layout: default
         {{ page.tldr | markdownify }}
       </div>
     {% endif %}
-
-    <div class="ar-byline">
-      <span>
-        {%- if is_zh -%}作者 {% else %}By {% endif -%}
-        <a href="{{ '/' | relative_url }}">{{ author }}</a>
-      </span>
-      {% if page.notion_url %}
-        <span class="ar-byline-meta">
-          <a href="{{ page.notion_url }}" rel="external nofollow noopener" target="_blank">
-            {%- if is_zh -%}Notion 原文{%- else -%}Source in Notion{%- endif -%}
-          </a>
-        </span>
-      {% endif %}
-    </div>
   </header>
 
   <aside class="ar-toc" aria-label="{% if is_zh %}目录{% else %}Contents{% endif %}" hidden>

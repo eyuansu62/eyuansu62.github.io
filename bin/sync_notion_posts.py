@@ -605,12 +605,45 @@ def extract_metadata(page: dict) -> dict:
     }
 
 
+BYLINE = re.compile(r"^\s*(author|by|作者)\s*[:：]", re.IGNORECASE)
+
+
+def split_intro(blocks: list[dict]) -> tuple[list[dict], str]:
+    """Take the page's own header lines out of the body.
+
+    The post layout already shows the author, and a subtitle belongs under the
+    title, so a page that opens with "Author: …" and then an all-italic line
+    would otherwise say both twice. Drops a leading byline paragraph, lifts a
+    following all-italic paragraph out as the subtitle, and drops a divider
+    left directly behind either. Returns the remaining blocks and the subtitle.
+    """
+
+    def spans(b: dict) -> list[dict]:
+        return [x for x in b.get("paragraph", {}).get("rich_text", []) if x.get("plain_text", "").strip()]
+
+    def skip_dividers(rest: list[dict]) -> list[dict]:
+        while rest and rest[0].get("type") == "divider":
+            rest = rest[1:]
+        return rest
+
+    rest, subtitle = list(blocks), ""
+    if rest and rest[0].get("type") == "paragraph" and BYLINE.match(plain_text(spans(rest[0]))):
+        rest = skip_dividers(rest[1:])
+    if rest and rest[0].get("type") == "paragraph" and not rest[0].get("has_children"):
+        first = spans(rest[0])
+        text = plain_text(first).strip()
+        if first and len(text) <= 200 and all(x.get("annotations", {}).get("italic") for x in first):
+            subtitle = text
+            rest = skip_dividers(rest[1:])
+    return rest, subtitle
+
+
 def write_post(page: dict) -> str:
     """Render one Notion page to a markdown file and return its path."""
     page_id = page["id"].replace("-", "")
     meta = extract_metadata(page)
 
-    blocks = fetch_blocks(page["id"])
+    blocks, subtitle = split_intro(fetch_blocks(page["id"]))
     # public_url is set only while the page is published to the web, and it is
     # the one a reader can actually open. `url` points into the private
     # workspace app, so linking that would send readers to a login screen.
@@ -623,6 +656,8 @@ def write_post(page: dict) -> str:
         "notion_page_id": page_id,
         "notion_url": notion_url,
     }
+    if subtitle:
+        front["subtitle"] = subtitle
     # Switches the post layout's labels (date format, 目录, 引用 …) to Chinese.
     if re.search(r"[一-鿿]", meta["title"]):
         front["lang"] = "zh"
