@@ -756,6 +756,10 @@ body:has(.ar-page) {
 // the title in the text column, so both line up with an article page.
 
 .ar-index {
+  // A date needs less room than the contents rail, so the text column widens.
+  // Same overall width as an article; the narrow view below still wins.
+  grid-template-columns: 110px minmax(0, 820px);
+
   .ar-lede {
     max-width: 760px;
     margin: 16px 0 0;
