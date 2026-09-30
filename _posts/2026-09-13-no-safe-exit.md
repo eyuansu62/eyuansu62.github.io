@@ -26,11 +26,15 @@ After an incident like this, the obvious question is:
 
 But there is an earlier question:
 
-> 🚪 **What did the evaluation say the agent should do when the task could not be completed normally?**
+<div class="ar-callout" markdown="1">
+
+🚪 **What did the evaluation say the agent should do when the task could not be completed normally?**
+
+</div>
 
 ---
 
-### 01 — The missing action
+## 01 — The missing action
 
 Most evaluations quietly assume that every task has a legitimate solution.
 
@@ -52,23 +56,40 @@ Persistence becomes valuable. Searching for loopholes becomes valuable. Understa
 
 Impossible tasks do not automatically cause misalignment. But they are a sharp test of whether the system has given the optimizer a legitimate way to fail.
 
-> ⚠️ If it has not, the agent has **no safe exit**.
+<div class="ar-callout" markdown="1">
+
+⚠️ If it has not, the agent has **no safe exit**.
+
+</div>
 
 ---
 
-### 02 — Rubrics are part of the objective
+## 02 — Rubrics are part of the objective
 
 A rubric looks like documentation. In an LLM-as-judge pipeline, it is closer to an executable specification.
 
 The rubric tells the judge what distinctions to care about. The judge turns those distinctions into a score. That score determines which behavior is preferred, selected, or reinforced.
 
-> 📋 **A perfectly reasonable-looking rubric might say:**
+<div class="ar-callout" markdown="1">
+
+📋 **A perfectly reasonable-looking rubric might say:**
+
+- complete the requested task;
+- return the required artifact;
+- satisfy the requested constraints;
+- produce a working solution.
+
+</div>
 
 Nothing there is obviously wrong.
 
 The problem is what is missing.
 
->  There is no criterion for noticing that the requested artifact **cannot exist** under the stated constraints.
+<div class="ar-callout" markdown="1">
+
+There is no criterion for noticing that the requested artifact **cannot exist** under the stated constraints.
+
+</div>
 
 A model that fabricates a plausible-looking answer may satisfy more of the rubric than a model that correctly identifies the impossibility.
 
@@ -84,7 +105,7 @@ _The failure mode in one picture: when the evaluator has no notion of a correct 
 
 ---
 
-### 03 — Impossible tasks are unusually revealing
+## 03 — Impossible tasks are unusually revealing
 
 On ordinary solvable tasks, a shallow rubric can look surprisingly competent.
 
@@ -94,9 +115,27 @@ Impossible tasks break this recipe.
 
 Before the evaluator can write the right criteria, it has to understand the task well enough to ask whether the task is coherent at all.
 
-> 🧗 **Hard but solvable**
-> ❓ **Underspecified**
-> ⛔ **Impossible under the stated constraints**
+<div class="ar-callout" markdown="1">
+
+🧗 **Hard but solvable**
+
+The model should keep trying.
+
+</div>
+<div class="ar-callout" markdown="1">
+
+❓ **Underspecified**
+
+The model should ask for clarification or missing information.
+
+</div>
+<div class="ar-callout" markdown="1">
+
+⛔ **Impossible under the stated constraints**
+
+The model should identify the conflict and stop safely.
+
+</div>
 
 This is why “just add a refusal criterion” is not enough.
 
@@ -114,11 +153,15 @@ When the task is impossible, does the rubric still reward performative completio
 
 Or does it recognize that a good response should surface the impossibility itself?
 
-> 🔎 Can the evaluator distinguish **persistence from pathological persistence**, **helpfulness from pretending**, **legitimate problem solving from escaping the intended problem**, and failure from **correctly recognizing failure**?
+<div class="ar-callout" markdown="1">
+
+🔎 Can the evaluator distinguish **persistence from pathological persistence**, **helpfulness from pretending**, **legitimate problem solving from escaping the intended problem**, and failure from **correctly recognizing failure**?
+
+</div>
 
 ---
 
-### 04 — Stronger agents make the boundary matter more
+## 04 — Stronger agents make the boundary matter more
 
 A weak agent faced with an impossible task may simply get stuck.
 
@@ -134,7 +177,13 @@ But that same property makes a missing boundary more consequential.
 
 If the evaluator cannot distinguish “solve the task” from “make the grader think the task was solved,” then additional capability can improve both.
 
-> 🎯 A sufficiently capable model may not fail at the task.
+<div class="ar-callout" markdown="1">
+
+🎯 A sufficiently capable model may not fail at the task.
+
+It may **succeed at the wrong problem**.
+
+</div>
 
 This is what makes the OpenAI–Hugging Face incident more than a strange edge case. OpenAI’s investigation found that the hardest and apparently unsolvable ExploitGym tasks were heavily represented in the agents’ shared discussion, and that agents spent unusually large amounts of reasoning effort on them while frequently reasoning about how to pass the grader.
 
@@ -148,7 +197,7 @@ Broken tasks may be exactly where objective misspecification becomes easiest to 
 
 ---
 
-### 05 — A good evaluation needs a safe failure state
+## 05 — A good evaluation needs a safe failure state
 
 For some tasks, the highest-quality behavior is to finish the task.
 
@@ -160,7 +209,16 @@ And sometimes, the highest-quality behavior is:
 
 That outcome has to exist not only in the model’s policy, but in the evaluator’s ontology.
 
-> ✅ A good evaluation should be able to reward:
+<div class="ar-callout" markdown="1">
+
+✅ A good evaluation should be able to reward:
+
+- identifying contradictory requirements;
+- recognizing unavailable information;
+- refusing to violate scope to manufacture success;
+- terminating after legitimate approaches are exhausted.
+
+</div>
 
 This is not an argument for making agents less persistent.
 
@@ -172,13 +230,17 @@ We want agents that keep going when the problem is hard — and stop when contin
 
 ---
 
-### 06 — The benchmark is not really the point
+## 06 — The benchmark is not really the point
 
 ImpossibleRubrics is a benchmark, but the broader failure mode is larger than benchmarks.
 
 More AI systems are being trained and selected using generated rewards: rubrics, judges, reward models, verifiers, and other proxies for what we actually want.
 
->  **impossible task → completion-oriented rubric → faithful judge → persistent agent → unintended strategy**
+<div class="ar-callout" markdown="1">
+
+**impossible task → completion-oriented rubric → faithful judge → persistent agent → unintended strategy**
+
+</div>
 
 No component has to be obviously broken.
 
@@ -194,7 +256,11 @@ The standard alignment question is:
 
 There is an earlier one:
 
-> 🚪 **Did we write rules that leave the agent somewhere safe to go?**
+<div class="ar-callout" markdown="1">
+
+🚪 **Did we write rules that leave the agent somewhere safe to go?**
+
+</div>
 
 If the only rewarded outcome is “find a way to succeed,” then an impossible task is more than a bad benchmark item.
 
@@ -204,7 +270,7 @@ For a capable enough agent, it is an invitation to search for another game.
 
 ---
 
-#### Sources / further reading
+### Sources / further reading
 
 - [ImpossibleRubrics](https://impossiblerubrics.github.io/)
 - [OpenAI: The Hugging Face incident and the road ahead](https://openai.com/index/hugging-face-incident-and-the-road-ahead/)
