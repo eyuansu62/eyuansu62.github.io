@@ -10,14 +10,14 @@
  ******************************************************************************/
 
 .ar-page {
-  // Linen paper with an indigo accent.
+  // Indigo accent on the site's white page.
   --ar-ink: #15141a;
   --ar-ink-2: #2a2830;
   --ar-ink-3: #5e5b66;
-  --ar-ink-4: #67636f; // >= 4.5:1 on the paper and on --ar-wash (WCAG AA)
-  --ar-rule: #dbd5c8;
-  --ar-rule-2: #e8e3d8;
-  --ar-wash: #eeeae1;
+  --ar-ink-4: #67636f; // >= 4.5:1 on white and on --ar-wash (WCAG AA)
+  --ar-rule: #e0ddd6;
+  --ar-rule-2: #ecebe6;
+  --ar-wash: #f5f4f0;
   --ar-accent: #2b3f6c;
   --ar-accent-hover: #1d2c4f;
   --ar-accent-soft: rgba(43, 63, 108, 0.07);
@@ -42,28 +42,11 @@ html[data-theme="dark"] .ar-page {
   --ar-link-line: rgba(157, 176, 224, 0.45);
 }
 
-// On post pages the paper colour and accent reach the navbar too, so the page
-// reads as one sheet. Other pages keep the site's own colours.
-:root:not([data-theme="dark"]):has(.ar-page) {
-  --global-bg-color: #f7f4ee;
-  --global-theme-color: #2b3f6c;
-  --global-hover-color: #2b3f6c;
-}
-
-html[data-theme="dark"]:has(.ar-page) {
-  --global-theme-color: #9db0e0;
-  --global-hover-color: #9db0e0;
-}
-
+// Thinner, crisper text on macOS for the serif prose.
 body:has(.ar-page) {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-
-  .navbar :is(.navbar-brand, .nav-link) {
-    font-family: "Newsreader", Georgia, serif;
-    font-size: 1.1rem;
-  }
 }
 
 // CJK fonts have no italic, so browsers slant the glyphs artificially. Keep
