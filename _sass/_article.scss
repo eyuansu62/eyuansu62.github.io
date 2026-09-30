@@ -66,7 +66,7 @@ body:has(.ar-page) {
   transform: translateX(-50%);
   padding-bottom: 72px;
   display: grid;
-  grid-template-columns: 200px minmax(0, 720px);
+  grid-template-columns: 160px minmax(0, 720px);
   column-gap: clamp(32px, 4vw, 56px);
   justify-content: center;
   color: var(--ar-ink);
