@@ -27,15 +27,15 @@ description: 8 月 1 日，DeepSeek Harness 团队的 Tianyi 在 X 上发了一�
 
 先看总榜前 40 名的"上线时间"这一列。
 
-| 项目 | Stars（快照） | 语言 | 创建时间 |
-| --- | --- | --- | --- |
-| nexu-io/open-design | 83,268 ✓ | TypeScript | **2026-04-28** |
-| Egonex-AI/Understand-Anything | 77,233 ↓ | TypeScript | **2026-03-15** |
-| santifer/career-ops | 62,573 ✓ | JavaScript | **2026-04-04** |
-| HKUDS/nanobot | 46,528 ↓ | Python | **2026-02-01** |
-| Hmbown/CodeWhale | 40,383 ✓ | Rust | **2026-01-19** |
-| stablyai/orca | 36,013 ↓ | TypeScript | **2026-03-17** |
-| esengine/DeepSeek-Reasonix | 29,298 ↓ | Go | **2026-04-21** |
+| 项目                          | Stars（快照） | 语言       | 创建时间       |
+| ----------------------------- | ------------- | ---------- | -------------- |
+| nexu-io/open-design           | 83,268 ✓      | TypeScript | **2026-04-28** |
+| Egonex-AI/Understand-Anything | 77,233 ↓      | TypeScript | **2026-03-15** |
+| santifer/career-ops           | 62,573 ✓      | JavaScript | **2026-04-04** |
+| HKUDS/nanobot                 | 46,528 ↓      | Python     | **2026-02-01** |
+| Hmbown/CodeWhale              | 40,383 ✓      | Rust       | **2026-01-19** |
+| stablyai/orca                 | 36,013 ↓      | TypeScript | **2026-03-17** |
+| esengine/DeepSeek-Reasonix    | 29,298 ↓      | Go         | **2026-04-21** |
 
 （✓ = 8 月 4 日实测与快照一致；↓ = 实测已回落，详见第七节。）
 
@@ -49,22 +49,22 @@ description: 8 月 1 日，DeepSeek Harness 团队的 Tianyi 在 X 上发了一�
 
 档案库把 712 个项目分成 18 个赛道（此处按全部 712 个项目计）：
 
-| 赛道 | 项目数 |
-| --- | --- |
-| agent-harness | 130 |
-| coding-agent | 112 |
-| skills | 83 |
-| agent-orchestration | 58 |
-| memory-context | 57 |
-| agent-workspace | 47 |
-| tooling-automation | 39 |
-| agent-client | 36 |
-| infrastructure / creative-tools | 27 / 27 |
-| security-governance / research-evaluation | 24 / 24 |
-| developer-tools | 18 |
-| research-tools | 10 |
-| education | 6 |
-| 其他（unclassified / other / domain-application） | 14 |
+| 赛道                                              | 项目数  |
+| ------------------------------------------------- | ------- |
+| agent-harness                                     | 130     |
+| coding-agent                                      | 112     |
+| skills                                            | 83      |
+| agent-orchestration                               | 58      |
+| memory-context                                    | 57      |
+| agent-workspace                                   | 47      |
+| tooling-automation                                | 39      |
+| agent-client                                      | 36      |
+| infrastructure / creative-tools                   | 27 / 27 |
+| security-governance / research-evaluation         | 24 / 24 |
+| developer-tools                                   | 18      |
+| research-tools                                    | 10      |
+| education                                         | 6       |
+| 其他（unclassified / other / domain-application） | 14      |
 
 前三名（harness 内核 + coding agent + skills）合计 325 个，占 46%。这是最卷的地方——自研 agent loop、工具调用、会话持久化、Skills、MCP、多 provider，这套配置在报名描述里几乎成了标点符号。
 
@@ -131,19 +131,19 @@ Go 在网关和后端类项目里稳定出现（DeepSeek-Reasonix、gpt-load、y
 
 我在 8 月 4 日把本文点名的仓库逐一打开对了一遍实时 star 数，距离档案库快照只过了一天：
 
-| 仓库 | 快照 8/3 | 实测 8/4 | 变化 |
-| --- | --- | --- | --- |
-| usewhale/whale | 965 | **100** | **-90%** |
-| LING71671/open-reverselab | 965 | **9** | **-99%** |
-| OpenMinis/OpenMinis | 3,032 | **211** | **-93%** |
-| xuzhougeng/wisp-science | 834 | **36** | **-96%** |
-| Cai-aa/CAE-Agent-Hub | 667 | 398 | -40% |
-| liliMozi/openhanako | 5,706 | ~4,800 | -16% |
-| HKUDS/nanobot | 46,528 | ~41,800 | -10% |
-| Egonex-AI/Understand-Anything | 77,233 | ~73,500 | -5% |
-| esengine/DeepSeek-Reasonix | 29,298 | ~27,800 | -5% |
-| stablyai/orca | 36,013 | ~34,800 | -3% |
-| open-design / CodeWhale / career-ops / AutoSci / boxsh / forkprobe | — | 与快照一致 | 稳定 |
+| 仓库                                                               | 快照 8/3 | 实测 8/4   | 变化     |
+| ------------------------------------------------------------------ | -------- | ---------- | -------- |
+| usewhale/whale                                                     | 965      | **100**    | **-90%** |
+| LING71671/open-reverselab                                          | 965      | **9**      | **-99%** |
+| OpenMinis/OpenMinis                                                | 3,032    | **211**    | **-93%** |
+| xuzhougeng/wisp-science                                            | 834      | **36**     | **-96%** |
+| Cai-aa/CAE-Agent-Hub                                               | 667      | 398        | -40%     |
+| liliMozi/openhanako                                                | 5,706    | ~4,800     | -16%     |
+| HKUDS/nanobot                                                      | 46,528   | ~41,800    | -10%     |
+| Egonex-AI/Understand-Anything                                      | 77,233   | ~73,500    | -5%      |
+| esengine/DeepSeek-Reasonix                                         | 29,298   | ~27,800    | -5%      |
+| stablyai/orca                                                      | 36,013   | ~34,800    | -3%      |
+| open-design / CodeWhale / career-ops / AutoSci / boxsh / forkprobe | —        | 与快照一致 | 稳定     |
 
 star 数是不会自然下跌的，成批消失基本只有一种解释：**刷上去的星正在被 GitHub 清退**。一天之内，有项目掉了九成，头部项目也在以每天几个百分点的速度漏气；同时另一批项目（open-design、CodeWhale、career-ops）实测与快照分毫不差——真假在同一张榜单上泾渭分明。
 
@@ -221,105 +221,105 @@ pi、Claude Code、Codex、Kimi Code、opencode、openclaw 这几个底座的生
 
 数据来自档案库 `exports/leaderboards.csv`。star 数为 8 月 3 日快照值；标 ✓ 的为 8 月 4 日实测与快照一致，标 ↓ 的为实测已回落（详见第七节），未标记的未做实测。
 
-| # | 项目 | Stars（快照） | 赛道 | 语言 | 创建时间 |
-| --- | --- | --- | --- | --- | --- |
-| 1 | [vllm-project/vllm](https://github.com/vllm-project/vllm) | 88,004 | memory-context | Python | 2023-02-09 |
-| 2 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 83,268 ✓ | coding-agent | TypeScript | 2026-04-28 |
-| 3 | [lobehub/lobehub](https://github.com/lobehub/lobehub) | 81,142 | agent-workspace | TypeScript | 2023-05-21 |
-| 4 | [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | 79,024 | agent-harness | Python | 2025-05-07 |
-| 5 | [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) | 77,233 ↓ | developer-tools | TypeScript | 2026-03-15 |
-| 6 | [santifer/career-ops](https://github.com/santifer/career-ops) | 62,573 ✓ | coding-agent | JavaScript | 2026-04-04 |
-| 7 | [HKUDS/nanobot](https://github.com/HKUDS/nanobot) | 46,528 ↓ | memory-context | Python | 2026-02-01 |
-| 8 | [Hmbown/CodeWhale](https://github.com/Hmbown/CodeWhale) | 40,383 ✓ | agent-harness | Rust | 2026-01-19 |
-| 9 | [chatchat-space/Langchain-Chatchat](https://github.com/chatchat-space/Langchain-Chatchat) | 38,498 | memory-context | Python | 2023-03-31 |
-| 10 | [stablyai/orca](https://github.com/stablyai/orca) | 36,013 ↓ | agent-orchestration | TypeScript | 2026-03-17 |
-| 11 | [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | 29,298 ↓ | coding-agent | Go | 2026-04-21 |
-| 12 | [badges/shields](https://github.com/badges/shields) | 27,011 | tooling-automation | JavaScript | 2013-01-30 |
-| 13 | [QwenLM/qwen-code](https://github.com/QwenLM/qwen-code) | 26,530 | coding-agent | TypeScript | 2025-06-26 |
-| 14 | [simple-icons/simple-icons](https://github.com/simple-icons/simple-icons) | 25,546 | tooling-automation | JavaScript | 2012-11-16 |
-| 15 | [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) | 23,713 | coding-agent | TypeScript | 2025-10-09 |
-| 16 | [readest/readest](https://github.com/readest/readest) | 23,026 | other | TypeScript | 2024-10-12 |
-| 17 | [can1357/oh-my-pi](https://github.com/can1357/oh-my-pi) | 21,376 | coding-agent | TypeScript | 2025-12-31 |
-| 18 | [coze-dev/coze-studio](https://github.com/coze-dev/coze-studio) | 21,318 | infrastructure | TypeScript | 2025-06-26 |
-| 19 | [Mikubill/sd-webui-controlnet](https://github.com/Mikubill/sd-webui-controlnet) | 17,852 | creative-tools | Python | 2023-02-12 |
-| 20 | [camel-ai/camel](https://github.com/camel-ai/camel) | 17,530 | agent-orchestration | Python | 2023-03-17 |
-| 21 | [browser-use/web-ui](https://github.com/browser-use/web-ui) | 16,257 | tooling-automation | Python | 2025-01-02 |
-| 22 | [eigent-ai/eigent](https://github.com/eigent-ai/eigent) | 14,720 | coding-agent | TypeScript | 2025-07-29 |
-| 23 | [electerm/electerm](https://github.com/electerm/electerm) | 14,645 | developer-tools | JavaScript | 2017-10-07 |
-| 24 | [YishenTu/claudian](https://github.com/YishenTu/claudian) | 14,504 | agent-client | TypeScript | 2025-12-05 |
-| 25 | [web-infra-dev/midscene](https://github.com/web-infra-dev/midscene) | 14,469 ↓ | infrastructure | TypeScript | 2024-07-23 |
-| 26 | [plait-board/drawnix](https://github.com/plait-board/drawnix) | 14,367 | creative-tools | TypeScript | 2024-06-04 |
-| 27 | [hangwin/mcp-chrome](https://github.com/hangwin/mcp-chrome) | 12,247 ↓ | tooling-automation | TypeScript | 2025-06-09 |
-| 28 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | 8,611 | skills | HTML | 2026-04-15 |
-| 29 | [yaoapp/yao](https://github.com/yaoapp/yao) | 7,555 | agent-client | Go | 2021-09-06 |
-| 30 | [l0o0/jasminum](https://github.com/l0o0/jasminum) | 7,115 | research-tools | TypeScript | 2020-06-16 |
-| 31 | [open-multi-agent/open-multi-agent](https://github.com/open-multi-agent/open-multi-agent) | 6,705 | agent-orchestration | TypeScript | 2026-03-31 |
-| 32 | [crisxuan/bestjavaer](https://github.com/crisxuan/bestjavaer) | 6,615 | agent-orchestration | JavaScript | 2020-06-03 |
-| 33 | [DerekYRC/mini-spring](https://github.com/DerekYRC/mini-spring) | 6,371 | coding-agent | Java | 2020-11-17 |
-| 34 | [op7418/CodePilot](https://github.com/op7418/CodePilot) | 6,325 | skills | TypeScript | 2026-02-06 |
-| 35 | [tbphp/gpt-load](https://github.com/tbphp/gpt-load) | 6,260 | infrastructure | Go | 2025-06-06 |
-| 36 | [ThinkInAIXYZ/deepchat](https://github.com/ThinkInAIXYZ/deepchat) | 6,186 | agent-client | TypeScript | 2025-02-14 |
-| 37 | [drakeet/MultiType](https://github.com/drakeet/MultiType) | 5,759 | other | Kotlin | 2016-08-03 |
-| 38 | [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI) | 5,750 | agent-workspace | TypeScript | 2026-02-12 |
-| 39 | [liliMozi/openhanako](https://github.com/liliMozi/openhanako) | 5,706 ↓ | agent-client | TypeScript | 2026-03-15 |
-| 40 | [Mai-with-u/MaiBot](https://github.com/Mai-with-u/MaiBot) | 5,634 | agent-client | Python | 2025-02-25 |
-| 41 | [KunAgent/Kun](https://github.com/KunAgent/Kun) | 5,615 | agent-workspace | TypeScript | 2026-05-21 |
-| 42 | [mindcraft-bots/mindcraft](https://github.com/mindcraft-bots/mindcraft) | 5,593 | security-governance | JavaScript | 2023-08-16 |
-| 43 | [looplj/axonhub](https://github.com/looplj/axonhub) | 4,854 | developer-tools | Go | 2025-09-09 |
-| 44 | [CJackHwang/ds2api](https://github.com/CJackHwang/ds2api) | 4,761 | infrastructure | Go | 2026-01-21 |
-| 45 | [l0o0/translators_CN](https://github.com/l0o0/translators_CN) | 4,698 | research-tools | JavaScript | 2019-11-21 |
-| 46 | [MaaXYZ/MaaFramework](https://github.com/MaaXYZ/MaaFramework) | 4,574 | tooling-automation | C++ | 2023-04-24 |
-| 47 | [ZSeven-W/openpencil](https://github.com/ZSeven-W/openpencil) | 4,557 | creative-tools | Rust | 2026-02-17 |
-| 48 | [binaricat/Netcatty](https://github.com/binaricat/Netcatty) | 4,536 | developer-tools | TypeScript | 2025-12-06 |
-| 49 | [phodal/auto-dev](https://github.com/phodal/auto-dev) | 4,521 | agent-orchestration | Kotlin | 2023-04-14 |
-| 50 | [oomol-lab/open-connector](https://github.com/oomol-lab/open-connector) | 4,131 | tooling-automation | TypeScript | 2026-06-29 |
-| 51 | [nextlevelbuilder/goclaw](https://github.com/nextlevelbuilder/goclaw) | 3,501 | agent-harness | Go | 2026-02-22 |
-| 52 | [EverMind-AI/Raven](https://github.com/EverMind-AI/Raven) | 3,480 | memory-context | Python | 2026-05-21 |
-| 53 | [xingkongliang/skills-manager](https://github.com/xingkongliang/skills-manager) | 3,469 | skills | Rust | 2026-03-02 |
-| 54 | [strukto-ai/mirage](https://github.com/strukto-ai/mirage) | 3,377 | memory-context | TypeScript | 2026-05-06 |
-| 55 | [VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB) | 3,241 | memory-context | Python | 2026-04-04 |
-| 56 | [XiaoMi/xiaomi-miloco](https://github.com/XiaoMi/xiaomi-miloco) | 3,184 | memory-context | Python | 2025-11-06 |
-| 57 | [jihe520/MathModelAgent](https://github.com/jihe520/MathModelAgent) | 3,126 | skills | Python | 2025-01-30 |
-| 58 | [OpenMinis/OpenMinis](https://github.com/OpenMinis/OpenMinis) | 3,032 ↓ | agent-client | Swift | 2026-04-25 |
-| 59 | [teaql/teaql-agent-kit](https://github.com/teaql/teaql-agent-kit) | 2,803 | agent-harness | — | 2018-12-17 |
-| 60 | [BannyLon/DifyAIA](https://github.com/BannyLon/DifyAIA) | 2,624 | tooling-automation | HTML | 2024-10-14 |
-| 61 | [metatool-ai/metamcp](https://github.com/metatool-ai/metamcp) | 2,575 | agent-orchestration | TypeScript | 2025-01-22 |
-| 62 | [heshengtao/super-agent-party](https://github.com/heshengtao/super-agent-party) | 2,543 | agent-harness | JavaScript | 2025-03-08 |
-| 63 | [spring-ai-alibaba/DataAgent](https://github.com/spring-ai-alibaba/DataAgent) | 2,390 | domain-application | Java | 2025-09-12 |
-| 64 | [kubeovn/kube-ovn](https://github.com/kubeovn/kube-ovn) | 2,361 | security-governance | Go | 2019-03-22 |
-| 65 | [oiov/wr.do](https://github.com/oiov/wr.do) | 2,271 | coding-agent | TypeScript | 2024-07-26 |
-| 66 | [lioensky/VCPToolBox](https://github.com/lioensky/VCPToolBox) | 2,226 | memory-context | JavaScript | 2025-05-12 |
-| 67 | [org2AI/ORG2](https://github.com/org2AI/ORG2) | 2,181 | agent-harness | TypeScript | 2026-06-01 |
-| 68 | [openakita/openakita](https://github.com/openakita/openakita) | 1,895 | agent-harness | Python | 2026-01-30 |
-| 69 | [proma-ai/Proma](https://github.com/proma-ai/Proma) | 1,881 | tooling-automation | TypeScript | 2026-01-31 |
-| 70 | [yologdev/yoyo-evolve](https://github.com/yologdev/yoyo-evolve) | 1,851 | agent-harness | Rust | 2026-03-01 |
-| 71 | [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench) | 1,622 | research-evaluation | PDDL | 2025-12-29 |
-| 72 | [skyllwt/AutoSci](https://github.com/skyllwt/AutoSci) | 1,599 ✓ | research-evaluation | Python | 2026-04-09 |
-| 73 | [tddworks/baguette](https://github.com/tddworks/baguette) | 1,596 | tooling-automation | Swift | 2026-05-01 |
-| 74 | [DeadWaveWave/opencove](https://github.com/DeadWaveWave/opencove) | 1,550 | coding-agent | TypeScript | 2026-03-09 |
-| 75 | [kenryu42/cc-safety-net](https://github.com/kenryu42/cc-safety-net) | 1,466 | coding-agent | TypeScript | 2025-12-25 |
-| 76 | [myshell-ai/AIlice](https://github.com/myshell-ai/AIlice) | 1,413 | tooling-automation | Python | 2023-10-16 |
-| 77 | [GCWing/BitFun](https://github.com/GCWing/BitFun) | 1,397 | memory-context | Rust | 2026-02-02 |
-| 78 | [nianhua99/PandoraHelper](https://github.com/nianhua99/PandoraHelper) | 1,354 | other | TypeScript | 2023-12-18 |
-| 79 | [poco-ai/poco-claw](https://github.com/poco-ai/poco-claw) | 1,343 | agent-harness | Python | 2026-01-08 |
-| 80 | [Lapis0x0/obsidian-yolo](https://github.com/Lapis0x0/obsidian-yolo) | 1,288 | agent-workspace | TypeScript | 2025-06-02 |
-| 81 | [Team-Commonly/commonly](https://github.com/Team-Commonly/commonly) | 1,283 | agent-orchestration | TypeScript | 2025-02-03 |
-| 82 | [via007/bilibili-rag](https://github.com/via007/bilibili-rag) | 1,277 | memory-context | Python | 2026-01-25 |
-| 83 | [Vizards/deepseek-v4-for-copilot](https://github.com/Vizards/deepseek-v4-for-copilot) | 1,272 | coding-agent | TypeScript | 2026-04-24 |
-| 84 | [mem9-ai/mem9](https://github.com/mem9-ai/mem9) | 1,174 | memory-context | TypeScript | 2026-03-08 |
-| 85 | [clacky-ai/openclacky](https://github.com/clacky-ai/openclacky) | 1,159 | skills | Ruby | 2025-12-30 |
-| 86 | [nevertoday/zhongguo-traditional-colors](https://github.com/nevertoday/zhongguo-traditional-colors) | 1,141 | skills | HTML | 2026-06-03 |
-| 87 | [CreminiAI/skillpack](https://github.com/CreminiAI/skillpack) | 1,124 | skills | TypeScript | 2026-03-15 |
-| 88 | [maka-agent/maka-agent](https://github.com/maka-agent/maka-agent) | 1,108 | agent-client | TypeScript | 2026-05-27 |
-| 89 | [ChesterRa/cccc](https://github.com/ChesterRa/cccc) | 1,065 | agent-orchestration | Python | 2025-08-15 |
-| 90 | [weiesky/cc-viewer](https://github.com/weiesky/cc-viewer) | 1,056 | coding-agent | JavaScript | 2026-02-17 |
-| 91 | [QuantumBFS/Yao.jl](https://github.com/QuantumBFS/Yao.jl) | 1,037 | research-tools | Julia | 2018-04-13 |
-| 92 | [LING71671/open-reverselab](https://github.com/LING71671/open-reverselab) | 965 ↓ | security-governance | Python | 2026-06-17 |
-| 93 | [usewhale/whale](https://github.com/usewhale/whale) | 965 ↓ | coding-agent | Go | 2026-05-06 |
-| 94 | [Orkas-AI/Orkas](https://github.com/Orkas-AI/Orkas) | 961 | skills | TypeScript | 2026-04-29 |
-| 95 | [huifer/WellAlly-health](https://github.com/huifer/WellAlly-health) | 911 | domain-application | Shell | 2025-12-31 |
-| 96 | [proxysoul/Empryo](https://github.com/proxysoul/Empryo) | 893 | agent-orchestration | TypeScript | 2026-03-01 |
-| 97 | [xuzhougeng/wisp-science](https://github.com/xuzhougeng/wisp-science) | 834 ↓ | agent-workspace | HTML | 2026-07-01 |
-| 98 | [xlang-ai/OpenCUA](https://github.com/xlang-ai/OpenCUA) | 808 | tooling-automation | Python | 2025-06-21 |
-| 99 | [shenseanchen/waku-agent](https://github.com/shenseanchen/waku-agent) | 789 | memory-context | Python | 2026-07-10 |
-| 100 | [vinhnx/VTCode](https://github.com/vinhnx/VTCode) | 783 | coding-agent | Rust | 2025-08-29 |
+| #   | 项目                                                                                                | Stars（快照） | 赛道                | 语言       | 创建时间   |
+| --- | --------------------------------------------------------------------------------------------------- | ------------- | ------------------- | ---------- | ---------- |
+| 1   | [vllm-project/vllm](https://github.com/vllm-project/vllm)                                           | 88,004        | memory-context      | Python     | 2023-02-09 |
+| 2   | [nexu-io/open-design](https://github.com/nexu-io/open-design)                                       | 83,268 ✓      | coding-agent        | TypeScript | 2026-04-28 |
+| 3   | [lobehub/lobehub](https://github.com/lobehub/lobehub)                                               | 81,142        | agent-workspace     | TypeScript | 2023-05-21 |
+| 4   | [bytedance/deer-flow](https://github.com/bytedance/deer-flow)                                       | 79,024        | agent-harness       | Python     | 2025-05-07 |
+| 5   | [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything)                   | 77,233 ↓      | developer-tools     | TypeScript | 2026-03-15 |
+| 6   | [santifer/career-ops](https://github.com/santifer/career-ops)                                       | 62,573 ✓      | coding-agent        | JavaScript | 2026-04-04 |
+| 7   | [HKUDS/nanobot](https://github.com/HKUDS/nanobot)                                                   | 46,528 ↓      | memory-context      | Python     | 2026-02-01 |
+| 8   | [Hmbown/CodeWhale](https://github.com/Hmbown/CodeWhale)                                             | 40,383 ✓      | agent-harness       | Rust       | 2026-01-19 |
+| 9   | [chatchat-space/Langchain-Chatchat](https://github.com/chatchat-space/Langchain-Chatchat)           | 38,498        | memory-context      | Python     | 2023-03-31 |
+| 10  | [stablyai/orca](https://github.com/stablyai/orca)                                                   | 36,013 ↓      | agent-orchestration | TypeScript | 2026-03-17 |
+| 11  | [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix)                         | 29,298 ↓      | coding-agent        | Go         | 2026-04-21 |
+| 12  | [badges/shields](https://github.com/badges/shields)                                                 | 27,011        | tooling-automation  | JavaScript | 2013-01-30 |
+| 13  | [QwenLM/qwen-code](https://github.com/QwenLM/qwen-code)                                             | 26,530        | coding-agent        | TypeScript | 2025-06-26 |
+| 14  | [simple-icons/simple-icons](https://github.com/simple-icons/simple-icons)                           | 25,546        | tooling-automation  | JavaScript | 2012-11-16 |
+| 15  | [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin)     | 23,713        | coding-agent        | TypeScript | 2025-10-09 |
+| 16  | [readest/readest](https://github.com/readest/readest)                                               | 23,026        | other               | TypeScript | 2024-10-12 |
+| 17  | [can1357/oh-my-pi](https://github.com/can1357/oh-my-pi)                                             | 21,376        | coding-agent        | TypeScript | 2025-12-31 |
+| 18  | [coze-dev/coze-studio](https://github.com/coze-dev/coze-studio)                                     | 21,318        | infrastructure      | TypeScript | 2025-06-26 |
+| 19  | [Mikubill/sd-webui-controlnet](https://github.com/Mikubill/sd-webui-controlnet)                     | 17,852        | creative-tools      | Python     | 2023-02-12 |
+| 20  | [camel-ai/camel](https://github.com/camel-ai/camel)                                                 | 17,530        | agent-orchestration | Python     | 2023-03-17 |
+| 21  | [browser-use/web-ui](https://github.com/browser-use/web-ui)                                         | 16,257        | tooling-automation  | Python     | 2025-01-02 |
+| 22  | [eigent-ai/eigent](https://github.com/eigent-ai/eigent)                                             | 14,720        | coding-agent        | TypeScript | 2025-07-29 |
+| 23  | [electerm/electerm](https://github.com/electerm/electerm)                                           | 14,645        | developer-tools     | JavaScript | 2017-10-07 |
+| 24  | [YishenTu/claudian](https://github.com/YishenTu/claudian)                                           | 14,504        | agent-client        | TypeScript | 2025-12-05 |
+| 25  | [web-infra-dev/midscene](https://github.com/web-infra-dev/midscene)                                 | 14,469 ↓      | infrastructure      | TypeScript | 2024-07-23 |
+| 26  | [plait-board/drawnix](https://github.com/plait-board/drawnix)                                       | 14,367        | creative-tools      | TypeScript | 2024-06-04 |
+| 27  | [hangwin/mcp-chrome](https://github.com/hangwin/mcp-chrome)                                         | 12,247 ↓      | tooling-automation  | TypeScript | 2025-06-09 |
+| 28  | [tt-a1i/archify](https://github.com/tt-a1i/archify)                                                 | 8,611         | skills              | HTML       | 2026-04-15 |
+| 29  | [yaoapp/yao](https://github.com/yaoapp/yao)                                                         | 7,555         | agent-client        | Go         | 2021-09-06 |
+| 30  | [l0o0/jasminum](https://github.com/l0o0/jasminum)                                                   | 7,115         | research-tools      | TypeScript | 2020-06-16 |
+| 31  | [open-multi-agent/open-multi-agent](https://github.com/open-multi-agent/open-multi-agent)           | 6,705         | agent-orchestration | TypeScript | 2026-03-31 |
+| 32  | [crisxuan/bestjavaer](https://github.com/crisxuan/bestjavaer)                                       | 6,615         | agent-orchestration | JavaScript | 2020-06-03 |
+| 33  | [DerekYRC/mini-spring](https://github.com/DerekYRC/mini-spring)                                     | 6,371         | coding-agent        | Java       | 2020-11-17 |
+| 34  | [op7418/CodePilot](https://github.com/op7418/CodePilot)                                             | 6,325         | skills              | TypeScript | 2026-02-06 |
+| 35  | [tbphp/gpt-load](https://github.com/tbphp/gpt-load)                                                 | 6,260         | infrastructure      | Go         | 2025-06-06 |
+| 36  | [ThinkInAIXYZ/deepchat](https://github.com/ThinkInAIXYZ/deepchat)                                   | 6,186         | agent-client        | TypeScript | 2025-02-14 |
+| 37  | [drakeet/MultiType](https://github.com/drakeet/MultiType)                                           | 5,759         | other               | Kotlin     | 2016-08-03 |
+| 38  | [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI)                             | 5,750         | agent-workspace     | TypeScript | 2026-02-12 |
+| 39  | [liliMozi/openhanako](https://github.com/liliMozi/openhanako)                                       | 5,706 ↓       | agent-client        | TypeScript | 2026-03-15 |
+| 40  | [Mai-with-u/MaiBot](https://github.com/Mai-with-u/MaiBot)                                           | 5,634         | agent-client        | Python     | 2025-02-25 |
+| 41  | [KunAgent/Kun](https://github.com/KunAgent/Kun)                                                     | 5,615         | agent-workspace     | TypeScript | 2026-05-21 |
+| 42  | [mindcraft-bots/mindcraft](https://github.com/mindcraft-bots/mindcraft)                             | 5,593         | security-governance | JavaScript | 2023-08-16 |
+| 43  | [looplj/axonhub](https://github.com/looplj/axonhub)                                                 | 4,854         | developer-tools     | Go         | 2025-09-09 |
+| 44  | [CJackHwang/ds2api](https://github.com/CJackHwang/ds2api)                                           | 4,761         | infrastructure      | Go         | 2026-01-21 |
+| 45  | [l0o0/translators_CN](https://github.com/l0o0/translators_CN)                                       | 4,698         | research-tools      | JavaScript | 2019-11-21 |
+| 46  | [MaaXYZ/MaaFramework](https://github.com/MaaXYZ/MaaFramework)                                       | 4,574         | tooling-automation  | C++        | 2023-04-24 |
+| 47  | [ZSeven-W/openpencil](https://github.com/ZSeven-W/openpencil)                                       | 4,557         | creative-tools      | Rust       | 2026-02-17 |
+| 48  | [binaricat/Netcatty](https://github.com/binaricat/Netcatty)                                         | 4,536         | developer-tools     | TypeScript | 2025-12-06 |
+| 49  | [phodal/auto-dev](https://github.com/phodal/auto-dev)                                               | 4,521         | agent-orchestration | Kotlin     | 2023-04-14 |
+| 50  | [oomol-lab/open-connector](https://github.com/oomol-lab/open-connector)                             | 4,131         | tooling-automation  | TypeScript | 2026-06-29 |
+| 51  | [nextlevelbuilder/goclaw](https://github.com/nextlevelbuilder/goclaw)                               | 3,501         | agent-harness       | Go         | 2026-02-22 |
+| 52  | [EverMind-AI/Raven](https://github.com/EverMind-AI/Raven)                                           | 3,480         | memory-context      | Python     | 2026-05-21 |
+| 53  | [xingkongliang/skills-manager](https://github.com/xingkongliang/skills-manager)                     | 3,469         | skills              | Rust       | 2026-03-02 |
+| 54  | [strukto-ai/mirage](https://github.com/strukto-ai/mirage)                                           | 3,377         | memory-context      | TypeScript | 2026-05-06 |
+| 55  | [VectifyAI/OpenKB](https://github.com/VectifyAI/OpenKB)                                             | 3,241         | memory-context      | Python     | 2026-04-04 |
+| 56  | [XiaoMi/xiaomi-miloco](https://github.com/XiaoMi/xiaomi-miloco)                                     | 3,184         | memory-context      | Python     | 2025-11-06 |
+| 57  | [jihe520/MathModelAgent](https://github.com/jihe520/MathModelAgent)                                 | 3,126         | skills              | Python     | 2025-01-30 |
+| 58  | [OpenMinis/OpenMinis](https://github.com/OpenMinis/OpenMinis)                                       | 3,032 ↓       | agent-client        | Swift      | 2026-04-25 |
+| 59  | [teaql/teaql-agent-kit](https://github.com/teaql/teaql-agent-kit)                                   | 2,803         | agent-harness       | —          | 2018-12-17 |
+| 60  | [BannyLon/DifyAIA](https://github.com/BannyLon/DifyAIA)                                             | 2,624         | tooling-automation  | HTML       | 2024-10-14 |
+| 61  | [metatool-ai/metamcp](https://github.com/metatool-ai/metamcp)                                       | 2,575         | agent-orchestration | TypeScript | 2025-01-22 |
+| 62  | [heshengtao/super-agent-party](https://github.com/heshengtao/super-agent-party)                     | 2,543         | agent-harness       | JavaScript | 2025-03-08 |
+| 63  | [spring-ai-alibaba/DataAgent](https://github.com/spring-ai-alibaba/DataAgent)                       | 2,390         | domain-application  | Java       | 2025-09-12 |
+| 64  | [kubeovn/kube-ovn](https://github.com/kubeovn/kube-ovn)                                             | 2,361         | security-governance | Go         | 2019-03-22 |
+| 65  | [oiov/wr.do](https://github.com/oiov/wr.do)                                                         | 2,271         | coding-agent        | TypeScript | 2024-07-26 |
+| 66  | [lioensky/VCPToolBox](https://github.com/lioensky/VCPToolBox)                                       | 2,226         | memory-context      | JavaScript | 2025-05-12 |
+| 67  | [org2AI/ORG2](https://github.com/org2AI/ORG2)                                                       | 2,181         | agent-harness       | TypeScript | 2026-06-01 |
+| 68  | [openakita/openakita](https://github.com/openakita/openakita)                                       | 1,895         | agent-harness       | Python     | 2026-01-30 |
+| 69  | [proma-ai/Proma](https://github.com/proma-ai/Proma)                                                 | 1,881         | tooling-automation  | TypeScript | 2026-01-31 |
+| 70  | [yologdev/yoyo-evolve](https://github.com/yologdev/yoyo-evolve)                                     | 1,851         | agent-harness       | Rust       | 2026-03-01 |
+| 71  | [benchflow-ai/skillsbench](https://github.com/benchflow-ai/skillsbench)                             | 1,622         | research-evaluation | PDDL       | 2025-12-29 |
+| 72  | [skyllwt/AutoSci](https://github.com/skyllwt/AutoSci)                                               | 1,599 ✓       | research-evaluation | Python     | 2026-04-09 |
+| 73  | [tddworks/baguette](https://github.com/tddworks/baguette)                                           | 1,596         | tooling-automation  | Swift      | 2026-05-01 |
+| 74  | [DeadWaveWave/opencove](https://github.com/DeadWaveWave/opencove)                                   | 1,550         | coding-agent        | TypeScript | 2026-03-09 |
+| 75  | [kenryu42/cc-safety-net](https://github.com/kenryu42/cc-safety-net)                                 | 1,466         | coding-agent        | TypeScript | 2025-12-25 |
+| 76  | [myshell-ai/AIlice](https://github.com/myshell-ai/AIlice)                                           | 1,413         | tooling-automation  | Python     | 2023-10-16 |
+| 77  | [GCWing/BitFun](https://github.com/GCWing/BitFun)                                                   | 1,397         | memory-context      | Rust       | 2026-02-02 |
+| 78  | [nianhua99/PandoraHelper](https://github.com/nianhua99/PandoraHelper)                               | 1,354         | other               | TypeScript | 2023-12-18 |
+| 79  | [poco-ai/poco-claw](https://github.com/poco-ai/poco-claw)                                           | 1,343         | agent-harness       | Python     | 2026-01-08 |
+| 80  | [Lapis0x0/obsidian-yolo](https://github.com/Lapis0x0/obsidian-yolo)                                 | 1,288         | agent-workspace     | TypeScript | 2025-06-02 |
+| 81  | [Team-Commonly/commonly](https://github.com/Team-Commonly/commonly)                                 | 1,283         | agent-orchestration | TypeScript | 2025-02-03 |
+| 82  | [via007/bilibili-rag](https://github.com/via007/bilibili-rag)                                       | 1,277         | memory-context      | Python     | 2026-01-25 |
+| 83  | [Vizards/deepseek-v4-for-copilot](https://github.com/Vizards/deepseek-v4-for-copilot)               | 1,272         | coding-agent        | TypeScript | 2026-04-24 |
+| 84  | [mem9-ai/mem9](https://github.com/mem9-ai/mem9)                                                     | 1,174         | memory-context      | TypeScript | 2026-03-08 |
+| 85  | [clacky-ai/openclacky](https://github.com/clacky-ai/openclacky)                                     | 1,159         | skills              | Ruby       | 2025-12-30 |
+| 86  | [nevertoday/zhongguo-traditional-colors](https://github.com/nevertoday/zhongguo-traditional-colors) | 1,141         | skills              | HTML       | 2026-06-03 |
+| 87  | [CreminiAI/skillpack](https://github.com/CreminiAI/skillpack)                                       | 1,124         | skills              | TypeScript | 2026-03-15 |
+| 88  | [maka-agent/maka-agent](https://github.com/maka-agent/maka-agent)                                   | 1,108         | agent-client        | TypeScript | 2026-05-27 |
+| 89  | [ChesterRa/cccc](https://github.com/ChesterRa/cccc)                                                 | 1,065         | agent-orchestration | Python     | 2025-08-15 |
+| 90  | [weiesky/cc-viewer](https://github.com/weiesky/cc-viewer)                                           | 1,056         | coding-agent        | JavaScript | 2026-02-17 |
+| 91  | [QuantumBFS/Yao.jl](https://github.com/QuantumBFS/Yao.jl)                                           | 1,037         | research-tools      | Julia      | 2018-04-13 |
+| 92  | [LING71671/open-reverselab](https://github.com/LING71671/open-reverselab)                           | 965 ↓         | security-governance | Python     | 2026-06-17 |
+| 93  | [usewhale/whale](https://github.com/usewhale/whale)                                                 | 965 ↓         | coding-agent        | Go         | 2026-05-06 |
+| 94  | [Orkas-AI/Orkas](https://github.com/Orkas-AI/Orkas)                                                 | 961           | skills              | TypeScript | 2026-04-29 |
+| 95  | [huifer/WellAlly-health](https://github.com/huifer/WellAlly-health)                                 | 911           | domain-application  | Shell      | 2025-12-31 |
+| 96  | [proxysoul/Empryo](https://github.com/proxysoul/Empryo)                                             | 893           | agent-orchestration | TypeScript | 2026-03-01 |
+| 97  | [xuzhougeng/wisp-science](https://github.com/xuzhougeng/wisp-science)                               | 834 ↓         | agent-workspace     | HTML       | 2026-07-01 |
+| 98  | [xlang-ai/OpenCUA](https://github.com/xlang-ai/OpenCUA)                                             | 808           | tooling-automation  | Python     | 2025-06-21 |
+| 99  | [shenseanchen/waku-agent](https://github.com/shenseanchen/waku-agent)                               | 789           | memory-context      | Python     | 2026-07-10 |
+| 100 | [vinhnx/VTCode](https://github.com/vinhnx/VTCode)                                                   | 783           | coding-agent        | Rust       | 2025-08-29 |

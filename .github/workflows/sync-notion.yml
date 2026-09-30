@@ -77,6 +77,16 @@ jobs:
           fi
           python bin/sync_notion_posts.py
 
+      # The converter writes tables with unpadded cells; format the posts the
+      # way prettier.yml checks them, or every sync would fail that check.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Format posts with Prettier
+        run: |
+          npm install --no-save prettier @shopify/prettier-plugin-liquid
+          npx prettier --write _posts
+
       - name: Configure Git
         run: |
           git config --local user.email "actions@github.com"
