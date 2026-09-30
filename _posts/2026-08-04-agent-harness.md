@@ -9,10 +9,6 @@ description: 8 月 1 日，DeepSeek Harness 团队的 Tianyi 在 X 上发了一�
   相关开源项目的开发者，想参加 DeepSeek Harness 内测，回复我，附上 GitHub id 和开源代表作。（原推文链接待补）
 ---
 
-作者：Bowen ｜ [个人主页](https://eyuansu62.github.io/) ｜ [X @eyuansuMX](https://x.com/eyuansuMX)
-
----
-
 8 月 1 日，DeepSeek Harness 团队的 Tianyi 在 X 上发了一条很短的推文：如果你是 Agent Harness 相关开源项目的开发者，想参加 DeepSeek Harness 内测，回复我，附上 GitHub id 和开源代表作。（原推文链接待补）
 
 三天后，这条推文有 83 万次浏览、1000 多条回复。

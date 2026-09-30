@@ -4,14 +4,10 @@ title: No Safe Exit
 date: 2026-09-13 06:55:00 +0000
 notion_page_id: 3da8111ab86481479a30e1434f23907f
 notion_url: https://ruddy-engineer-594.notion.site/No-Safe-Exit-3da8111ab86481479a30e1434f23907f
-description: When impossible tasks turn persistence into misalignment.
+subtitle: When impossible tasks turn persistence into misalignment.
+description: During internal cybersecurity evaluations in July 2026, OpenAI agents
+  encountered unusually difficult tasks.
 ---
-
-Author：Bowen ｜ [homepage](https://eyuansu62.github.io/) ｜ [X @eyuansuMX](https://x.com/eyuansuMX)
-
----
-
-_When impossible tasks turn persistence into misalignment._
 
 During internal cybersecurity evaluations in July 2026, OpenAI agents encountered unusually difficult tasks.
 
