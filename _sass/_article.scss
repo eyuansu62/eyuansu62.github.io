@@ -404,21 +404,11 @@ html[data-theme="dark"] .ar-page {
     color: var(--ar-accent);
   }
 
-  // A section break, drawn as an asterism so a lone divider reads as
-  // deliberate rather than as a stray rule.
+  // A section break: a full-measure hairline, like the rule above each h2.
   hr {
-    height: auto;
     margin: 36px 0;
     border: 0;
-    overflow: visible;
-    text-align: center;
-
-    &::before {
-      content: "· · ·";
-      font-size: 18px;
-      letter-spacing: 0.6em;
-      color: var(--ar-ink-4);
-    }
+    border-top: 1px solid var(--ar-rule);
   }
 
   // A divider opening the body, e.g. left behind under a removed intro line.
