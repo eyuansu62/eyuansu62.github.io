@@ -50,8 +50,8 @@ body:has(.ar-page) {
 }
 
 // CJK fonts have no italic, so browsers slant the glyphs artificially. Keep
-// the dek and pull quotes upright in Chinese posts; their size sets them apart.
-.ar-page:lang(zh) :is(.ar-head .ar-dek, blockquote) {
+// the dek upright in Chinese posts; its size and colour set it apart.
+.ar-page:lang(zh) .ar-head .ar-dek {
   font-style: normal;
 }
 
@@ -435,27 +435,6 @@ body:has(.ar-page) {
     background: none;
   }
 
-  // Pull quote: a plain markdown blockquote.
-  blockquote {
-    margin: 32px 0;
-    padding: 4px 0 4px 22px;
-    background: none;
-    border-left: 2px solid var(--ar-ink);
-    font-size: 21px;
-    font-style: italic;
-    line-height: 1.55;
-    color: var(--ar-ink);
-
-    p {
-      font-size: inherit;
-      line-height: inherit;
-      margin: 0 0 10px;
-      &:last-child {
-        margin: 0;
-      }
-    }
-  }
-
   // Tables: hairlines, mono uppercase headers, tabular figures. article.js
   // wraps each table in .ar-table so wide ones scroll instead of overflowing.
   .ar-table {
@@ -546,7 +525,10 @@ body:has(.ar-page) {
     }
   }
 
-  // Notion callouts, emitted by bin/sync_notion_posts.py.
+  // Quotes and Notion callouts (emitted by bin/sync_notion_posts.py) share
+  // one boxed style. Lines fill the box rather than being balanced: in a
+  // narrow box, text-wrap: pretty breaks visibly early.
+  blockquote,
   .ar-callout {
     margin: 28px 0;
     padding: 16px 20px;
@@ -554,11 +536,14 @@ body:has(.ar-page) {
     border: 1px solid var(--ar-rule-2);
     border-left: 2px solid var(--ar-accent);
     border-radius: 2px;
+    font-size: inherit;
+    font-style: normal;
 
     p,
     li {
       font-size: 16.5px;
       line-height: 1.65;
+      text-wrap: wrap;
     }
 
     p {
