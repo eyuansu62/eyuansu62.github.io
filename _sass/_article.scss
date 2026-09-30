@@ -106,10 +106,10 @@ body:has(.ar-page) {
 
 // --------------------------------------------------------------- header ----
 
-// Title, dek, then one quiet line of metadata. No rule under it: white space
-// separates the header from the body.
+// Title, dek, then one quiet line of metadata, closed by a hairline.
 .ar-head {
-  padding: 24px 0 0;
+  padding: 24px 0 32px;
+  border-bottom: 1px solid var(--ar-rule);
 }
 
 .ar-head h1 {
@@ -209,7 +209,7 @@ body:has(.ar-page) {
 
 // Starts level with the first line of the body; lighter than the prose.
 .ar-toc {
-  margin-top: 62px;
+  margin-top: 42px;
 
   ol {
     list-style: none;
@@ -265,7 +265,7 @@ body:has(.ar-page) {
   color: var(--ar-ink-2);
 
   > :first-child {
-    margin-top: 56px;
+    margin-top: 36px;
   }
 
   p,
