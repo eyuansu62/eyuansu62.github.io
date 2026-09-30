@@ -1,0 +1,872 @@
+/*******************************************************************************
+ * Long-form article layout for blog posts (_layouts/post.liquid).
+ *
+ * A journal-style reading view: serif prose on a 720px measure, a sticky
+ * contents rail on the left, hairline rules instead of boxes, and small mono
+ * uppercase labels for metadata. Everything is scoped under .ar-page so the
+ * rest of al-folio is untouched.
+ *
+ * To retune the look, change the tokens below; nothing else hardcodes colour.
+ ******************************************************************************/
+
+.ar-page {
+  --ar-ink: #15141a;
+  --ar-ink-2: #2a2830;
+  --ar-ink-3: #5e5b66;
+  --ar-ink-4: #6a6674; // >= 4.5:1 on white and on --ar-wash (WCAG AA)
+  --ar-rule: #dcd7cb;
+  --ar-rule-2: #e9e5da;
+  --ar-wash: #f6f3ec;
+  --ar-accent: #7a1a1a;
+  --ar-accent-hover: #5c1212;
+  --ar-accent-soft: rgba(122, 26, 26, 0.07);
+  --ar-link-line: rgba(122, 26, 26, 0.38);
+
+  --ar-serif: "Newsreader", "Iowan Old Style", Georgia, "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+  --ar-sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+  --ar-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+html[data-theme="dark"] .ar-page {
+  --ar-ink: #ecebef;
+  --ar-ink-2: #d6d4dc;
+  --ar-ink-3: #a9a6b2;
+  --ar-ink-4: #9a97a3;
+  --ar-rule: #3a3940;
+  --ar-rule-2: #2e2d33;
+  --ar-wash: #25252a;
+  --ar-accent: #e08a80;
+  --ar-accent-hover: #f0a79e;
+  --ar-accent-soft: rgba(224, 138, 128, 0.1);
+  --ar-link-line: rgba(224, 138, 128, 0.45);
+}
+
+// ---------------------------------------------------------------- grid ----
+
+// al-folio's .container is max_width (800px) wide, too narrow for a rail plus a
+// 720px measure. Break out to the viewport and re-centre.
+.ar-page {
+  position: relative;
+  width: min(1060px, calc(100vw - 32px));
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 72px;
+  display: grid;
+  grid-template-columns: 200px minmax(0, 720px);
+  column-gap: clamp(32px, 4vw, 56px);
+  justify-content: center;
+  color: var(--ar-ink);
+}
+
+.ar-head,
+.ar-main {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.ar-toc {
+  grid-column: 1;
+  grid-row: 2;
+  position: sticky;
+  top: 88px; // clears the fixed navbar
+  align-self: start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.ar-main {
+  grid-row: 2;
+}
+
+// Same-colour text rule from _base.scss (`p, div, li, span … { color }`) would
+// otherwise win over inheritance inside the article.
+.ar-page :is(p, div, li, span, em, strong, h1, h2, h3, h4, td, th, figcaption) {
+  color: inherit;
+}
+
+// --------------------------------------------------------------- header ----
+
+.ar-crumb {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  margin: 8px 0 36px;
+  font-family: var(--ar-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ar-ink-4);
+
+  a {
+    color: var(--ar-ink-3);
+    font-weight: 500;
+    &:hover {
+      color: var(--ar-accent);
+      text-decoration: none;
+    }
+  }
+
+  span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.ar-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 20px;
+  font-family: var(--ar-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ar-ink-4);
+
+  .ar-dot {
+    opacity: 0.5;
+  }
+}
+
+.ar-lang {
+  display: inline-flex;
+  border: 1px solid var(--ar-rule);
+  border-radius: 2px;
+  overflow: hidden;
+
+  a,
+  span {
+    padding: 2px 8px;
+    color: var(--ar-ink-4);
+    letter-spacing: 0.05em;
+  }
+
+  a:hover {
+    color: var(--ar-accent);
+    text-decoration: none;
+  }
+
+  [aria-current="true"] {
+    background: var(--ar-ink);
+    color: var(--global-bg-color);
+  }
+}
+
+.ar-head h1 {
+  margin: 0;
+  font-family: var(--ar-serif);
+  font-weight: 400;
+  font-size: clamp(34px, 4.6vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ar-ink);
+  text-wrap: balance;
+}
+
+.ar-dek {
+  margin: 14px 0 0;
+  font-family: var(--ar-serif);
+  font-style: italic;
+  font-size: clamp(18px, 1.7vw, 21px);
+  line-height: 1.45;
+  color: var(--ar-ink-3);
+}
+
+.ar-standfirst {
+  margin: 22px 0 0;
+  padding: 14px 0 14px 18px;
+  border-left: 2px solid var(--ar-accent);
+  font-family: var(--ar-serif);
+  font-size: clamp(17px, 1.5vw, 19.5px);
+  line-height: 1.6;
+  color: var(--ar-ink-2);
+  text-wrap: pretty;
+
+  .ar-label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--ar-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ar-accent);
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--ar-ink);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.ar-byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 0;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--ar-rule);
+  font-family: var(--ar-sans);
+  font-size: 15px;
+
+  .ar-avatar {
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--ar-rule);
+    background: var(--ar-wash);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  a {
+    color: var(--ar-ink);
+    &:hover {
+      color: var(--ar-accent);
+      text-decoration: none;
+    }
+  }
+
+  .ar-byline-meta {
+    margin-left: auto;
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ar-ink-4);
+
+    a {
+      color: var(--ar-ink-4);
+      border-bottom: 1px solid var(--ar-rule);
+      &:hover {
+        color: var(--ar-accent);
+        border-color: var(--ar-accent);
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------ TOC ----
+
+.ar-toc {
+  margin-top: 6px;
+
+  h3 {
+    margin: 0 0 12px;
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ar-ink-4);
+  }
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid var(--ar-rule);
+  }
+
+  ol ol {
+    border-left: 0;
+    margin: 0 0 2px 14px;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    margin-left: -2px;
+    padding: 5px 0 5px 14px;
+    border-left: 2px solid transparent;
+    font-family: var(--ar-sans);
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ar-ink-4);
+    transition:
+      color 0.15s,
+      border-color 0.15s;
+
+    &:hover {
+      color: var(--ar-ink-2);
+      text-decoration: none;
+    }
+
+    &.active {
+      color: var(--ar-ink);
+      border-left-color: var(--ar-ink);
+    }
+  }
+
+  ol ol a {
+    font-size: 12.5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+}
+
+// ----------------------------------------------------------------- prose ----
+
+.ar-main {
+  font-family: var(--ar-serif);
+  color: var(--ar-ink-2);
+
+  > :first-child {
+    margin-top: 32px;
+  }
+
+  p,
+  li {
+    font-size: 18px;
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  p {
+    margin: 0 0 20px;
+  }
+
+  h2 {
+    margin: 48px 0 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ar-rule);
+    font-family: var(--ar-serif);
+    font-weight: 500;
+    font-size: clamp(24px, 2.4vw, 29px);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ar-ink);
+    scroll-margin-top: 80px;
+  }
+
+  h3 {
+    margin: 34px 0 12px;
+    font-family: var(--ar-serif);
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: -0.01em;
+    color: var(--ar-ink);
+    scroll-margin-top: 80px;
+  }
+
+  h4 {
+    margin: 26px 0 10px;
+    font-family: var(--ar-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ar-ink-3);
+  }
+
+  a {
+    color: var(--ar-ink);
+    border-bottom: 1px solid var(--ar-link-line);
+    padding: 0 1px;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
+
+    &:hover {
+      color: var(--ar-accent);
+      border-bottom-color: var(--ar-accent);
+      text-decoration: none;
+    }
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+    color: var(--ar-ink);
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 22px;
+    padding-left: 1.4em;
+  }
+
+  li {
+    margin: 0 0 8px;
+    padding-left: 4px;
+  }
+
+  ul > li::marker {
+    color: var(--ar-accent);
+  }
+
+  ol > li::marker {
+    font-family: var(--ar-mono);
+    font-size: 0.8em;
+    color: var(--ar-accent);
+  }
+
+  hr {
+    margin: 40px auto;
+    width: 64px;
+    border: 0;
+    border-top: 1px solid var(--ar-rule);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  // Inline code and blocks. Resets al-folio's theme-coloured code.
+  code {
+    font-family: var(--ar-mono);
+    font-size: 0.82em;
+    color: var(--ar-ink);
+    background: var(--ar-wash);
+    border: 1px solid var(--ar-rule-2);
+    border-radius: 3px;
+    padding: 1px 5px;
+    white-space: normal;
+  }
+
+  pre,
+  .highlight {
+    margin: 0 0 24px;
+    padding: 16px 18px;
+    background: var(--ar-wash);
+    border: 1px solid var(--ar-rule);
+    border-radius: 2px;
+    font-family: var(--ar-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ar-ink-2);
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      border: 0;
+      background: none;
+      font-size: inherit;
+      color: inherit;
+      white-space: pre;
+    }
+  }
+
+  .highlight pre {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  // Pull quote: a plain markdown blockquote.
+  blockquote {
+    margin: 32px 0;
+    padding: 4px 0 4px 22px;
+    background: none;
+    border-left: 2px solid var(--ar-ink);
+    font-size: 21px;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--ar-ink);
+
+    p {
+      font-size: inherit;
+      line-height: inherit;
+      margin: 0 0 10px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
+  // Tables: hairlines, mono uppercase headers, tabular figures. article.js
+  // wraps each table in .ar-table so wide ones scroll instead of overflowing.
+  .ar-table {
+    width: 100%;
+    overflow-x: auto;
+    margin: 28px 0;
+
+    table {
+      margin: 0;
+    }
+  }
+
+  table {
+    width: 100%;
+    margin: 28px 0;
+    border-collapse: collapse;
+    font-family: var(--ar-sans);
+    font-size: 14.5px;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    border-top: 1px solid var(--ar-ink);
+    border-bottom: 1px solid var(--ar-ink);
+  }
+
+  thead th {
+    padding: 10px 14px 8px 0;
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ar-ink-3);
+    border-bottom: 1px solid var(--ar-rule);
+    text-align: left;
+    vertical-align: bottom;
+  }
+
+  td {
+    padding: 9px 14px 9px 0;
+    font-size: 14.5px;
+    border-bottom: 1px solid var(--ar-rule-2);
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  td code {
+    font-size: 0.85em;
+  }
+
+  // Figures
+  figure {
+    margin: 36px 0;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-family: var(--ar-sans);
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ar-ink-3);
+  }
+
+  // Closing line of a post, in the style of a standfirst: `{: .ar-coda}`.
+  .ar-coda {
+    margin: 44px 0 0;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--ar-rule);
+    font-size: 21px;
+    line-height: 1.55;
+    text-align: center;
+    color: var(--ar-ink);
+    text-wrap: balance;
+  }
+
+  // Small print, e.g. a data note at the end: `{: .ar-fine}`.
+  .ar-fine {
+    margin-top: 28px;
+    font-family: var(--ar-sans);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ar-ink-3);
+
+    a {
+      color: var(--ar-ink-3);
+    }
+  }
+
+  // Boxed aside: `{: .ar-aside}` on a paragraph or a <div class="ar-aside">.
+  .ar-aside {
+    margin: 28px 0;
+    padding: 16px 20px;
+    background: var(--ar-wash);
+    border: 1px solid var(--ar-rule-2);
+    border-radius: 2px;
+    font-family: var(--ar-sans);
+    font-size: 15px;
+    line-height: 1.6;
+
+    p,
+    li {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ------------------------------------------------------------ footnotes ----
+// kramdown renders [^n] as <sup><a class="footnote"> and a trailing
+// <div class="footnotes">. article.js moves that list under a "Notes" heading
+// and adds a hover popover on each marker.
+
+.ar-main {
+  sup[role="doc-noteref"],
+  sup:has(> a.footnote) {
+    line-height: 0;
+    font-size: 0.7em;
+
+    a {
+      padding: 0 1px;
+      border: 0;
+      font-family: var(--ar-mono);
+      color: var(--ar-accent);
+    }
+  }
+
+  .footnotes {
+    font-family: var(--ar-sans);
+
+    ol {
+      padding-left: 1.6em;
+    }
+
+    li,
+    p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ar-ink-3);
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a.reversefootnote {
+      border: 0;
+      color: var(--ar-accent);
+    }
+  }
+}
+
+.ar-fnpop {
+  position: absolute;
+  z-index: 1050;
+  max-width: 340px;
+  padding: 10px 12px;
+  background: var(--global-bg-color);
+  border: 1px solid var(--ar-rule);
+  border-radius: 3px;
+  box-shadow: 0 10px 28px -14px rgba(0, 0, 0, 0.4);
+  font-family: var(--ar-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ar-ink-2);
+  pointer-events: none;
+
+  p {
+    margin: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  a.reversefootnote {
+    display: none;
+  }
+}
+
+// -------------------------------------------------------------- citation ----
+
+.ar-cite {
+  position: relative;
+
+  pre {
+    margin-bottom: 0;
+    white-space: pre;
+  }
+
+  .ar-copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 9px;
+    font-family: var(--ar-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ar-ink-3);
+    background: var(--global-bg-color);
+    border: 1px solid var(--ar-rule);
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--ar-accent);
+      border-color: var(--ar-accent);
+    }
+  }
+}
+
+.ar-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ar-rule);
+
+  a {
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ar-accent);
+    border: 0;
+
+    &:hover {
+      color: var(--ar-accent-hover);
+      text-decoration: none;
+    }
+  }
+}
+
+// Everything al-folio appends after the article (related posts, comments)
+// sits on the same measure as the prose.
+.ar-after {
+  grid-column: 2;
+  grid-row: 3;
+  min-width: 0;
+}
+
+.ar-next {
+  margin-top: 48px;
+
+  h3 {
+    margin: 0 0 10px;
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ar-ink-4);
+  }
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--ar-rule);
+  }
+
+  time {
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ar-ink-4);
+  }
+
+  a {
+    font-family: var(--ar-serif);
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--ar-ink);
+
+    &:hover {
+      color: var(--ar-accent);
+      text-decoration: none;
+    }
+  }
+}
+
+// ---------------------------------------------------------- narrow view ----
+
+@media (max-width: 1000px) {
+  .ar-page {
+    grid-template-columns: minmax(0, 720px);
+  }
+
+  .ar-head,
+  .ar-main,
+  .ar-toc,
+  .ar-after {
+    grid-column: 1;
+  }
+
+  .ar-head {
+    grid-row: 1;
+  }
+
+  .ar-toc {
+    grid-row: 2;
+    position: static;
+    max-height: none;
+    margin: 24px 0 0;
+
+    ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 18px;
+      border: 0;
+    }
+
+    ol ol {
+      display: none;
+    }
+
+    a {
+      margin-left: 0;
+      padding: 3px 0;
+      border: 0;
+    }
+  }
+
+  .ar-main {
+    grid-row: 3;
+  }
+
+  .ar-after {
+    grid-row: 4;
+  }
+}
+
+@media (max-width: 576px) {
+  .ar-main {
+    p,
+    li {
+      font-size: 17px;
+      line-height: 1.7;
+    }
+  }
+
+  .ar-byline .ar-byline-meta {
+    display: none;
+  }
+}
+
+@media print {
+  .ar-toc,
+  .ar-foot,
+  .ar-cite .ar-copy {
+    display: none;
+  }
+
+  .ar-page {
+    display: block;
+    width: auto;
+    left: 0;
+    transform: none;
+  }
+}

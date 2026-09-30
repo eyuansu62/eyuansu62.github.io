@@ -1,10 +1,31 @@
 ---
 layout: default
 ---
-{% assign year = page.date | date: '%Y' %}
-{% assign tags = page.tags | join: '' %}
-{% assign categories = page.categories | join: '' %}
-{% assign url_beginning = page.url | slice: 0, 6 %}
+{%- comment -%}
+  Long-form article view. Styles live in _sass/_article.scss; the contents rail,
+  footnote popovers and citation copy button are wired up by assets/js/article.js.
+
+  Optional front matter:
+    subtitle:        a one-line dek under the title
+    tldr:            one or two sentences shown under the title (markdown ok)
+    lang:            en | zh, switches the interface labels
+    translation_key: shared by the translations of one post; adds an EN / 中文 switch
+    cite: false      hides the BibTeX block; cite_key overrides the generated key
+{%- endcomment -%}
+{% assign is_zh = false %}
+{% if page.lang == 'zh' %}{% assign is_zh = true %}{% endif %}
+
+{% if page.author %}
+  {% assign author = page.author %}
+{% else %}
+  {% assign author = site.first_name | append: ' ' | append: site.last_name %}
+{% endif %}
+
+{% if page.reading_time %}
+  {% assign read_time = page.reading_time %}
+{% else %}
+  {% assign read_time = content | strip_html | number_of_words: 'auto' | divided_by: 200 | plus: 1 %}
+{% endif %}
 
 {% if page._styles %}
   <!-- Page/Post style -->
@@ -13,92 +34,200 @@ layout: default
   </style>
 {% endif %}
 
-<div class="post">
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">
-      Created on {{ page.date | date: '%B %d, %Y' }}
-      {% if page.author %}by {{ page.author }}{% endif %}
-      {% if page.last_updated %}, last updated on {{ page.last_updated | date: '%B %d, %Y' }}{% endif %}
-      {% if page.meta %}• {{ page.meta }}{% endif %}
-      {%- comment -%}
-        Set by bin/sync_notion_posts.py on imported posts. The body above is a
-        full local copy, so this is attribution and a way back to the source,
-        not the canonical location of the text.
-      {%- endcomment -%}
-      {% if page.notion_url %}
-        • <a href="{{ page.notion_url }}" rel="external nofollow noopener" target="_blank">source in Notion</a>
-      {% endif %}
-    </p>
-    <p class="post-tags">
-      {% if url_beginning == '/blog/' %}
-        <a href="{{ year | prepend: '/blog/' | relative_url }}"> <i class="fa-solid fa-calendar fa-sm"></i> {{ year }} </a>
-      {% else %}
-        <i class="fa-solid fa-calendar fa-sm"></i> {{ year }}
-      {% endif %}
-      {% if tags != '' %}
-        &nbsp; &middot; &nbsp;
-        {% for tag in page.tags %}
-          {% if url_beginning == '/blog/' %}
-            <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}"> <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}</a>
-          {% else %}
-            <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}
-          {% endif %}
-          {% unless forloop.last %}
-            &nbsp;
-          {% endunless %}
-        {% endfor %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
+>
+
+<div
+  class="post ar-page"
+  {% if is_zh %}
+    lang="zh-CN"
+  {% endif %}
+>
+  <header class="ar-head" id="top">
+    <nav class="ar-crumb" aria-label="Breadcrumb">
+      <a href="{{ '/blog/' | relative_url }}">
+        {%- if is_zh %}博客{% else %}Blog{% endif -%}
+      </a>
+      <span aria-hidden="true">›</span>
+      <span>{{ page.title }}</span>
+    </nav>
+
+    <div class="ar-eyebrow">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        {%- if is_zh -%}
+          {{ page.date | date: '%Y 年 %-m 月 %-d 日' }}
+        {%- else -%}
+          {{ page.date | date: '%b %-d, %Y' }}
+        {%- endif -%}
+      </time>
+      <span class="ar-dot" aria-hidden="true">·</span>
+      <span>
+        {%- if is_zh %}约 {{ read_time }} 分钟{% else %}{{ read_time }} min read{% endif -%}
+      </span>
+      {% if page.last_updated %}
+        <span class="ar-dot" aria-hidden="true">·</span>
+        <span>
+          {%- if is_zh %}更新于 {% else %}Updated {% endif -%}
+          {{- page.last_updated | date: '%Y-%m-%d' -}}
+        </span>
       {% endif %}
 
-      {% if categories != '' %}
-        &nbsp; &middot; &nbsp;
-        {% for category in page.categories %}
-          {% if url_beginning == '/blog/' %}
-            <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}"> <i class="fa-solid fa-tag fa-sm"></i> {{ category -}}</a>
-          {% else %}
-            <i class="fa-solid fa-tag fa-sm"></i> {{ category }}
-          {% endif %}
-          {% unless forloop.last %}
-            &nbsp;
-          {% endunless %}
-        {% endfor %}
+      {% if page.translation_key %}
+        {% assign translations = site.posts | where: 'translation_key', page.translation_key | sort: 'lang' %}
+        {% if translations.size > 1 %}
+          <span class="ar-lang" role="group" aria-label="Language">
+            {% for t in translations %}
+              {% if t.lang == 'zh' %}{% assign label = '中文' %}{% else %}{% assign label = 'EN' %}{% endif %}
+              {% if t.url == page.url %}
+                <span aria-current="true">{{ label }}</span>
+              {% else %}
+                <a href="{{ t.url | relative_url }}" hreflang="{% if t.lang == 'zh' %}zh-CN{% else %}en{% endif %}">{{ label }}</a>
+              {% endif %}
+            {% endfor %}
+          </span>
+        {% endif %}
       {% endif %}
-    </p>
+    </div>
+
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}
+      <p class="ar-dek">{{ page.subtitle }}</p>
+    {% endif %}
+
+    {% if page.tldr %}
+      <div class="ar-standfirst">
+        <span class="ar-label">
+          {%- if is_zh %}结论先行 · TL;DR{% else %}TL;DR{% endif -%}
+        </span>
+        {{ page.tldr | markdownify }}
+      </div>
+    {% endif %}
+
+    <div class="ar-byline">
+      <span class="ar-avatar"><img src="{{ '/assets/img/prof_pic.jpg' | relative_url }}" alt="" width="36" height="36"></span>
+      <span>
+        {%- if is_zh -%}作者 {% else %}By {% endif -%}
+        <a href="{{ '/' | relative_url }}">{{ author }}</a>
+      </span>
+      {% if page.notion_url %}
+        <span class="ar-byline-meta">
+          <a href="{{ page.notion_url }}" rel="external nofollow noopener" target="_blank">
+            {%- if is_zh -%}Notion 原文{%- else -%}Source in Notion{%- endif -%}
+          </a>
+        </span>
+      {% endif %}
+    </div>
   </header>
 
-  <article class="post-content">
-    {% if page.toc and page.toc.beginning %}
-      <div id="table-of-contents">
-        {% toc %}
+  <aside class="ar-toc" aria-label="{% if is_zh %}目录{% else %}Contents{% endif %}" hidden>
+    <h3>
+      {% if is_zh %}目录{% else %}Contents{% endif %}
+    </h3>
+  </aside>
+
+  <article class="ar-main" id="markdown-content" data-notes-label="{% if is_zh %}注释{% else %}Notes{% endif %}">
+    {{ content }}
+
+    {% if page.related_publications %}
+      <h2 id="references">
+        {% if is_zh %}参考文献{% else %}References{% endif %}
+      </h2>
+      <div class="publications">
+        {% bibliography --group_by none --cited_in_order %}
       </div>
-      <hr>
     {% endif %}
-    <div id="markdown-content">
-      {{ content }}
+
+    {% unless page.cite == false %}
+      {% assign cite_year = page.date | date: '%Y' %}
+      {% if page.cite_key %}
+        {% assign cite_key = page.cite_key %}
+      {% else %}
+        {% assign cite_key = site.last_name | downcase | append: cite_year | append: page.slug | split: '-' | first %}
+      {% endif %}
+      {% assign cite_title = page.title | replace: '{', '' | replace: '}', '' %}
+      <h2 id="citation">
+        {% if is_zh %}引用{% else %}Citation{% endif %}
+      </h2>
+      <p>
+        {%- if is_zh -%}
+          如果这篇文章对你有帮助，可以这样引用：
+        {%- else -%}
+          If you found this post useful, please cite it as:
+        {%- endif -%}
+      </p>
+      <div class="ar-cite">
+        <pre><code>@misc{ {{- cite_key -}},
+  title        = { {{- cite_title -}} },
+  author       = { {{- site.last_name }}, {{ site.first_name -}} },
+  year         = { {{- cite_year -}} },
+  howpublished = {Blog post},
+  url          = { {{- page.url | absolute_url -}} }
+}</code></pre>
+        <button type="button" class="ar-copy" data-done="{% if is_zh %}已复制{% else %}Copied{% endif %}">
+          {%- if is_zh -%}复制{%- else -%}Copy{%- endif -%}
+        </button>
+      </div>
+    {% endunless %}
+
+    <div class="ar-foot">
+      <a href="{{ '/blog/' | relative_url }}"
+        >← {% if is_zh %}全部文章{% else %}All posts{% endif -%}
+      </a>
+      <a href="#top">
+        {%- if is_zh %}回到顶部{% else %}Back to top{% endif %} ↑</a
+      >
     </div>
   </article>
 
-  {% if page.citation %}
-    {% include citation.liquid %}
-  {% endif %}
-
-  {% if page.related_publications %}
-    <h2>References</h2>
-    <div class="publications">
-      {% bibliography --group_by none --cited_in_order %}
-    </div>
-  {% endif %}
-
-  {% if site.related_blog_posts and site.related_blog_posts.enabled %}
-    {% if page.related_posts == null or page.related_posts %}
-      {% include related_posts.liquid %}
+  <div class="ar-after">
+    {% if site.related_blog_posts and site.related_blog_posts.enabled %}
+      {% if page.related_posts == null or page.related_posts %}
+        {%- comment -%}
+          Other posts, newest first, skipping this post's own translations.
+          Replaces al-folio's related_posts.liquid, which does not fit this layout.
+        {%- endcomment -%}
+        {% assign shown = 0 %}
+        {% capture next_items %}
+          {% for post in site.posts %}
+            {% if shown >= site.related_blog_posts.max_related %}{% break %}{% endif %}
+            {% if post.url == page.url %}{% continue %}{% endif %}
+            {% if page.translation_key and post.translation_key == page.translation_key %}{% continue %}{% endif %}
+            {% if post.redirect contains '://' %}
+              {% assign next_href = post.redirect %}
+            {% else %}
+              {% assign next_href = post.url | relative_url %}
+            {% endif %}
+            <li>
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %Y' }}</time>
+              <a href="{{ next_href }}"{% if post.redirect contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ post.title }}</a>
+            </li>
+            {% assign shown = shown | plus: 1 %}
+          {% endfor %}
+        {% endcapture %}
+        {% if shown > 0 %}
+          <section class="ar-next">
+            <h3>
+              {% if is_zh %}继续阅读{% else %}Read next{% endif %}
+            </h3>
+            <ol>
+              {{ next_items }}
+            </ol>
+          </section>
+        {% endif %}
+      {% endif %}
     {% endif %}
-  {% endif %}
 
-  {% if site.disqus_shortname and page.disqus_comments %}
-    {% include disqus.liquid %}
-  {% endif %}
-  {% if site.giscus and page.giscus_comments %}
-    {% include giscus.liquid %}
-  {% endif %}
+    {% if site.disqus_shortname and page.disqus_comments %}
+      {% include disqus.liquid %}
+    {% endif %}
+    {% if site.giscus and page.giscus_comments %}
+      {% include giscus.liquid %}
+    {% endif %}
+  </div>
 </div>
+
+<script defer src="{{ '/assets/js/article.js' | relative_url | bust_file_cache }}"></script>
