@@ -72,9 +72,14 @@ body:has(.ar-page) {
   color: var(--ar-ink);
 }
 
-.ar-head,
 .ar-main {
   grid-column: 2;
+  min-width: 0;
+}
+
+// The header spans the contents rail too, so the title gets a wider line.
+.ar-head {
+  grid-column: 1 / -1;
   min-width: 0;
 }
 
@@ -170,6 +175,7 @@ body:has(.ar-page) {
 }
 
 .ar-head .ar-dek {
+  max-width: 760px;
   margin: 14px 0 0;
   font-family: var(--ar-serif);
   font-style: italic;
@@ -179,6 +185,7 @@ body:has(.ar-page) {
 }
 
 .ar-standfirst {
+  max-width: 760px;
   margin: 22px 0 0;
   padding: 14px 0 14px 18px;
   border-left: 2px solid var(--ar-accent);
