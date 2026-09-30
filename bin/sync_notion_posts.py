@@ -623,6 +623,9 @@ def write_post(page: dict) -> str:
         "notion_page_id": page_id,
         "notion_url": notion_url,
     }
+    # Switches the post layout's labels (date format, 目录, 引用 …) to Chinese.
+    if re.search(r"[一-鿿]", meta["title"]):
+        front["lang"] = "zh"
 
     if LINK_ONLY:
         print(f"...linking “{meta['title']}”")
@@ -651,6 +654,8 @@ def write_post(page: dict) -> str:
     else:
         print(f"...importing “{meta['title']}”")
         body = blocks_to_markdown(blocks, page_id)
+        if not meta["description"]:
+            meta["description"] = summarise(blocks_to_plain_text(blocks))
 
     if meta["description"]:
         front["description"] = meta["description"]

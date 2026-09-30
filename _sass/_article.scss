@@ -427,6 +427,12 @@ html[data-theme="dark"] .ar-page {
     border-top: 1px solid var(--ar-rule);
   }
 
+  // h2 already draws a rule above itself; Notion pages often put a divider
+  // there too, which would double it.
+  hr:has(+ h2) {
+    display: none;
+  }
+
   img {
     max-width: 100%;
     height: auto;
