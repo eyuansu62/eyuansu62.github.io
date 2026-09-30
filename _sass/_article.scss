@@ -99,8 +99,9 @@ body:has(.ar-page) {
 }
 
 // Same-colour text rule from _base.scss (`p, div, li, span … { color }`) would
-// otherwise win over inheritance inside the article.
-.ar-page :is(p, div, li, span, em, strong, h1, h2, h3, h4, td, th, figcaption) {
+// otherwise win over inheritance inside the article. :where keeps this at one
+// class of specificity, so any later class rule that sets a colour still wins.
+.ar-page :where(p, div, li, span, em, strong, h1, h2, h3, h4, td, th, figcaption) {
   color: inherit;
 }
 
@@ -750,6 +751,90 @@ body:has(.ar-page) {
   }
 }
 
+// ------------------------------------------------------------ post index ----
+// /blog/ (_pages/blog.md): each row puts the date in the contents rail and
+// the title in the text column, so both line up with an article page.
+
+.ar-index {
+  .ar-lede {
+    max-width: 760px;
+    margin: 16px 0 0;
+    font-family: var(--ar-serif);
+    font-size: clamp(18px, 1.7vw, 21px);
+    line-height: 1.45;
+    color: var(--ar-ink-3);
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+.ar-posts,
+.ar-post {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.ar-posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ar-post {
+  align-items: baseline;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--ar-rule-2);
+}
+
+.ar-post-date {
+  font-family: var(--ar-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ar-ink-4);
+}
+
+.ar-post-body {
+  min-width: 0;
+
+  h2 {
+    margin: 0;
+    font-family: var(--ar-serif);
+    font-weight: 400;
+    font-size: clamp(23px, 2.3vw, 27px);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--ar-ink);
+    text-wrap: balance;
+
+    a:hover {
+      color: var(--ar-accent);
+      text-decoration: none;
+    }
+  }
+
+  .ar-ext {
+    font-size: 0.7em;
+    color: var(--ar-ink-4);
+  }
+
+  p {
+    margin: 10px 0 0;
+    font-family: var(--ar-serif);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ar-ink-3);
+    text-wrap: pretty;
+  }
+
+  .ar-meta {
+    margin-top: 14px;
+  }
+}
+
 // ---------------------------------------------------------- narrow view ----
 
 @media (max-width: 1000px) {
@@ -790,6 +875,10 @@ body:has(.ar-page) {
 
   .ar-after {
     grid-row: 4;
+  }
+
+  .ar-post-date {
+    margin-bottom: 8px;
   }
 }
 
