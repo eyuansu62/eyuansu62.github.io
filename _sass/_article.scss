@@ -10,19 +10,20 @@
  ******************************************************************************/
 
 .ar-page {
+  // Linen paper with an indigo accent.
   --ar-ink: #15141a;
   --ar-ink-2: #2a2830;
   --ar-ink-3: #5e5b66;
-  --ar-ink-4: #6a6674; // >= 4.5:1 on white and on --ar-wash (WCAG AA)
-  --ar-rule: #dcd7cb;
-  --ar-rule-2: #e9e5da;
-  --ar-wash: #f6f3ec;
-  --ar-accent: #7a1a1a;
-  --ar-accent-hover: #5c1212;
-  --ar-accent-soft: rgba(122, 26, 26, 0.07);
-  --ar-link-line: rgba(122, 26, 26, 0.38);
+  --ar-ink-4: #67636f; // >= 4.5:1 on the paper and on --ar-wash (WCAG AA)
+  --ar-rule: #dbd5c8;
+  --ar-rule-2: #e8e3d8;
+  --ar-wash: #eeeae1;
+  --ar-accent: #2b3f6c;
+  --ar-accent-hover: #1d2c4f;
+  --ar-accent-soft: rgba(43, 63, 108, 0.07);
+  --ar-link-line: rgba(43, 63, 108, 0.38);
 
-  --ar-serif: "Source Serif 4", "Noto Serif SC", "Source Han Serif SC", "Noto Serif CJK SC", Georgia, "Songti SC", serif;
+  --ar-serif: "Newsreader", "Noto Serif SC", "Source Han Serif SC", "Noto Serif CJK SC", Georgia, "Songti SC", serif;
   --ar-sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
   --ar-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
@@ -35,10 +36,34 @@ html[data-theme="dark"] .ar-page {
   --ar-rule: #3a3940;
   --ar-rule-2: #2e2d33;
   --ar-wash: #25252a;
-  --ar-accent: #e08a80;
-  --ar-accent-hover: #f0a79e;
-  --ar-accent-soft: rgba(224, 138, 128, 0.1);
-  --ar-link-line: rgba(224, 138, 128, 0.45);
+  --ar-accent: #9db0e0;
+  --ar-accent-hover: #bccbef;
+  --ar-accent-soft: rgba(157, 176, 224, 0.1);
+  --ar-link-line: rgba(157, 176, 224, 0.45);
+}
+
+// On post pages the paper colour and accent reach the navbar too, so the page
+// reads as one sheet. Other pages keep the site's own colours.
+:root:not([data-theme="dark"]):has(.ar-page) {
+  --global-bg-color: #f7f4ee;
+  --global-theme-color: #2b3f6c;
+  --global-hover-color: #2b3f6c;
+}
+
+html[data-theme="dark"]:has(.ar-page) {
+  --global-theme-color: #9db0e0;
+  --global-hover-color: #9db0e0;
+}
+
+body:has(.ar-page) {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  .navbar :is(.navbar-brand, .nav-link) {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 1.1rem;
+  }
 }
 
 // CJK fonts have no italic, so browsers slant the glyphs artificially. Keep
