@@ -760,9 +760,13 @@ body:has(.ar-page) {
   // Same overall width as an article; the narrow view below still wins.
   grid-template-columns: 110px minmax(0, 820px);
 
+  .ar-head {
+    text-align: center;
+  }
+
   .ar-lede {
     max-width: 760px;
-    margin: 16px 0 0;
+    margin: 16px auto 0;
     font-family: var(--ar-serif);
     font-size: clamp(18px, 1.7vw, 21px);
     line-height: 1.45;
