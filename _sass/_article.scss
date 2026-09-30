@@ -404,11 +404,26 @@ html[data-theme="dark"] .ar-page {
     color: var(--ar-accent);
   }
 
+  // A section break, drawn as an asterism so a lone divider reads as
+  // deliberate rather than as a stray rule.
   hr {
-    margin: 40px auto;
-    width: 64px;
+    height: auto;
+    margin: 36px 0;
     border: 0;
-    border-top: 1px solid var(--ar-rule);
+    overflow: visible;
+    text-align: center;
+
+    &::before {
+      content: "· · ·";
+      font-size: 18px;
+      letter-spacing: 0.6em;
+      color: var(--ar-ink-4);
+    }
+  }
+
+  // A divider opening the body, e.g. left behind under a removed intro line.
+  > hr:first-child {
+    display: none;
   }
 
   // h2 already draws a rule above itself; Notion pages often put a divider
