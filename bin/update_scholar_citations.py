@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 
+import argparse
 import os
+from pathlib import Path
 import sys
+import tempfile
 import yaml
 from datetime import datetime
 from scholarly import scholarly
+
+import sync_scholar_publications as publications
 
 
 def load_scholar_user_id() -> str:
@@ -36,8 +41,21 @@ SCHOLAR_USER_ID: str = load_scholar_user_id()
 OUTPUT_FILE: str = "_data/citations.yml"
 
 
-def get_scholar_citations() -> None:
-    """Fetch and update Google Scholar citation data."""
+def atomic_write(path: Path, content: str) -> None:
+    """Readers see a complete file, including when a fetch is interrupted."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as handle:
+        temporary = Path(handle.name)
+        try:
+            handle.write(content)
+            handle.close()
+            temporary.replace(path)
+        finally:
+            temporary.unlink(missing_ok=True)
+
+
+def get_scholar_citations(sync_publications: bool = False, force: bool = False) -> None:
+    """Fetch citations and optionally import missing publications."""
     print(f"Fetching citations for Google Scholar ID: {SCHOLAR_USER_ID}")
     today = datetime.now().strftime("%Y-%m-%d")
     existing_data = None
@@ -53,7 +71,11 @@ def get_scholar_citations() -> None:
                 and "last_updated" in existing_data["metadata"]
             ):
                 print(f"Last updated on: {existing_data['metadata']['last_updated']}")
-                if existing_data["metadata"]["last_updated"] == today:
+                if (
+                    not force
+                    and existing_data["metadata"]["last_updated"] == today
+                    and (not sync_publications or existing_data["metadata"].get("publications_last_updated") == today)
+                ):
                     print("Citations data is already up-to-date. Skipping fetch.")
                     return
         except Exception as e:
@@ -113,25 +135,40 @@ def get_scholar_citations() -> None:
         print("No valid publication IDs returned. Keeping existing citation data.")
         sys.exit(1)
 
-    # Record a successful check even when the citation counts did not change.
-    if existing_data == citation_data:
-        print("No changes in citation data. Skipping file update.")
-        return
+    # Prepare every output before touching either file. A blocked detail page
+    # must not mark a partial publication import as successfully synchronized.
+    bibliography = None
+    if sync_publications:
+        bibliography = publications.prepare_bibliography(author_data["publications"], SCHOLAR_USER_ID)
+        citation_data["metadata"]["publications_last_updated"] = today
+    elif existing_data and existing_data.get("metadata", {}).get("publications_last_updated"):
+        citation_data["metadata"]["publications_last_updated"] = existing_data["metadata"]["publications_last_updated"]
 
     try:
-        with open(OUTPUT_FILE, "w") as f:
-            yaml.dump(citation_data, f, width=1000, sort_keys=True)
-        print(f"Citation data saved to {OUTPUT_FILE}")
+        if bibliography is not None:
+            path = publications.MANAGED_FILE
+            if not path.exists() or path.read_text(encoding="utf-8") != bibliography:
+                atomic_write(path, bibliography)
+                print(f"New publications saved to {path}")
+        if existing_data != citation_data:
+            atomic_write(Path(OUTPUT_FILE), yaml.dump(citation_data, width=1000, sort_keys=True))
+            print(f"Citation data saved to {OUTPUT_FILE}")
+        else:
+            print("No changes in citation data. Skipping file update.")
     except Exception as e:
         print(
-            f"Error writing citation data to {OUTPUT_FILE}: {e}. Please check file permissions and disk space."
+            f"Error saving Scholar data: {e}. Please check file permissions and disk space."
         )
         sys.exit(1)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Synchronize Google Scholar citations and new publications.")
+    parser.add_argument("--sync-publications", action="store_true", help="Import missing papers into _bibliography/scholar.bib.")
+    parser.add_argument("--force", action="store_true", help="Fetch even if the data was checked today.")
+    args = parser.parse_args()
     try:
-        get_scholar_citations()
+        get_scholar_citations(sync_publications=args.sync_publications, force=args.force)
     except Exception as e:
         print(f"Unexpected error: {e}")
         sys.exit(1)

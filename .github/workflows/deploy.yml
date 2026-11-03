@@ -59,10 +59,14 @@ on:
       - "!FAQ.md"
       - "!INSTALL.md"
       - "!README.md"
-  # The citation bot pushes with the default GITHUB_TOKEN, which by design does not
-  # trigger the push event above. Rebuild on a schedule so its commits reach the site.
+  # Bot pushes with GITHUB_TOKEN do not trigger push workflows. Publish after
+  # Scholar sync completes; retain the schedule for the separate Notion sync.
+  workflow_run:
+    workflows: ["Sync Google Scholar Publications"]
+    types: [completed]
+    branches: [main]
   schedule:
-    - cron: "0 2 * * 1,3,5" # 2h after update-citations.yml
+    - cron: "0 2 * * 1,3,5" # 1h after sync-notion.yml
   workflow_dispatch:
 
 permissions:
@@ -70,6 +74,7 @@ permissions:
 
 jobs:
   deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     # available images: https://github.com/actions/runner-images#available-images
     runs-on: ubuntu-latest
     steps:
@@ -98,6 +103,7 @@ jobs:
           pip3 install --upgrade nbconvert
           export JEKYLL_ENV=production
           bundle exec jekyll build
+          bundle exec ruby bin/check_publications.rb
       - name: Purge unused CSS 🧹
         run: |
           npm install -g purgecss

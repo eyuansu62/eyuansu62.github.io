@@ -353,7 +353,11 @@ You can create a people page if you want to feature more than one person. Each p
 
 ### Publications
 
-Your publications' page is generated automatically from your BibTex bibliography. Simply edit [\_bibliography/papers.bib](_bibliography/papers.bib). You can also add new `*.bib` files and customize the look of your publications however you like by editing [\_pages/publications.md](_pages/publications.md). By default, the publications will be sorted by year and the most recent will be displayed first. You can change this behavior and more in the `Jekyll Scholar` section in [\_config.yml](_config.yml) file.
+New papers are imported automatically from the Google Scholar profile in [\_data/socials.yml](_data/socials.yml) every Monday, Wednesday, and Friday at 00:00 UTC (08:00 Singapore time). The sync writes [\_bibliography/scholar.bib](_bibliography/scholar.bib), updates citation counts, and triggers deployment after success. The homepage shows the five newest papers, sorted by year, month, and day.
+
+Keep hand-maintained entries, selected-paper flags, annotations, and custom links in [\_bibliography/papers.bib](_bibliography/papers.bib). Curated entries take priority over matching Scholar records, which are deduplicated during import. Existing papers are not deleted when a Scholar record disappears, and a failed sync leaves the published data intact. The sync does not overwrite curated metadata or require manually adding new BibTeX entries.
+
+To run a fresh publication and citation sync locally, install `requirements.txt` and run `python bin/update_scholar_citations.py --sync-publications --force`. You can also run **Sync Google Scholar Publications** from the repository's Actions tab. Customize the publication layout in [\_pages/publications.md](_pages/publications.md) and sorting in the `Jekyll Scholar` section of [\_config.yml](_config.yml).
 
 You can add extra information to a publication, like a PDF file in the [assets/pdf/](assets/pdf/) directory and add the path to the PDF file in the BibTeX entry with the `pdf` field. Some of the supported fields are: `abstract`, `altmetric`, `arxiv`, `bibtex_show`, `blog`, `code`, `dimensions`, `doi`, `eprint`, `html`, `isbn`, `pdf`, `pmid`, `poster`, `slides`, `supp`, `video`, and `website`.
 
