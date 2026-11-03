@@ -30,10 +30,6 @@ papers:
     citations: 14
     title: 'SUN: Exploring intrinsic uncertainties in text-to-SQL parsers'
     year: '2022'
-  75pkx3YAAAAJ:HDshCWvjkbEC:
-    citations: 0
-    title: Benchmarking and Training Reward Models for Cross-Source Evidence Grounding in Search Agents
-    year: '2026'
   75pkx3YAAAAJ:IWHjjKOFINEC:
     citations: 87
     title: others. 2023. Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
@@ -62,18 +58,10 @@ papers:
     citations: 9
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
-  75pkx3YAAAAJ:R3hNpaxXUhUC:
-    citations: 0
-    title: Agentic Image Generation in the Wild
-    year: '2026'
   75pkx3YAAAAJ:Se3iqnhoufwC:
     citations: 137
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
-  75pkx3YAAAAJ:TQgYirikUcIC:
-    citations: 0
-    title: Cross-Domain Hybrid OPD for Generalizable Search Agents
-    year: '2026'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
     citations: 134
     title: 'S2sql: Injecting syntax to question-schema interaction graph encoder for text-to-sql parsers'
