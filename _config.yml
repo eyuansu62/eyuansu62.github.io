@@ -309,7 +309,7 @@ scholar:
   # year must lead: the homepage renders with --group_by none, so without it
   # entries sort by month alone and a Jul 2026 paper lands below Oct 2025.
   # Within the year-grouped /publications/ page the extra key is a no-op.
-  sort_by: year, month, title
+  sort_by: year, month, day, title
   order: descending
 
 # Display different badges withs stats for your publications

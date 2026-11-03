@@ -8,6 +8,7 @@
     first N encountered. --group_by none keeps it a flat list, which is why the
     site-wide sort_by has to lead with year: without a year group to hold the
     ordering, a Jul 2026 paper would sort below Oct 2025.
+    Day breaks ties between papers published in the same month.
   {%- endcomment -%}
   {% bibliography --group_by none --max 5 %}
 </div>

@@ -29,6 +29,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Test citation updater
+        run: python -m unittest discover -s bin -p 'test_update_scholar_citations.py'
+
       - name: Save current citations.yml hash
         id: before
         run: |
@@ -58,6 +61,7 @@ jobs:
           else
             echo "❌ Citation update script failed with exit code $status (started at $start_time, ended at $end_time)."
             echo "❌ Citation update script failed with exit code $status." >> $GITHUB_STEP_SUMMARY
+            exit "$status"
           fi
           set -e
 
@@ -96,6 +100,8 @@ jobs:
           git add _data/citations.yml
           git diff --staged --quiet || (
             echo "📤 Committing and pushing changes..."
-            git commit -m "Update Google Scholar citations"
+            git commit -m "Keep publication citation counts current" -m "Confidence: high
+          Scope-risk: narrow
+          Tested: Citation updater regression tests and successful Scholar fetch"
             git push
           )

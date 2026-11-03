@@ -1,6 +1,10 @@
 metadata:
-  last_updated: '2026-09-02'
+  last_updated: '2026-11-03'
 papers:
+  75pkx3YAAAAJ:-f6ydRqryjwC:
+    citations: 0
+    title: 'MoM: Memory of Memory'
+    year: '2026'
   75pkx3YAAAAJ:2osOgNQ5qMEC:
     citations: 10
     title: Exploring auxiliary reasoning tasks for task-oriented dialog systems with meta cooperative learning
@@ -14,7 +18,7 @@ papers:
     title: 'Beyond Solving Math Quiz: Evaluating the Ability of Large Reasoning Models to Ask for Information'
     year: '2025'
   75pkx3YAAAAJ:7PzlFSSx8tAC:
-    citations: 2
+    citations: 3
     title: 'Micro-Act: Mitigating Knowledge Conflict in LLM-based RAG via Actionable Self-Reasoning'
     year: '2025'
   75pkx3YAAAAJ:8k81kl-MbHgC:
@@ -25,8 +29,12 @@ papers:
     citations: 14
     title: 'SUN: Exploring intrinsic uncertainties in text-to-SQL parsers'
     year: '2022'
+  75pkx3YAAAAJ:HDshCWvjkbEC:
+    citations: 0
+    title: Benchmarking and Training Reward Models for Cross-Source Evidence Grounding in Search Agents
+    year: '2026'
   75pkx3YAAAAJ:IWHjjKOFINEC:
-    citations: 79
+    citations: 87
     title: others. 2023. Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '1'
   75pkx3YAAAAJ:KlAtU1dfN6UC:
@@ -34,15 +42,15 @@ papers:
     title: An improved method to determine basic probability assignment with interval number and its application in classification
     year: '2019'
   75pkx3YAAAAJ:L8Ckcad2t8MC:
-    citations: 2
+    citations: 5
     title: 'BIRD-INTERACT: Re-imagining Text-to-SQL Evaluation via Lens of Dynamic Interactions'
     year: '2026'
   75pkx3YAAAAJ:LkGwnXOMwfcC:
-    citations: 85
+    citations: 88
     title: 'Towards analyzing and understanding the limitations of dpo: A theoretical perspective'
     year: '2024'
   75pkx3YAAAAJ:M3ejUd6NZC8C:
-    citations: 9
+    citations: 11
     title: 'Bird-interact: Re-imagining text-to-sql evaluation for large language models via lens of dynamic interactions'
     year: '2025'
   75pkx3YAAAAJ:MXK_kJrjxJIC:
@@ -50,27 +58,35 @@ papers:
     title: 'Conversational few-shot prompting: Rethinking few-shot prompting for chat language model'
     year: '2025'
   75pkx3YAAAAJ:QIV2ME_5wuYC:
-    citations: 7
+    citations: 9
     title: 'Flagevalmm: A flexible framework for comprehensive multimodal model evaluation'
     year: '2025'
+  75pkx3YAAAAJ:R3hNpaxXUhUC:
+    citations: 0
+    title: Agentic Image Generation in the Wild
+    year: '2026'
   75pkx3YAAAAJ:Se3iqnhoufwC:
-    citations: 126
+    citations: 137
     title: Before generation, align it! a novel and effective strategy for mitigating hallucinations in text-to-sql generation
     year: '2024'
+  75pkx3YAAAAJ:TQgYirikUcIC:
+    citations: 0
+    title: Cross-Domain Hybrid OPD for Generalizable Search Agents
+    year: '2026'
   75pkx3YAAAAJ:Tyk-4Ss8FVUC:
-    citations: 131
+    citations: 134
     title: 'S2sql: Injecting syntax to question-schema interaction graph encoder for text-to-sql parsers'
     year: '2022'
   75pkx3YAAAAJ:ULOm3_A8WrAC:
-    citations: 8
+    citations: 10
     title: 'Micro-act: Mitigate knowledge conflict in question answering via actionable self-reasoning'
     year: '2025'
   75pkx3YAAAAJ:UeHWp8X0CEIC:
-    citations: 197
+    citations: 209
     title: 'A survey on text-to-sql parsing: Concepts, methods, and future directions'
     year: '2022'
   75pkx3YAAAAJ:UebtZRa9Y70C:
-    citations: 7
+    citations: 8
     title: 'Legend: Leveraging representation engineering to annotate safety margin for preference datasets'
     year: '2025'
   75pkx3YAAAAJ:W7OEmFMy1HYC:
@@ -78,67 +94,87 @@ papers:
     title: 'Sdcup: Schema dependency-enhanced curriculum pre-training for table semantic parsing'
     year: '2021'
   75pkx3YAAAAJ:WF5omc3nYNoC:
-    citations: 43
+    citations: 44
     title: A non-parametric method to determine basic probability assignment based on kernel density estimation
     year: '2018'
   75pkx3YAAAAJ:Wp0gIr-vW9MC:
-    citations: 1
+    citations: 2
     title: 'Beyond multiple choice: Verifiable openqa for robust vision-language RFT'
     year: '2026'
   75pkx3YAAAAJ:YOwf2qJgpHMC:
-    citations: 8
+    citations: 10
     title: 'Swe-sql: Illuminating llm pathways to solve user sql issues in real-world applications'
     year: '2026'
   75pkx3YAAAAJ:YsMSGLbcyi4C:
-    citations: 92
+    citations: 93
     title: A weighted combination method for conflicting evidence in multi-sensor data fusion
     year: '2018'
   75pkx3YAAAAJ:ZeXyd9-uunAC:
-    citations: 1
+    citations: 2
     title: 'Hint Tuning: Less Data Makes Better Reasoners'
     year: '2026'
   75pkx3YAAAAJ:Zph67rFs4hoC:
-    citations: 21
+    citations: 28
     title: 'SHARE: An SLM-based hierarchical action CorREction assistant for text-to-SQL'
     year: '2025'
   75pkx3YAAAAJ:_FxGoFyzp5QC:
-    citations: 47
+    citations: 49
     title: 'Flm-101b: An open llm and how to train it with $100 k budget'
     year: '2023'
+  75pkx3YAAAAJ:_Qo2XoVZTnwC:
+    citations: 49
+    title: others. 2023a
+    year: '1'
   75pkx3YAAAAJ:_kc_bZDykSQC:
     citations: 6
     title: Are large language models ready for multi-turn tabular data analysis?
     year: '2025'
   75pkx3YAAAAJ:d1gkVwhDpl0C:
-    citations: 235
+    citations: 244
     title: 'Graphix-t5: Mixing pre-trained transformers with graph-aware layers for text-to-sql parsing'
     year: '2023'
   75pkx3YAAAAJ:dhFuZR0502QC:
-    citations: 2
+    citations: 10
     title: 'LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models'
     year: '2026'
+  75pkx3YAAAAJ:e5wmG9Sq2KIC:
+    citations: 0
+    title: 'BIRD-RL: Scaling Agentic Reinforcement Learning over Stateful Data-Centric Environments'
+    year: '2026'
   75pkx3YAAAAJ:eQOLeE2rZwMC:
-    citations: 1387
+    citations: 1596
     title: Can llm already serve as a database interface? a big bench for large-scale database grounded text-to-sqls
     year: '2023'
+  75pkx3YAAAAJ:hC7cP41nSMkC:
+    citations: 2
+    title: 'ImpossibleRubrics: Stress-testing generated rubrics as reward signals'
+    year: '2026'
+  75pkx3YAAAAJ:hFOr9nPyWt4C:
+    citations: 0
+    title: 'ORCA: Evaluating LLMs on Data Science Code Translation'
+    year: '2026'
   75pkx3YAAAAJ:hqOjcs7Dif8C:
-    citations: 37
+    citations: 39
     title: Hanfei-1.0
     year: '2023'
+  75pkx3YAAAAJ:mB3voiENLucC:
+    citations: 0
+    title: 'Diff-SQL: SQL Efficiency Optimization via Patch Generation and Constraint Alignment'
+    year: '2026'
   75pkx3YAAAAJ:mVmsd5A6BfQC:
     citations: 1
     title: 'FlagEval-Arena: A side-by-side comparative evaluation platform for large language models and text-driven AIGC'
     year: '2025'
   75pkx3YAAAAJ:qUcmZB5y_30C:
-    citations: 0
-    title: 'Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents'
+    citations: 3
+    title: 'Agent retrieval bench: Evaluating repository context retrieval for coding agents'
     year: '2026'
   75pkx3YAAAAJ:qjMakFHDy7sC:
     citations: 18
     title: "FR\u2013KDE: A Hybrid Fuzzy Rule-Based Information Fusion Method with its Application in Biomedical Classification: X. Song et al."
     year: '2021'
   75pkx3YAAAAJ:qxL8FJ1GzNcC:
-    citations: 16
+    citations: 17
     title: 'THE PRICE OF A SECOND THOUGHT: ON THE EVAL-UATION OF REASONING EFFICIENCY IN LARGE LAN-GUAGE MODELS'
     year: '2025'
   75pkx3YAAAAJ:roLk4NBRz8UC:
@@ -146,10 +182,10 @@ papers:
     title: Towards understanding the influence of reward margin on preference model performance
     year: '2024'
   75pkx3YAAAAJ:u5HHmVD_uO8C:
-    citations: 73
+    citations: 75
     title: 'Proton: Probing schema linking information from pre-trained language models for text-to-sql parsing'
     year: '2022'
   75pkx3YAAAAJ:zYLM7Y9cAGgC:
-    citations: 77
+    citations: 80
     title: A fuzzy preference-based Dempster-Shafer evidence theory for decision fusion
     year: '2021'
