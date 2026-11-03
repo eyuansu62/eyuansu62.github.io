@@ -37,7 +37,7 @@ jobs:
       - name: Sync publications and citation counts
         shell: bash
         run: |
-          if timeout 300 python bin/update_scholar_citations.py --sync-publications --force; then
+          if timeout 300 python -u bin/update_scholar_citations.py --sync-publications --force; then
             echo "Scholar publication and citation sync succeeded." >> "$GITHUB_STEP_SUMMARY"
           else
             status=$?

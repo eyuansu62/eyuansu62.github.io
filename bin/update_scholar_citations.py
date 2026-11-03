@@ -7,7 +7,6 @@ import sys
 import tempfile
 import yaml
 from datetime import datetime
-from scholarly import scholarly
 
 import sync_scholar_publications as publications
 
@@ -85,11 +84,8 @@ def get_scholar_citations(sync_publications: bool = False, force: bool = False) 
 
     citation_data = {"metadata": {"last_updated": today}, "papers": {}}
 
-    scholarly.set_timeout(15)
-    scholarly.set_retries(3)
     try:
-        author = scholarly.search_author_id(SCHOLAR_USER_ID)
-        author_data = scholarly.fill(author, sections=["publications"])
+        author_data = publications.fetch_profile(SCHOLAR_USER_ID)
     except Exception as e:
         print(
             f"Error fetching author data from Google Scholar for user ID '{SCHOLAR_USER_ID}': {e}. Please check your internet connection and Scholar user ID."

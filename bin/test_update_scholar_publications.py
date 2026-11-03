@@ -38,6 +38,59 @@ def detail_page(title="A New Paper", date="2026/10/21", authors="Bowen Qin, Yi X
     <div class="gs_scl"><div class="gsc_oci_field">Journal</div><div class="gsc_oci_value">arXiv preprint arXiv:2610.12345</div></div>"""
 
 
+def profile_page(identifier="one", more=False):
+    return f"""<div id="gsc_prf_in">A Researcher</div><table><tr class="gsc_a_tr">
+    <td><a class="gsc_a_at" href="/citations?citation_for_view={USER}:{identifier}">A Paper &amp; Its Results</a>
+    <div class="gs_gray">Bowen Qin</div><div class="gs_gray">arXiv preprint arXiv:2610.12345, 2026</div></td>
+    <td><a class="gsc_a_ac">1,234*</a></td><td class="gsc_a_y"><span class="gsc_a_h">2026</span></td>
+    </tr></table><button id="gsc_bpf_more" {'disabled' if not more else ''}>More</button>"""
+
+
+class ProfileFetchTests(unittest.TestCase):
+    def setUp(self):
+        self.session = Mock()
+        self.session.get.return_value = Mock(text=profile_page())
+        patcher = patch.object(sync.requests, "Session")
+        constructor = patcher.start()
+        constructor.return_value.__enter__.return_value = self.session
+        self.addCleanup(patcher.stop)
+
+    def test_profile_preserves_ids_titles_years_and_citation_counts(self):
+        paper = sync.fetch_profile(USER)["publications"][0]
+        self.assertEqual(paper["author_pub_id"], f"{USER}:one")
+        self.assertEqual(paper["bib"]["title"], "A Paper & Its Results")
+        self.assertEqual(paper["bib"]["pub_year"], "2026")
+        self.assertEqual(paper["num_citations"], 1234)
+
+    def test_all_pages_are_fetched_until_more_is_disabled(self):
+        self.session.get.side_effect = [Mock(text=profile_page(more=True)), Mock(text=profile_page("two"))]
+        papers = sync.fetch_profile(USER)["publications"]
+        self.assertEqual(len(papers), 2)
+        self.assertEqual(self.session.get.call_args_list[1].kwargs["params"]["cstart"], 1)
+
+    def test_repeated_pagination_and_wrong_author_are_rejected(self):
+        self.session.get.return_value = Mock(text=profile_page(more=True))
+        with self.assertRaises(ValueError):
+            sync.fetch_profile(USER)
+        self.session.get.side_effect = None
+        self.session.get.return_value = Mock(text=profile_page().replace(USER + ":one", "someone_else:one"))
+        with self.assertRaises(ValueError):
+            sync.fetch_profile(USER)
+
+    def test_challenge_and_empty_profile_pages_fail(self):
+        for page in ("<html>Verify you are human</html>", '<div id="gsc_prf_in">A Researcher</div>'):
+            with self.subTest(page=page):
+                self.session.get.return_value = Mock(text=page)
+                with self.assertRaises(ValueError):
+                    sync.fetch_profile(USER)
+
+    def test_http_rejection_does_not_enter_an_unbounded_retry_loop(self):
+        self.session.get.return_value.raise_for_status.side_effect = requests.HTTPError("403 Forbidden")
+        with self.assertRaises(requests.HTTPError):
+            sync.fetch_profile(USER)
+        self.session.get.assert_called_once()
+
+
 class PublicationImportTests(unittest.TestCase):
     def setUp(self):
         directory = tempfile.TemporaryDirectory()

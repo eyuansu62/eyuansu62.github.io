@@ -6,7 +6,7 @@ from html import escape, unescape
 from pathlib import Path
 import re
 import unicodedata
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import parse_qs, urlsplit, urlunsplit
 
 import bibtexparser
 from bibtexparser.bibdatabase import BibDatabase
@@ -72,6 +72,51 @@ def bibtex_text(value: str) -> str:
         "\\": "∖", "{": "｛", "}": "｝", "'": "’", '"': "”"
     }))
     return escape(value, quote=False)
+
+
+def fetch_profile(scholar_user_id: str) -> dict:
+    """Fetch paginated profile records with bounded requests and no proxy fallback."""
+    papers = []
+    seen = set()
+    with requests.Session() as session:
+        session.headers.update({"User-Agent": "Mozilla/5.0"})
+        for _ in range(100):
+            response = session.get(
+                "https://scholar.google.com/citations",
+                params={"user": scholar_user_id, "hl": "en", "sortby": "pubdate", "pagesize": 100, "cstart": len(papers)},
+                timeout=15,
+            )
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+            rows = soup.select("tr.gsc_a_tr")
+            if soup.select_one("#gsc_prf_in") is None or not rows:
+                raise ValueError("Scholar did not return a complete profile page")
+            for row in rows:
+                title = row.select_one("a.gsc_a_at")
+                if title is None:
+                    raise ValueError("Scholar returned an incomplete publication row")
+                query = parse_qs(urlsplit(title.get("href", "")).query)
+                identifier = query.get("citation_for_view", [""])[0]
+                paper = {"author_pub_id": identifier, "bib": {"title": title.get_text(" ", strip=True)}}
+                publication_id(paper, scholar_user_id)
+                if identifier in seen:
+                    raise ValueError("Scholar pagination repeated a publication instead of advancing")
+                seen.add(identifier)
+                year = row.select_one(".gsc_a_y .gsc_a_h")
+                if year is not None:
+                    paper["bib"]["pub_year"] = year.get_text(strip=True)
+                details = row.select("div.gs_gray")
+                paper["bib"]["citation"] = details[1].get_text(" ", strip=True) if len(details) > 1 else ""
+                count = row.select_one("a.gsc_a_ac")
+                value = re.sub(r"[,*\s]", "", count.get_text()) if count is not None else ""
+                paper["num_citations"] = int(value) if value else 0
+                papers.append(paper)
+            more = soup.select_one("#gsc_bpf_more")
+            if more is not None and more.has_attr("disabled"):
+                return {"publications": papers}
+            if more is None and len(rows) < 100:
+                return {"publications": papers}
+        raise ValueError("Scholar profile exceeded the pagination safety limit")
 
 
 def fetch_publication(publication: dict, scholar_user_id: str) -> dict:
