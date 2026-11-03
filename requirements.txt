@@ -1,5 +1,6 @@
 nbconvert
 pyyaml
-scholarly
-# scholarly imports the v1 bibtexparser.bibdatabase API.
+requests
+beautifulsoup4
+# The importer uses the BibTeX parser's v1 API.
 bibtexparser<2
