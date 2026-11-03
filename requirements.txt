@@ -1,3 +1,5 @@
 nbconvert
 pyyaml
 scholarly
+# scholarly imports the v1 bibtexparser.bibdatabase API.
+bibtexparser<2
