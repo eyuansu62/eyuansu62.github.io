@@ -27,8 +27,4 @@ latest_posts:
 
 I am a 1st-year Ph.D. student at the National University of Singapore (NUS), advised by [Prof. Yao Lu](https://yao.lu/).
 
-Previously, I was a researcher at the Beijing Academy of Artificial Intelligence ([BAAI](https://www.baai.ac.cn/en/)), specializing in the evaluation, alignment, and code intelligence of large language models (LLMs). Previously, I obtained my master's degree with top honors from the Shenzhen Institute of Advanced Technology (SIAT), Chinese Academy of Sciences (CAS), under the guidance of [Prof. Min Yang](https://minyang.me/) in 2023. I was a research intern at Alibaba DAMO Academy mentored by [Binyuan Hui](https://huybery.github.io/).
-
-I am a member of the [**BIRD team**](https://huggingface.co/birdsql), which drives the development of text-to-SQL for real-world database applications.
-
-Throughout my academic journey, I collaborated with many talented researchers, including: [Jinyang Li](https://jinyang-li.me/), [Duanyu Feng](https://colfeng.github.io/), [Binyuan Hui](https://huybery.github.io/) and [Yequan Wang](https://www.wangyequan.com/).
+Previously, I was a researcher at the Beijing Academy of Artificial Intelligence ([BAAI](https://www.baai.ac.cn/en/)), specializing in the evaluation, alignment, and code intelligence of large language models (LLMs). Previously, I obtained my master's degree with top honors from the Shenzhen Institute of Advanced Technology (SIAT), Chinese Academy of Sciences (CAS), under the guidance of [Prof. Min Yang](https://minyang.me/) in 2023.
