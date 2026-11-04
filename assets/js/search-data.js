@@ -81,10 +81,7 @@ ninja.data = [{
             window.location.href = "/blog/2026/agent-harness/";
           
         },
-      },{id: "news-our-team-secured-7th-place-out-of-over-100-global-competitors-in-the-ai-safety-and-security-challenge-hosted-by-ai-singapore-aisg-and-the-national-university-of-singapore-nus-and-was-invited-to-attend-the-singapore-international-cyber-week-sicw-2024",
-          title: 'Our team secured 7th place out of over 100 global competitors in the...',
-          description: "",
-          section: "News",},{id: "news-we-introduced-agent-retrieval-bench-to-evaluate-the-retrieval-of-task-relevant-repository-files-for-coding-agents-announcement",
+      },{id: "news-we-introduced-agent-retrieval-bench-to-evaluate-the-retrieval-of-task-relevant-repository-files-for-coding-agents-announcement",
           title: 'We introduced Agent Retrieval Bench to evaluate the retrieval of task-relevant repository files...',
           description: "",
           section: "News",},{id: "news-i-introduced-logdx-ci-a-benchmark-comparing-log-reduction-tools-for-llm-diagnosis-of-real-ci-failures-announcement",
