@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Long-form article layout for blog posts (_layouts/post.liquid).
  *
- * A journal-style reading view: serif prose on a 720px measure, a sticky
- * contents rail on the left, hairline rules instead of boxes, and small mono
- * uppercase labels for metadata. Everything is scoped under .ar-page so the
+ * A journal-style reading view: serif prose on a centred 720px measure, a
+ * Distill-style contents list in the left margin, hairline rules instead of
+ * boxes, and small mono uppercase labels for metadata. Everything is scoped under .ar-page so the
  * rest of al-folio is untouched.
  *
  * To retune the look, change the tokens below; nothing else hardcodes colour.
@@ -15,9 +15,9 @@
   --ar-ink-2: #2a2830;
   --ar-ink-3: #5e5b66;
   --ar-ink-4: #67636f; // >= 4.5:1 on white and on --ar-wash (WCAG AA)
-  --ar-rule: #e0ddd6;
-  --ar-rule-2: #ecebe6;
-  --ar-wash: #f5f4f0;
+  --ar-rule: #e3e3e6;
+  --ar-rule-2: #eeeef0;
+  --ar-wash: #f5f5f7;
   --ar-accent: #2b3f6c;
   --ar-accent-hover: #1d2c4f;
   --ar-accent-soft: rgba(43, 63, 108, 0.07);
@@ -57,27 +57,27 @@ body:has(.ar-page) {
 
 // ---------------------------------------------------------------- grid ----
 
-// al-folio's .container is max_width (800px) wide, too narrow for a rail plus a
-// 720px measure. Break out to the viewport and re-centre.
+// al-folio's .container is max_width (800px) wide, too narrow for a margin
+// column plus a 720px measure. Break out to the viewport and re-centre.
+//
+// As on Distill, the text column sits in the middle of the page and the
+// contents list hangs in the left margin. The margin never drops below 240px:
+// where the page is too narrow for that, the text shifts right instead, and
+// below 1100px the list moves above the text (narrow view).
 .ar-page {
   position: relative;
-  width: min(1060px, calc(100vw - 32px));
+  width: min(1360px, calc(100vw - 32px));
   left: 50%;
   transform: translateX(-50%);
   padding-bottom: 72px;
   display: grid;
-  grid-template-columns: 160px minmax(0, 720px);
-  column-gap: clamp(32px, 4vw, 56px);
-  justify-content: center;
+  grid-template-columns: minmax(240px, 1fr) minmax(0, 720px) minmax(0, 1fr);
+  column-gap: 32px;
   color: var(--ar-ink);
 }
 
-.ar-main {
-  grid-column: 2;
-  min-width: 0;
-}
-
-// The header spans the contents rail too, so the title gets a wider line.
+// The header spans the page; its rule runs the full width, and the title is
+// held to a readable measure below.
 .ar-head {
   grid-column: 1 / -1;
   min-width: 0;
@@ -86,16 +86,15 @@ body:has(.ar-page) {
 .ar-toc {
   grid-column: 1;
   grid-row: 2;
-  position: sticky;
-  top: 88px; // clears the fixed navbar
+  justify-self: end;
   align-self: start;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
   min-width: 0;
 }
 
 .ar-main {
+  grid-column: 2;
   grid-row: 2;
+  min-width: 0;
 }
 
 // Same-colour text rule from _base.scss (`p, div, li, span … { color }`) would
@@ -119,7 +118,8 @@ body:has(.ar-page) {
 }
 
 .ar-head h1 {
-  margin: 0;
+  max-width: 936px;
+  margin: 0 auto;
   font-family: var(--ar-serif);
   font-weight: 400;
   font-size: clamp(34px, 4.6vw, 50px);
@@ -214,54 +214,58 @@ body:has(.ar-page) {
 
 // ------------------------------------------------------------------ TOC ----
 
-// Starts level with the first line of the body; lighter than the prose.
+// After Distill's d-contents: a heading, bold section titles with their
+// subsections indented beneath, and a hairline between the list and the text.
+// It sits beside the opening of the article and scrolls away with it.
 .ar-toc {
-  margin-top: 42px;
+  margin-top: 40px;
+  padding: 0 28px 8px 0;
+  border-right: 1px solid var(--ar-rule);
+  font-family: var(--ar-sans);
+
+  h3 {
+    margin: 0 0 14px;
+    font-family: var(--ar-sans);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ar-ink-3);
+  }
 
   ol {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-left: 1px solid var(--ar-rule);
-  }
-
-  ol ol {
-    border-left: 0;
-    margin: 0 0 2px 12px;
   }
 
   li {
-    margin: 0;
+    margin: 0 0 8px;
+  }
+
+  ol ol {
+    margin: 6px 0 0;
+    padding-left: 13px;
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    a {
+      font-weight: 400;
+    }
   }
 
   a {
     display: block;
-    margin-left: -1px;
-    padding: 4px 0 4px 14px;
-    border-left: 1px solid transparent;
-    font-family: var(--ar-sans);
     font-size: 13px;
-    line-height: 1.45;
-    color: var(--ar-ink-4);
-    transition:
-      color 0.15s,
-      border-color 0.15s;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--ar-ink-2);
 
     &:hover {
-      color: var(--ar-ink-2);
+      color: var(--ar-accent);
       text-decoration: none;
     }
-
-    &.active {
-      color: var(--ar-accent);
-      border-left-color: var(--ar-accent);
-    }
-  }
-
-  ol ol a {
-    font-size: 12.5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
   }
 }
 
@@ -388,15 +392,16 @@ body:has(.ar-page) {
     height: auto;
   }
 
-  // Inline code and blocks. Resets al-folio's theme-coloured code.
+  // Inline code and blocks. Resets al-folio's theme-coloured code. Inline
+  // code is a faint tint with no border, so names set in code don't read as
+  // highlights.
   code {
     font-family: var(--ar-mono);
     font-size: 0.82em;
-    color: var(--ar-ink);
+    color: var(--ar-ink-3);
     background: var(--ar-wash);
-    border: 1px solid var(--ar-rule-2);
-    border-radius: 3px;
-    padding: 1px 5px;
+    border-radius: 2px;
+    padding: 1px 4px;
     white-space: normal;
   }
 
@@ -465,6 +470,13 @@ body:has(.ar-page) {
     border-bottom: 1px solid var(--ar-rule);
     text-align: left;
     vertical-align: bottom;
+
+    code {
+      padding: 0;
+      background: none;
+      font-size: inherit;
+      color: inherit;
+    }
   }
 
   td {
@@ -773,6 +785,8 @@ body:has(.ar-page) {
   // A date needs less room than the contents rail, so the text column widens.
   // Same overall width as an article; the narrow view below still wins.
   grid-template-columns: 110px minmax(0, 820px);
+  column-gap: clamp(32px, 4vw, 56px);
+  justify-content: center;
 
   .ar-lede {
     max-width: 760px;
@@ -855,44 +869,51 @@ body:has(.ar-page) {
 
 // ---------------------------------------------------------- narrow view ----
 
-@media (max-width: 1000px) {
-  .ar-page {
+// Below 1100px the margin is too narrow for the list: it moves above the text,
+// closed off by a rule, and lists sections only.
+@media (max-width: 1100px) {
+  .ar-page:not(.ar-index) {
     grid-template-columns: minmax(0, 720px);
-  }
+    column-gap: 0;
+    justify-content: center;
 
-  .ar-head,
-  .ar-main,
-  .ar-toc,
-  .ar-after {
-    grid-column: 1;
-  }
-
-  .ar-head {
-    grid-row: 1;
-  }
-
-  .ar-toc {
-    grid-row: 2;
-    position: static;
-    max-height: none;
-    margin: 24px 0 0;
-
-    ol ol {
-      display: none;
+    .ar-head,
+    .ar-main,
+    .ar-toc,
+    .ar-after {
+      grid-column: 1;
     }
 
-    a {
-      padding-top: 3px;
-      padding-bottom: 3px;
+    .ar-head {
+      grid-row: 1;
+    }
+
+    .ar-toc {
+      grid-row: 2;
+      justify-self: stretch;
+      margin-top: 28px;
+      padding: 0 0 16px;
+      border-right: 0;
+      border-bottom: 1px solid var(--ar-rule);
+
+      ol ol {
+        display: none;
+      }
+    }
+
+    .ar-main {
+      grid-row: 3;
+    }
+
+    .ar-after {
+      grid-row: 4;
     }
   }
+}
 
-  .ar-main {
-    grid-row: 3;
-  }
-
-  .ar-after {
-    grid-row: 4;
+@media (max-width: 1000px) {
+  .ar-index {
+    grid-template-columns: minmax(0, 720px);
   }
 
   .ar-post-date {

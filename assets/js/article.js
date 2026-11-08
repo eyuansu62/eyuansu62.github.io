@@ -1,7 +1,7 @@
-// Behaviour for _layouts/post.liquid: builds the contents rail from the post's
-// h2/h3 headings and highlights the section being read, turns kramdown
-// footnotes into hover popovers, and wires the citation copy button.
-// Without JS the post still reads top to bottom; the rail just stays hidden.
+// Behaviour for _layouts/post.liquid: builds the contents list from the post's
+// h2/h3 headings, turns kramdown footnotes into hover popovers, and wires the
+// citation copy button. Without JS the post still reads top to bottom; the
+// contents list just stays hidden.
 (function () {
   "use strict";
 
@@ -49,9 +49,8 @@
   }
   const ordered = Array.from(main.querySelectorAll("h2, h3")).filter((h) => h.id && !h.closest(".footnotes, .publications"));
 
-  // ---- contents rail ------------------------------------------------------
+  // ---- contents list ------------------------------------------------------
   const toc = document.querySelector(".ar-toc");
-  const links = new Map();
   if (toc && ordered.filter((h) => h.tagName === "H2").length >= 2) {
     const root = document.createElement("ol");
     let sub = null;
@@ -61,7 +60,6 @@
       a.href = "#" + h.id;
       a.textContent = h.textContent.trim();
       li.appendChild(a);
-      links.set(h.id, a);
       if (h.tagName === "H3" && root.lastElementChild) {
         if (!sub) {
           sub = document.createElement("ol");
@@ -75,35 +73,6 @@
     });
     toc.appendChild(root);
     toc.hidden = false;
-
-    // Highlight the last heading that has scrolled past the top third.
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const line = window.innerHeight * 0.3;
-      let current = ordered[0];
-      for (const h of ordered) {
-        if (h.getBoundingClientRect().top - line <= 0) current = h;
-        else break;
-      }
-      links.forEach((a, id) => a.classList.toggle("active", id === current.id));
-      // Keep the active link visible when the rail itself scrolls.
-      const active = links.get(current.id);
-      if (active && toc.scrollHeight > toc.clientHeight) {
-        const r = active.getBoundingClientRect();
-        const t = toc.getBoundingClientRect();
-        if (r.top < t.top || r.bottom > t.bottom) active.scrollIntoView({ block: "nearest" });
-      }
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
   } else if (toc) {
     toc.remove();
   }
