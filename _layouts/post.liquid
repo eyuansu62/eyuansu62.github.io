@@ -11,6 +11,9 @@ layout: default
     lang:            en | zh, switches the interface labels
     translation_key: shared by the translations of one post; adds an EN / 中文 switch
     cite: false      hides the BibTeX block; cite_key overrides the generated key
+    dollar_math: false
+                     leaves $ as plain text (prices) instead of inline math; wrap
+                     a formula in <div class="mathjax_process"> to typeset it anyway
 {%- endcomment -%}
 {% assign is_zh = false %}
 {% if page.lang == 'zh' %}{% assign is_zh = true %}{% endif %}
@@ -104,7 +107,11 @@ layout: default
     </h3>
   </aside>
 
-  <article class="ar-main" id="markdown-content" data-notes-label="{% if is_zh %}注释{% else %}Notes{% endif %}">
+  <article
+    class="ar-main{% if page.dollar_math == false %} mathjax_ignore{% endif %}"
+    id="markdown-content"
+    data-notes-label="{% if is_zh %}注释{% else %}Notes{% endif %}"
+  >
     {{ content }}
 
     {% if page.related_publications %}

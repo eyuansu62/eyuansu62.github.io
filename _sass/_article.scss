@@ -114,6 +114,10 @@ body:has(.ar-page) {
   border-bottom: 1px solid var(--ar-rule);
 }
 
+.ar-head .ar-meta {
+  justify-content: center;
+}
+
 .ar-head h1 {
   margin: 0;
   font-family: var(--ar-serif);
@@ -139,7 +143,6 @@ body:has(.ar-page) {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: center;
   gap: 6px 12px;
   margin-top: 22px;
   font-family: var(--ar-mono);
@@ -477,6 +480,14 @@ body:has(.ar-page) {
 
   td code {
     font-size: 0.85em;
+  }
+
+  // Display math: `<div class="ar-math mathjax_process">\[ … \]</div>`.
+  // Wide formulas scroll rather than overflow the measure on phones.
+  .ar-math {
+    margin: 28px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   // Figures
