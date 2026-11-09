@@ -9,7 +9,7 @@ nav_order: 5
 {%- comment -%}
 Post index, in the article style (_sass/_article.scss). Every post is listed
 on one page; the translations of a post (same translation_key) share a row,
-shown in the language of whichever comes first in site.posts.
+shown in English when an English version exists.
 {%- endcomment -%}
 
 {% include article_fonts.liquid %}
@@ -24,11 +24,14 @@ shown in the language of whichever comes first in site.posts.
 
   <ol class="ar-posts">
     {% assign seen = '|' %}
-    {% for post in site.posts %}
-      {% if post.translation_key %}
-        {% assign key = post.translation_key | prepend: '|' | append: '|' %}
+    {% for item in site.posts %}
+      {% assign post = item %}
+      {% if item.translation_key %}
+        {% assign key = item.translation_key | prepend: '|' | append: '|' %}
         {% if seen contains key %}{% continue %}{% endif %}
         {% assign seen = seen | append: key %}
+        {% assign english = site.posts | where: 'translation_key', item.translation_key | where: 'lang', 'en' | first %}
+        {% if english %}{% assign post = english %}{% endif %}
       {% endif %}
 
       {% if post.reading_time %}
