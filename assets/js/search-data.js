@@ -37,7 +37,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-no-safe-exit",
+        },{id: "post-是-不会设计-还是-懒得重构-我们复现并解构了-slopcodebench-的代码腐烂之谜",
+        
+          title: "是“不会设计”还是“懒得重构”？我们复现并解构了 SlopCodeBench 的代码腐烂之谜",
+        
+        description: "在 GLM-5.3-flash 与 Claude Opus 5.5 上复现并扩展 SlopCodeBench：Agent 不是不会重构，而是不主动重构；全程施加 anti_slop 约束能压平退化斜率，在长链路难题上还省下 39% 的费用。",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/slopcodebench-cant-design-or-wont-refactor/";
+          
+        },
+      },{id: "post-can-39-t-design-or-won-39-t-refactor-dissecting-code-erosion-in-slopcodebench",
+        
+          title: "Can&#39;t Design or Won&#39;t Refactor? Dissecting Code Erosion in SlopCodeBench",
+        
+        description: "We reproduced and extended SlopCodeBench on GLM-5.3-flash and Claude Opus 5.5. Agents can refactor but don&#39;t do it unprompted; a day-one anti_slop prompt flattens the degradation slope and cut total cost by 39% on a long-horizon task.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/slopcodebench-cant-design-or-wont-refactor-en/";
+          
+        },
+      },{id: "post-no-safe-exit",
         
           title: "No Safe Exit",
         
