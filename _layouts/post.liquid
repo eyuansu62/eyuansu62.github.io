@@ -12,7 +12,8 @@ layout: default
     translation_key: shared by the translations of one post; adds an EN / 中文 switch
     cite: false      hides the BibTeX block; cite_key overrides the generated key
     toc_labels:      short contents-list labels, keyed by the heading's text as
-                     written; other headings are shortened automatically
+                     written; other headings are shortened automatically. Posts
+                     from the Notion sync keep theirs in _data/toc_labels.yml
     dollar_math: false
                      leaves $ as plain text (prices) instead of inline math; wrap
                      a formula in <div class="mathjax_process"> to typeset it anyway
@@ -103,11 +104,12 @@ layout: default
     {% endif %}
   </header>
 
+  {% assign toc_labels = page.toc_labels | default: site.data.toc_labels[page.notion_page_id] %}
   <aside
     class="ar-toc"
     aria-label="{% if is_zh %}目录{% else %}Contents{% endif %}"
-    {% if page.toc_labels %}
-      data-labels="{{ page.toc_labels | jsonify | escape }}"
+    {% if toc_labels %}
+      data-labels="{{ toc_labels | jsonify | escape }}"
     {% endif %}
     hidden
   >
