@@ -224,3 +224,6 @@ layout: default
 </div>
 
 <script defer src="{{ '/assets/js/article.js' | relative_url | bust_file_cache }}"></script>
+{% if page.slopcode_charts %}
+  <script defer src="{{ '/assets/js/slopcode-charts.js' | relative_url | bust_file_cache }}"></script>
+{% endif %}

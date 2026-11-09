@@ -8,14 +8,15 @@ lang: en
 translation_key: slopcodebench-erosion
 cite_key: qin2026slopcode
 dollar_math: false
+slopcode_charts: true
 toc_labels:
   "3. Claude Opus 5.5 Comparison & Where Complexity Accumulates": "Where complexity accumulates"
   "1. Zero Spontaneous Refactoring Under Default Prompting": "Zero spontaneous refactoring"
   "Finding 1: Mid-Course Refactoring Decays on Hard Tasks, and Periodic Refactoring Breaks Correctness": "Finding 1: Periodic refactoring backfires"
   "Finding 2: Continuous anti_slop Flattens the Degradation Slope — Directly Contradicting the Paper's Conclusion": "Finding 2: anti_slop flattens the slope"
-  "4. Step 3: Counterfactual Checkpoint Splicing — Proving Path Dependence": "Step 3: Checkpoint Splicing"
-  "9. Conclusion & Takeaways for Practitioners": "Takeaways"
-  "8. Bonus: Three Upstream Harness Bugs Uncovered": "Bonus: Harness bugs"
+  "Step 3: Counterfactual Checkpoint Splicing — Proving Path Dependence": "Step 3: Checkpoint Splicing"
+  "Conclusion & Takeaways for Practitioners": "Takeaways"
+  "Bonus: Three Upstream Harness Bugs Uncovered": "Bonus: Harness bugs"
 subtitle: "Five controlled experiments on code erosion in long-horizon coding agents"
 ---
 
@@ -25,10 +26,10 @@ We reproduced and extended SlopCodeBench on GLM-5.3-flash and Claude Opus 5.5 us
 
 1. **The Metric Illusion**: The paper's primary proportional metric (`erosion`) suffers from a Denominator Dilution Paradox and a Threshold Cliff at complexity > 10. Relying on `erosion` alone masks severe monster-function growth and mismeasures the true slope of prompt interventions.
 2. **Iterative Bloat & Entrypoint Accumulation**: After aligning one-shot evaluations with the full historical regression suite, iterative development writes 20%–30% more SLOC (p = 0.03) at 2× the time and cost of one-shot generation, concentrating complexity inside the `main()` entrypoint.
-3. **Won't Refactor ≠ Can't Refactor**: Under default `just-solve` prompting, Opus 5.5 performed 0 spontaneous refactorings across 25 checkpoint transitions. Yet when given an isolated `refactor_only` prompt, it succeeded 6/6 times with zero test regressions, slashing peak function complexity from 28–34 down to 8–13. Code rot is not an inability to engineer software; it is a rational Minimal-Invasive Patching strategy under cross-checkpoint amnesia and hidden regression tests.
+3. **Won't Refactor ≠ Can't Refactor**: Under default `just-solve` prompting, Opus 5.5 performed 0 spontaneous refactorings across 25 checkpoint transitions. Yet when given an isolated `refactor_only` prompt, it succeeded 6/6 times with zero test regressions, slashing peak function complexity from 24–34 down to 8–13. Code rot is not an inability to engineer software; it is a rational Minimal-Invasive Patching strategy under cross-checkpoint amnesia and hidden regression tests.
 4. **Endogenous Discipline Beats Exogenous Surgery (and Saves 39% in Cost)**: On Opus 5.5, applying `anti_slop` from Checkpoint 1 did not merely shift the intercept—it flattened the 8-checkpoint peak function complexity growth to 0 to +6 (vs. +14 to +54 under `just-solve`). Even more surprisingly, on the complex 8-checkpoint `circuit_eval` task, `anti_slop` reduced total cost by 39% ($13.12 vs. $21.40) by avoiding late-stage technical debt interest. Conversely, periodic exogenous refactoring doubled the cost ($43.58) and triggered cross-checkpoint regressions (pass rate dropped from 99.8% to 90.5%).
 
-## 1. Motivation: Do Coding Agents Really Suffer from Irreversible Architectural Decay?
+<h2 id="1-motivation-do-coding-agents-really-suffer-from-irreversible-architectural-decay">Motivation: Do Coding Agents Really Suffer from Irreversible Architectural Decay?</h2>
 
 Anyone who has used Claude Code, Cursor, or OpenCode on a multi-day project knows the pattern: ask an agent to build a greenfield tool (Checkpoint 1), and it produces clean, idiomatic code. Ask it to add the 4th, 5th, and 8th incremental feature, and it almost never refactors its earlier abstractions. Instead, it piles `if-elif` branches into the entrypoint and duplicates helper logic until the repository collapses into unmaintainable spaghetti—"[slop](https://gabeorlanski.github.io/posts/slop-code-bench/)."
 
@@ -44,7 +45,7 @@ Reading the paper left us with a nagging question: **Are frontier models genuine
 
 To find out, we set up SprocketLab/slop-code-bench (v1.0) using Claude Code (v2.1.44) as a unified harness and conducted a systematic causal dissection across GLM-5.3-flash and Claude Opus 5.5.
 
-## 2. Step 1: Calibrating the Ruler — What Is "Function Complexity," and Why Does erosion Mislead?
+<h2 id="2-step-1-calibrating-the-ruler--what-is-function-complexity-and-why-does-erosion-mislead">Step 1: Calibrating the Ruler — What Is “Function Complexity,” and Why Does erosion Mislead?</h2>
 
 Before diving into the data, let's establish a quick, intuitive scale for Function Complexity (formally known in software engineering as Cyclomatic Complexity, or CC):
 
@@ -59,11 +60,14 @@ Before diving into the data, let's establish a quick, intuitive scale for Functi
 
 We began by reproducing the paper's flagship example under default `just-solve` prompting. On `forge` (8 checkpoints), Claude Opus 5.5 (`thinking=high`) clearly exhibited entrypoint bloat:
 
-| Checkpoint   | Tests Passed | SLOC | Peak Function Complexity (Max CC) | `main()` Lines / Complexity |
-| ------------ | ------------ | ---: | --------------------------------: | --------------------------- |
-| Checkpoint 1 | 38 / 40      |  238 |                                21 | 36 lines / 15               |
-| Checkpoint 4 | 136 / 142    |  562 |                                33 | 47 lines / 19               |
-| Checkpoint 8 | 271 / 295    | 1138 |                                49 | 117 lines / 49              |
+| Checkpoint   | Tests passed | SLOC | Max CC | `main()` lines / CC |
+| :----------- | -----------: | ---: | -----: | ------------------: |
+| Checkpoint 1 |      38 / 40 |  238 |     21 |       36 lines / 15 |
+| Checkpoint 4 |    136 / 142 |  562 |     33 |       47 lines / 19 |
+| Checkpoint 8 |    271 / 295 | 1138 |     49 |  **117 lines / 49** |
+
+CC = cyclomatic complexity; Max CC is the highest single-function complexity. The last column reports `main()` lines / CC.
+{: .ar-table-note}
 
 However, when we inspected the paper's primary metric—`erosion` (Structural Erosion)—we noticed a striking anomaly:
 
@@ -83,7 +87,7 @@ Because `erosion` is a thresholded ratio, it suffers from two severe measurement
 
 Consequently, we use **absolute AST metrics—Peak Function Complexity (Max CC) and counts of bloated functions (Complexity ≥ 10 and ≥ 20)**—as our primary indicators, while reporting the paper's `erosion` and `verbosity` alongside them.
 
-## 3. Step 2: Iterative vs. One-Shot — Is Complexity Inherent to the Spec or Induced by Iteration?
+<h2 id="3-step-2-iterative-vs-one-shot--is-complexity-inherent-to-the-spec-or-induced-by-iteration">Step 2: Iterative vs. One-Shot — Is Complexity Inherent to the Spec or Induced by Iteration?</h2>
 
 Before dissecting multi-step degradation, we must rule out a baseline hypothesis: Is final checkpoint complexity high simply because the full specification is complex, or is it specifically induced by step-by-step iterative patching?
 
@@ -95,53 +99,65 @@ In the upstream repository, One-Shot mode concatenates all checkpoint specificat
 
 Under identical configurations (Claude Code 2.1.44, `thinking=none`, `just-solve`), we ran 14 paired Iterative vs. One-Shot comparisons across 6 problems on GLM-5.3-flash:
 
-| Metric                            | Iterative | One-Shot | Paired Diff (One-Shot − Iterative, Mean ± SE) | One-Shot Wins |
-| --------------------------------- | --------: | -------: | --------------------------------------------: | ------------: |
-| Full Test Suite Pass Rate         |     81.9% |    85.4% |                                  +3.6pp ± 1.1 |       10 / 14 |
-| Lines of Code (SLOC)              |      1756 |     1378 |                                    −379 ± 171 |       11 / 14 |
-| Peak Function Complexity (Max CC) |      53.2 |     42.4 |                                   −10.8 ± 5.4 |       11 / 14 |
-| `erosion` (Paper Ratio Metric)    |     0.720 |    0.721 |                                +0.001 ± 0.034 |        7 / 14 |
-| Cost (CNY)                        |     ¥3.86 |    ¥1.84 |                                  −2.03 ± 0.48 |       13 / 13 |
-| Wall-Clock Time (min)             |   173 min |   78 min |                                      −95 ± 22 |       14 / 14 |
+| Metric                            | Iterative |   One-Shot |    Paired diff | One-Shot wins |
+| :-------------------------------- | --------: | ---------: | -------------: | ------------: |
+| Full Test Suite Pass Rate         |     81.9% |      85.4% |   +3.6pp ± 1.1 |       10 / 14 |
+| Lines of Code (SLOC)              |      1756 |       1378 |     −379 ± 171 |       11 / 14 |
+| Peak Function Complexity (Max CC) |      53.2 |       42.4 |    −10.8 ± 5.4 |       11 / 14 |
+| `erosion` (Paper Ratio Metric)    |     0.720 |      0.721 | +0.001 ± 0.034 |        7 / 14 |
+| Cost (CNY)                        |     ¥3.86 |  **¥1.84** |   −2.03 ± 0.48 |       13 / 13 |
+| Wall-Clock Time (min)             |   173 min | **78 min** |       −95 ± 22 |       14 / 14 |
+
+Paired diff = One-Shot − Iterative, reported as mean ± standard error (SE). Pass-rate differences are in percentage points (pp); cost is CNY and time is minutes.
+{: .ar-table-note}
 
 (Note: When comparing the best-of-3 runs per problem, the pass rate gap vanishes to +0.1pp, indicating that correctness differences are not robust.)
 
 Controlling for specification coverage by restricting to the 13 pairs where both modes completed 100% of checkpoints, a permutation test confirms significant iterative code bloat:
 
-| Controlled Comparison (100% Spec Coverage) | Iterative − One-Shot Diff | Iterative Larger | Permutation Test p-value |
-| ------------------------------------------ | ------------------------: | ---------------: | ------------------------ |
-| Lines of Code (SLOC)                       |                +414 lines |          11 / 13 | 0.03 (Significant Bloat) |
-| `erosion`                                  |                    −0.001 |           7 / 13 | 0.98                     |
-| `verbosity`                                |                    +0.044 |           9 / 13 | 0.52                     |
+| Metric               |      Mean diff | Iterative larger |                      p-value |
+| :------------------- | -------------: | ---------------: | ---------------------------: |
+| Lines of Code (SLOC) | **+414 lines** |          11 / 13 | **0.03 (Significant Bloat)** |
+| `erosion`            |         −0.001 |           7 / 13 |                         0.98 |
+| `verbosity`          |         +0.044 |           9 / 13 |                         0.52 |
+
+Both modes completed 100% of the specification in these 13 pairs. Mean diff = Iterative − One-Shot; p-values are from a permutation test.
+{: .ar-table-note}
 
 ### 3. Claude Opus 5.5 Comparison & Where Complexity Accumulates
 
 We replicated the Iterative vs. One-Shot comparison on Claude Opus 5.5 across `forge` (3 pairs) and `code_search` (1 pair):
 
-| Problem       | Pairs   | Pass Rate (Iterative / One-Shot) | Complex Functions Count (CC ≥ 10, Iterative / One-Shot) | SLOC (Iterative / One-Shot) |
-| ------------- | ------- | -------------------------------- | ------------------------------------------------------- | --------------------------- |
-| `forge`       | 3 pairs | 91.1% / 90.2%                    | 11.0 / 11.3                                             | 1246 / 1090                 |
-| `code_search` | 1 pair  | 91.3% / 93.3%                    | 8 / 10                                                  | 2223 / 1680                 |
+| Problem       |   Pairs |     Pass rate | Functions ≥ 10 |            SLOC |
+| :------------ | ------: | ------------: | -------------: | --------------: |
+| `forge`       | 3 pairs | 91.1% / 90.2% |    11.0 / 11.3 | **1246 / 1090** |
+| `code_search` |  1 pair | 91.3% / 93.3% |         8 / 10 | **2223 / 1680** |
+
+Paired values are Iterative / One-Shot. Function counts use CC ≥ 10; SLOC is source lines of code.
+{: .ar-table-note}
 
 Across both models, two conclusions emerge:
 
 1. **Iteration Induces Code Bloat and Doubles Cost**: For the exact same final specification, iterative development writes 15%–30% more code (+414 lines on GLM, p = 0.03) while taking 2× the time and token budget.
 2. **Global Foresight Changes Where Complexity Lives**: While the total number of complex functions (CC ≥ 10) is similar, in 2 out of 3 iterative `forge` runs on Opus 5.5, the single most complex function in the entire codebase was `main()`. In One-Shot mode, `main()` was consistently tiny, with complexity properly distributed into subcommand handlers.
 
-## 4. Step 3: Counterfactual Checkpoint Splicing — Proving Path Dependence
+<h2 id="4-step-3-counterfactual-checkpoint-splicing--proving-path-dependence">Step 3: Counterfactual Checkpoint Splicing — Proving Path Dependence</h2>
 
 To test whether late-stage complexity on `forge` is driven by harder late-stage requirements or by early structural technical debt, we ran a Counterfactual Splicing Experiment on Opus 5.5:
 
 - **Group A (Self-Generated Start)**: Standard iterative run from Checkpoint 1 to 8.
 - **Group B (Spliced Reference Start)**: At the end of Checkpoint 3, we replaced the agent's workspace with the clean, modular human reference solution (canary strings stripped, 101/101 tests passing) and resumed Checkpoints 4–8 using the exact same `just-solve` prompt. Because each checkpoint starts a fresh session, the agent cannot tell whether it wrote the Checkpoint 3 code itself.
 
-| Checkpoint 8 Final Metrics (Mean)       | Group A: Agent's Own C3 Start | Group B: Spliced Reference C3 Start | Human Reference (C8) |
-| --------------------------------------- | ----------------------------- | ----------------------------------- | -------------------- |
-| Peak Function Complexity (Max CC)       | 41.0 (35, 39, 49)             | 25.7 (25, 26, 26)                   | 26                   |
-| Large Functions Count (Complexity ≥ 20) | 4.3                           | 1.3                                 | 3                    |
-| `main()` Function Complexity            | 34.0                          | 19.0                                | —                    |
-| C3 → C8 Peak Complexity Growth          | +11.3                         | +5.7                                | —                    |
-| Final Test Pass Rate                    | 91.1%                         | 98.2%                               | 100%                 |
+| Metric                                  |     Own start (A) |   Reference start (B) | Reference C8 |
+| :-------------------------------------- | ----------------: | --------------------: | -----------: |
+| Peak Function Complexity (Max CC)       | 41.0 (35, 39, 49) | **25.7 (25, 26, 26)** |           26 |
+| Large Functions Count (Complexity ≥ 20) |               4.3 |                   1.3 |            3 |
+| `main()` Function Complexity            |              34.0 |                  19.0 |            — |
+| C3 → C8 Peak Complexity Growth          |             +11.3 |              **+5.7** |            — |
+| Final Test Pass Rate                    |             91.1% |                 98.2% |         100% |
+
+C8 metrics are means, with the three run values in parentheses where shown. Growth is from C3 to C8; large functions have CC ≥ 20. Groups A and B start from their own and spliced reference C3 snapshots, respectively.
+{: .ar-table-note}
 
 The causal effect is unmistakable: given a clean modular foundation at Checkpoint 3, Opus 5.5 cut its subsequent complexity growth in half (+5.7 vs. +11.3) and finished Checkpoint 8 with a Peak Function Complexity of 25.7—matching the human reference solution (26)!
 
@@ -149,7 +165,7 @@ Coding agents exhibit a powerful Broken Windows Effect (Context-Following Bias):
 
 (Caveat: The reference Checkpoint 3 snapshot has both better structure and fewer bugs [101/101 vs. 92%–94%]; these two factors are not separated in this experiment.)
 
-## 5. Step 4: Why Don't Agents Refactor? Capability Deficit (Can't) vs. Incentive Deficit (Won't)
+<h2 id="5-step-4-why-dont-agents-refactor-capability-deficit-cant-vs-incentive-deficit-wont">Step 4: Why Don’t Agents Refactor? Capability Deficit (Can’t) vs. Incentive Deficit (Won’t)</h2>
 
 If a clean foundation makes such a dramatic difference, why doesn't the agent refactor its own messy code during iterative transitions?
 
@@ -157,12 +173,12 @@ If a clean foundation makes such a dramatic difference, why doesn't the agent re
 
 We scanned the AST evolution across all checkpoint transitions in our iterative runs to count how often functions were deleted, split, or substantially reduced in complexity:
 
-| Experimental Group                 | Checkpoint Transitions | Refactoring Events |
-| ---------------------------------- | ---------------------: | -----------------: |
-| Opus 5.5 `forge` (Own Start)       |                     21 |                  0 |
-| Opus 5.5 `code_search`             |                      4 |                  0 |
-| Opus 5.5 `forge` (Reference Start) |                     15 |                  2 |
-| GLM-5.3-flash (All Iterative Runs) |                     54 |                 10 |
+| Group                              | Transitions | Refactor events |
+| :--------------------------------- | ----------: | --------------: |
+| Opus 5.5 `forge` (Own Start)       |          21 |           **0** |
+| Opus 5.5 `code_search`             |           4 |           **0** |
+| Opus 5.5 `forge` (Reference Start) |          15 |               2 |
+| GLM-5.3-flash (All Iterative Runs) |          54 |              10 |
 
 Inspecting the few minor extraction events revealed that every single one was triggered by immediate code reuse for a new feature (e.g., "I'm sharing the unit list's filter parsing and matching with the new commands rather than duplicating it"). **Across 94 transitions, the agent never once refactored proactively to reduce complexity.**
 
@@ -170,10 +186,20 @@ Inspecting the few minor extraction events revealed that every single one was tr
 
 Is the model simply bad at refactoring? We took the Checkpoint 4 snapshots of `forge` and `circuit_eval` and ran a standalone session using a custom `refactor_only.txt` prompt—no new features, just instructions to decompose complex functions while preserving behavior:
 
-| Problem        | Runs | Tests Passed (Before → After)          | Peak Function Complexity (Before → After, 3 Runs) |
-| -------------- | ---: | -------------------------------------- | ------------------------------------------------- |
-| `forge`        |    3 | Unchanged (136/142, 132/142, 136/142)  | 32 → 8, 29 → 11, 28 → 8                           |
-| `circuit_eval` |    3 | Unchanged (430/430 → 430/430 in all 3) | 29 → 9, 34 → 13, 24 → 9                           |
+{% include slopcode_chart.liquid kind='refactor' %}
+
+<details class="ar-source-data" id="slopcode-refactor-data" open markdown="1">
+<summary>View raw refactoring data</summary>
+
+| Problem        | Runs |                  Tests: before → after |      Max CC: before → after |
+| :------------- | ---: | -------------------------------------: | --------------------------: |
+| `forge`        |    3 |  Unchanged (136/142, 132/142, 136/142) | **32 → 8, 29 → 11, 28 → 8** |
+| `circuit_eval` |    3 | Unchanged (430/430 → 430/430 in all 3) | **29 → 9, 34 → 13, 24 → 9** |
+
+Each problem has three independent C4 refactoring runs. Tests and Max CC are shown before → after; the test counts are unchanged in every run.
+{: .ar-table-note}
+
+</details>
 
 All 6 refactoring sessions succeeded on the first try with zero test regressions, slashing Peak Function Complexity from 24–34 down to a clean 8–13.
 
@@ -181,7 +207,7 @@ This cleanly separates Capability from Behavior: **degradation occurs because th
 
 Consider the agent's incentives inside SlopCodeBench: each checkpoint drops a fresh, amnesiac agent instance into an unfamiliar repository without access to the prior regression test suite. When you cannot see the historical unit tests, restructuring core modules carries a massive risk of silent regression breakage. Appending minimally invasive branches to existing entrypoints is the rational risk-minimizing strategy.
 
-## 6. Step 5: Finding the Cure — Why Endogenous Discipline Beats Exogenous Surgery
+<h2 id="6-step-5-finding-the-cure--why-endogenous-discipline-beats-exogenous-surgery">Step 5: Finding the Cure — Why Endogenous Discipline Beats Exogenous Surgery</h2>
 
 Since the model can refactor when asked, what is the best engineering intervention? Should we let it code fast-and-loose and run dedicated refactoring passes later (Exogenous Surgery), or enforce strict architectural constraints from Checkpoint 1 (Endogenous Discipline)?
 
@@ -196,20 +222,30 @@ We compared four regimes on Opus 5.5 across `forge` and `circuit_eval`:
 
 First, does a single refactoring pass after Checkpoint 4 (Group D) hold up through Checkpoint 8?
 
-| Problem        | Group                            | C4 Peak Complexity | C8 Peak Complexity | C4 → C8 Growth | C8 Large Functions (CC ≥ 20) |
-| -------------- | -------------------------------- | -----------------: | -----------------: | -------------: | ---------------------------: |
-| `forge`        | Group A: No Refactor             |               29.7 |               41.0 |          +11.3 |                          4.3 |
-| `forge`        | Group D: Refactor Once (Post-C4) |                9.0 |               14.3 |           +5.3 |                          0.0 |
-| `circuit_eval` | Group A: No Refactor             |               29.0 |               61.3 |          +32.3 |                          8.0 |
-| `circuit_eval` | Group D: Refactor Once (Post-C4) |               10.3 |               34.3 |          +24.0 |                          5.0 |
+| Problem        | Group                            | C4 Max CC | C8 Max CC | Growth | C8 funcs ≥ 20 |
+| :------------- | :------------------------------- | --------: | --------: | -----: | ------------: |
+| `forge`        | Group A: No Refactor             |      29.7 |      41.0 |  +11.3 |           4.3 |
+| `forge`        | Group D: Refactor Once (Post-C4) |       9.0 |  **14.3** |   +5.3 |           0.0 |
+| `circuit_eval` | Group A: No Refactor             |      29.0 |      61.3 |  +32.3 |           8.0 |
+| `circuit_eval` | Group D: Refactor Once (Post-C4) |      10.3 |  **34.3** |  +24.0 |           5.0 |
+
+Growth = C8 − C4 Max CC. Large-function counts use CC ≥ 20. Group A uses no refactoring; Group D refactors once after C4.
+{: .ar-table-note}
 
 On `forge`, a single refactoring held up well (final Peak Function Complexity 14.3, zero functions ≥ 20). On the much harder `circuit_eval`, where post-C4 refactoring only split functions within a single file, complexity rapidly re-accumulated to 34.3 by Checkpoint 8.
 
 What if we refactor every two checkpoints (**Group P: Periodic Refactor after C2, C4, C6** on `circuit_eval`)?
 
-| `circuit_eval` Periodic Refactor  |  C1 | C2 (Refactored) |  C3 | C4 (Refactored) |  C5 | C6 (Refactored) |  C7 | C8 (Final) |
-| --------------------------------- | --: | --------------: | --: | --------------: | --: | --------------: | --: | ---------: |
-| Peak Function Complexity (Max CC) |  29 |              9* |  14 |             11* |  11 |             11* |  12 |         42 |
+<div id="slopcode-periodic-data" markdown="1">
+
+| `circuit_eval`                    |  C1 | C2* |  C3 | C4* |  C5 | C6* |  C7 |     C8 |
+| :-------------------------------- | --: | --: | --: | --: | --: | --: | --: | -----: |
+| Peak Function Complexity (Max CC) |  29 |  9* |  14 | 11* |  11 | 11* |  12 | **42** |
+
+Each checkpoint reports Max CC. * After refactoring at C2, C4 and C6; C8 is the final checkpoint. This periodic-refactoring condition has one run.
+{: .ar-table-note}
+
+</div>
 
 Periodic exogenous refactoring backfired in three ways:
 
@@ -221,51 +257,77 @@ Periodic exogenous refactoring backfired in three ways:
 
 The breakthrough came in Group C (Continuous `anti_slop`). Look at the checkpoint-by-checkpoint Peak Function Complexity trajectory on `circuit_eval`:
 
-| Run                  |  C1 |  C2 |  C3 |  C4 |  C5 |  C6 |  C7 | C8 (Final) | C1 → C8 Growth |
-| -------------------- | --: | --: | --: | --: | --: | --: | --: | ---------: | -------------: |
-| `just-solve` (Run 1) |  16 |  25 |  27 |  29 |  33 |  42 |  53 |         62 |            +46 |
-| `just-solve` (Run 2) |  21 |  28 |  30 |  34 |  41 |  51 |  72 |         75 |            +54 |
-| `just-solve` (Run 3) |  10 |  18 |  20 |  24 |  30 |  50 |  40 |         47 |            +37 |
-| `anti_slop` (Run 1)  |   6 |   9 |  11 |  11 |  11 |  11 |  11 |         12 |             +6 |
-| `anti_slop` (Run 2)  |  10 |  10 |  10 |  10 |  10 |  10 |  10 |         10 |              0 |
-| `anti_slop` (Run 3)  |  10 |  10 |  10 |  10 |  10 |  10 |  10 |         11 |             +1 |
+{% include slopcode_chart.liquid kind='trajectory' %}
+
+<details class="ar-source-data" id="slopcode-trajectory-data" open markdown="1">
+<summary>View raw C1–C8 trajectory data</summary>
+
+| Run                  |  C1 |  C2 |  C3 |  C4 |  C5 |  C6 |  C7 |  C8 |  Growth |
+| :------------------- | --: | --: | --: | --: | --: | --: | --: | --: | ------: |
+| `just-solve` (Run 1) |  16 |  25 |  27 |  29 |  33 |  42 |  53 |  62 |     +46 |
+| `just-solve` (Run 2) |  21 |  28 |  30 |  34 |  41 |  51 |  72 |  75 | **+54** |
+| `just-solve` (Run 3) |  10 |  18 |  20 |  24 |  30 |  50 |  40 |  47 |     +37 |
+| `anti_slop` (Run 1)  |   6 |   9 |  11 |  11 |  11 |  11 |  11 |  12 |  **+6** |
+| `anti_slop` (Run 2)  |  10 |  10 |  10 |  10 |  10 |  10 |  10 |  10 |       0 |
+| `anti_slop` (Run 3)  |  10 |  10 |  10 |  10 |  10 |  10 |  10 |  11 |      +1 |
+
+Each cell reports Max CC at that checkpoint; growth = C8 − C1. Three independent runs per prompt on `circuit_eval`.
+{: .ar-table-note}
+
+</details>
 
 Across all 12 runs on `forge` and `circuit_eval` (3 pairs each), the two distributions do not overlap at all:
 
-| Problem        | Mode         | Runs | Final Peak Complexity (3 Runs) | 8-Checkpoint Complexity Growth | Final Large Functions (CC ≥ 20) | Pass Rate | Mean Cost |
-| -------------- | ------------ | ---: | ------------------------------ | ------------------------------ | ------------------------------: | --------: | --------: |
-| `forge`        | `just-solve` |    3 | 35, 39, 49                     | +14 to +28                     |                             4.3 |     91.1% |     $1.80 |
-| `forge`        | `anti_slop`  |    3 | 9, 10, 11                      | 0 to +4                        |                             0.0 |     92.1% |     $4.14 |
-| `circuit_eval` | `just-solve` |    3 | 47, 62, 75                     | +37 to +54                     |                             8.0 |     99.8% |    $21.40 |
-| `circuit_eval` | `anti_slop`  |    3 | 10, 11, 12                     | 0 to +6                        |                             0.0 |     99.6% |    $13.12 |
+| Problem        | Prompt       | Runs |      C8 Max CC |     Growth | C8 funcs ≥ 20 | Pass rate | Cost ($) |
+| :------------- | :----------- | ---: | -------------: | ---------: | ------------: | --------: | -------: |
+| `forge`        | `just-solve` |    3 |     35, 39, 49 | +14 to +28 |           4.3 |     91.1% |    $1.80 |
+| `forge`        | `anti_slop`  |    3 |  **9, 10, 11** |    0 to +4 |           0.0 |     92.1% |    $4.14 |
+| `circuit_eval` | `just-solve` |    3 |     47, 62, 75 | +37 to +54 |           8.0 |     99.8% |   $21.40 |
+| `circuit_eval` | `anti_slop`  |    3 | **10, 11, 12** |    0 to +6 |           0.0 |     99.6% |   $13.12 |
+
+C8 Max CC lists the three final run values; growth is C8 − C1. Large-function counts (CC ≥ 20), pass rates and full-run USD costs are condition means.
+{: .ar-table-note}
 
 Even using the paper's own `erosion` and `verbosity` metrics and comparing against Table 3 of the original paper (GPT 5.3–5.5), the reduction on Opus 5.5 is an order of magnitude stronger:
 
-| Model & Scope                        | `just-solve` Erosion | `anti_slop` Erosion | Relative Reduction | Verbosity Change C1 → C8 (`just-solve` vs. `anti_slop`) |
-| ------------------------------------ | -------------------- | ------------------- | -----------------: | ------------------------------------------------------- |
-| GPT 5.3 Codex (Paper, 36-prob mean)  | 0.64                 | 0.42                |               −34% | —                                                       |
-| GPT 5.4 (Paper, 36-prob mean)        | 0.51                 | 0.28                |               −45% | —                                                       |
-| GPT 5.5 (Paper, 36-prob mean)        | 0.49                 | 0.21                |               −57% | —                                                       |
-| Opus 5.5 `forge` Final (Ours)        | 0.69 (C1: 0.78)      | 0.02 (C1: 0.00)     |               −97% | +0.10 vs. +0.03                                         |
-| Opus 5.5 `circuit_eval` Final (Ours) | 0.74 (C1: 0.31)      | 0.07 (C1: 0.00)     |               −91% | +0.11 vs. +0.01                                         |
+| Model / scope                        |    `just-solve` |     `anti_slop` | Reduction |     Verbosity Δ |
+| :----------------------------------- | --------------: | --------------: | --------: | --------------: |
+| GPT 5.3 Codex (Paper, 36-prob mean)  |            0.64 |            0.42 |      −34% |               — |
+| GPT 5.4 (Paper, 36-prob mean)        |            0.51 |            0.28 |      −45% |               — |
+| GPT 5.5 (Paper, 36-prob mean)        |            0.49 |            0.21 |      −57% |               — |
+| Opus 5.5 `forge` Final (Ours)        | 0.69 (C1: 0.78) | 0.02 (C1: 0.00) |  **−97%** | +0.10 vs. +0.03 |
+| Opus 5.5 `circuit_eval` Final (Ours) | 0.74 (C1: 0.31) | 0.07 (C1: 0.00) |  **−91%** | +0.11 vs. +0.01 |
+
+The prompt columns report `erosion`; C1 values are shown in parentheses. Reduction is relative to `just-solve`. Verbosity Δ is C8 − C1, shown as `just-solve` vs. `anti_slop`. Paper rows average 36 problems; our rows report the named problem at C8.
+{: .ar-table-note}
 
 Why does our finding on Opus 5.5 diverge so sharply from the paper's claim that quality prompts do not affect degradation rates?
 
 1. **Model Generation & Instruction Following**: The paper evaluated `anti_slop` exclusively on GPT 5.3–5.5, whereas Opus 5.5 demonstrates substantially stronger adherence to structural constraints across long horizons.
 2. **Threshold & Aggregation Artifacts**: Because `anti_slop` explicitly instructs against god functions, Opus 5.5 keeps Peak Function Complexity around 10–12, holding both complexity growth (0 to +6) and `erosion` increment (+0.02 to +0.07) near zero.
 
-## 7. The Cost Crossover: Why Writing Clean Code Saved 39% on Hard Tasks
+<h2 id="7-the-cost-crossover-why-writing-clean-code-saved-39-on-hard-tasks">The Cost Crossover: Why Writing Clean Code Saved 39% on Hard Tasks</h2>
 
 The original paper coined a memorable aphorism: "Slop does not fail your tests. It bills you," while simultaneously reporting that `anti_slop` increases per-checkpoint cost by 12.1%.
 
 Comparing all four strategies across the full 8 checkpoints of `circuit_eval` reveals a striking **Cost Crossover**:
 
-| Strategy on `circuit_eval` (8 Checkpoints) | Runs | Final Peak Function Complexity (C8) | Pass Rate | Mean Total Cost (USD) |
-| ------------------------------------------ | ---: | ----------------------------------- | --------: | --------------------- |
-| 1. Default (`just-solve`)                  |    3 | 61.3 (47–75)                        |     99.8% | $21.40                |
-| 2. Refactor Once (Post-C4)                 |    3 | 34.3 (25–43)                        |     99.8% | $16.35                |
-| 3. Periodic Refactor (Post-C2/C4/C6)       |    1 | 42.0                                |     90.5% | $43.58                |
-| 4. Continuous `anti_slop`                  |    3 | 11.0 (10–12)                        |     99.6% | **$13.12 (−39%)**     |
+{% include slopcode_chart.liquid kind='cost' %}
+
+<details class="ar-source-data" id="slopcode-cost-data" open markdown="1">
+<summary>View source data for all four strategies</summary>
+
+| Strategy                             | Runs |    C8 Max CC | Pass rate |          Cost ($) |
+| :----------------------------------- | ---: | -----------: | --------: | ----------------: |
+| 1. Default (`just-solve`)            |    3 | 61.3 (47–75) |     99.8% |            $21.40 |
+| 2. Refactor Once (Post-C4)           |    3 | 34.3 (25–43) |     99.8% |            $16.35 |
+| 3. Periodic Refactor (Post-C2/C4/C6) |    1 |         42.0 | **90.5%** |            $43.58 |
+| 4. Continuous `anti_slop`            |    3 | 11.0 (10–12) |     99.6% | **$13.12 (−39%)** |
+
+Full 8-checkpoint `circuit_eval` runs. Max CC and total USD cost are means; parentheses show the Max CC range. Periodic refactoring has one run, the other strategies three each.
+{: .ar-table-note}
+
+</details>
 
 Why did `anti_slop` cost more on the simpler `forge` task ($4.14 vs. $1.80) but save 39% on the complex `circuit_eval` task ($13.12 vs. $21.40)?
 
@@ -274,7 +336,7 @@ Why did `anti_slop` cost more on the simpler `forge` task ($4.14 vs. $1.80) but 
 
 Clean architecture isn't just for human maintainers—it directly reduces the agent's own late-stage reasoning and debugging token burn.
 
-## 8. Bonus: Three Upstream Harness Bugs Uncovered
+<h2 id="8-bonus-three-upstream-harness-bugs-uncovered">Bonus: Three Upstream Harness Bugs Uncovered</h2>
 
 While auditing over 150 checkpoint trajectories, we identified three bugs in the slop-code-bench evaluation harness (upstream issues drafted):
 
@@ -282,7 +344,7 @@ While auditing over 150 checkpoint trajectories, we identified three bugs in the
 2. **Under-Reported Token Usage on Retries**: When a checkpoint retries internally, the harness only logs token usage from the final segment, under-counting up to 250K output tokens in a single checkpoint (corrected in our analysis scripts by summing all `result` events).
 3. **Retry Trajectory Overwrites**: Retries overwrite the original trajectory file, permanently erasing cost and trace data from failed attempts (e.g., losing a $2.05 run on `code_search` C3).
 
-## 9. Conclusion & Takeaways for Practitioners
+<h2 id="9-conclusion--takeaways-for-practitioners">Conclusion &amp; Takeaways for Practitioners</h2>
 
 1. **Beware Proportional Metrics**: Never rely solely on ratio metrics like `erosion` (which can be diluted by trivial helper functions); always track absolute complexity indicators like Peak Function Complexity and counts of bloated functions (CC ≥ 20).
 2. **Don't Expect Spontaneous Refactoring During Feature Work**: Under default goal-directed prompting without full regression visibility, minimal-invasive patching is the agent's path of least resistance (0/25 spontaneous refactorings), producing 20%–30% code bloat concentrated in `main()`.

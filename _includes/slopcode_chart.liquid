@@ -1,0 +1,71 @@
+{% assign chart_zh = false %}
+{% if page.lang == 'zh' %}{% assign chart_zh = true %}{% endif %}
+<figure
+  class="ar-chart"
+  data-chart="{{ include.kind }}"
+  data-source="slopcode-{{ include.kind }}-data"
+  {% if include.kind == 'trajectory' %}
+    data-extra-source="slopcode-periodic-data"
+  {% endif %}
+  data-lang="{{ page.lang }}"
+  aria-labelledby="slopcode-{{ include.kind }}-caption"
+  hidden
+>
+  <figcaption id="slopcode-{{ include.kind }}-caption">
+    {% if include.kind == 'trajectory' %}
+      {% if chart_zh %}三种策略的复杂度轨迹{% else %}Three strategies, different complexity trajectories{% endif %}
+    {% elsif include.kind == 'refactor' %}
+      {% if chart_zh %}六次独立重构，复杂度均下降{% else %}All six refactoring runs reduced peak complexity{% endif %}
+    {% else %}
+      {% if chart_zh %}复杂度与成本的反转{% else %}The complexity–cost crossover{% endif %}
+    {% endif %}
+  </figcaption>
+  <p class="ar-chart-subtitle">
+    {% if include.kind == 'trajectory' %}
+      {% if chart_zh %}
+        Claude Opus 5.5 · circuit_eval · 8 关 · 最高函数复杂度（CC）
+      {% else %}
+        Claude Opus 5.5 · circuit_eval · 8 checkpoints · Peak function complexity (CC)
+      {% endif %}
+    {% elsif include.kind == 'refactor' %}
+      {% if chart_zh %}
+        Claude Opus 5.5 · 第 4 关快照 · 六次 refactor_only 会话
+      {% else %}
+        Claude Opus 5.5 · Checkpoint 4 snapshots · Six refactor_only sessions
+      {% endif %}
+    {% else %}
+      {% if chart_zh %}
+        circuit_eval · 完整 8 关 · 复杂度与费用分别比较，均为越低越好
+      {% else %}
+        circuit_eval · All 8 checkpoints · Separate scales; lower is better on both
+      {% endif %}
+    {% endif %}
+  </p>
+  <div class="ar-chart-plot"></div>
+  <p class="ar-chart-note">
+    {% if include.kind == 'trajectory' %}
+      {% if chart_zh %}
+        实线为 3 次运行的均值，阴影为最小–最大范围，并非置信区间。虚线为单次定期重构；方形标记 C2、C4、C6 的重构后数值。
+        悬停或用左右方向键查看各关数据；<a href="#slopcode-periodic-data">定期重构原始轨迹见前表</a>。
+      {% else %}
+        Solid lines: means of 3 runs; shading: observed min–max, not confidence intervals. Dashed line: 1 periodic-refactoring run; squares mark
+        post-refactor values at C2, C4 and C6. Hover or use the arrow keys for checkpoint values;
+        <a href="#slopcode-periodic-data">periodic source data appear above</a>.
+      {% endif %}
+    {% elsif include.kind == 'refactor' %}
+      {% if chart_zh %}
+        空心圆为重构前，实心圆为重构后，数值越低越好。六次会话均保持了原有测试结果，包括重构前已失败的测试。悬停或聚焦任一行查看详情。
+      {% else %}
+        Open circles: before; filled circles: after. Lower is better. All six sessions preserved existing test results, including pre-existing
+        failures. Hover or focus a row for details.
+      {% endif %}
+    {% else %}
+      {% if chart_zh %}
+        条形表示均值。定期重构仅 1 次运行，通过率为 90.5%；其他策略各 3 次运行。悬停或聚焦条形查看通过率与范围；原始表格保留在下方。
+      {% else %}
+        Bars show means. Periodic refactoring has only 1 run, with a 90.5% pass rate; all other strategies have 3 runs. Hover or focus a bar for pass
+        rates and ranges; the source table follows.
+      {% endif %}
+    {% endif %}
+  </p>
+</figure>

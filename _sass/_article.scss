@@ -600,6 +600,292 @@ body:has(.ar-page) {
   }
 }
 
+// --------------------------------------------------------- research charts ----
+// Figures enhance source tables only on the two SlopCodeBench posts.
+.ar-main .ar-table-note,
+.ar-main .ar-chart-note,
+.ar-main .ar-chart-subtitle {
+  margin: 8px 0 20px;
+  font-family: var(--ar-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ar-ink-3);
+  text-wrap: wrap;
+}
+
+.ar-main .ar-table-note {
+  margin-top: -14px;
+}
+
+.ar-source-data {
+  margin: 16px 0 28px;
+  padding: 12px 0;
+  border-top: 1px solid var(--ar-rule);
+  border-bottom: 1px solid var(--ar-rule);
+
+  summary {
+    padding: 4px 0;
+    font-family: var(--ar-sans);
+    font-size: 13px;
+    color: var(--ar-ink-3);
+    cursor: pointer;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid var(--ar-accent);
+    outline-offset: 4px;
+  }
+}
+
+.ar-chart {
+  --chart-blue: #2a78d6;
+  --chart-orange: #eb6834;
+  --chart-green: #199e70;
+  position: relative;
+  min-width: 0;
+  margin: 32px 0 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ar-rule);
+  font-family: var(--ar-sans);
+
+  &[hidden] {
+    display: none;
+  }
+
+  figcaption {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ar-ink);
+  }
+
+  .ar-chart-subtitle {
+    margin: 6px 0 20px;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    overflow: visible;
+    font-family: var(--ar-sans);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  svg text {
+    fill: var(--ar-ink-3);
+  }
+
+  .ar-chart-grid {
+    fill: none;
+    stroke: var(--ar-rule);
+    stroke-width: 1;
+  }
+
+  .ar-chart-threshold,
+  .ar-chart-crosshair {
+    fill: none;
+    stroke: var(--ar-ink-4);
+    stroke-width: 1;
+  }
+
+  .ar-chart-threshold {
+    stroke-dasharray: 2 4;
+  }
+
+  .ar-chart-series-blue {
+    --chart-series: var(--chart-blue);
+  }
+
+  .ar-chart-series-orange {
+    --chart-series: var(--chart-orange);
+  }
+
+  .ar-chart-series-green {
+    --chart-series: var(--chart-green);
+    stroke-dasharray: 6 4;
+  }
+
+  .ar-chart-band {
+    fill: var(--chart-series);
+    fill-opacity: 0.12;
+    stroke: none;
+  }
+
+  .ar-chart-line {
+    fill: none;
+    stroke: var(--chart-series);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .ar-chart-marker {
+    fill: var(--chart-series);
+    stroke: var(--global-bg-color);
+    stroke-width: 2;
+    stroke-dasharray: none;
+  }
+
+  .ar-chart-marker-open {
+    fill: var(--global-bg-color);
+    stroke: var(--chart-series);
+  }
+
+  .ar-chart-end-label {
+    fill: var(--ar-ink-2);
+    font-size: 13px;
+  }
+
+  .ar-chart-end-value {
+    fill: var(--ar-ink);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .ar-chart-legend {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px 12px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: var(--ar-ink-3);
+
+    > span {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    svg {
+      flex: 0 0 28px;
+      width: 28px;
+      height: 14px;
+    }
+  }
+
+  .ar-chart-hit,
+  .ar-chart-bar-hit,
+  .ar-chart-row-hit {
+    fill: transparent;
+    stroke: transparent;
+    stroke-width: 2;
+  }
+
+  .ar-chart-hit {
+    cursor: crosshair;
+    touch-action: pan-y;
+  }
+
+  .ar-chart-hit:focus-visible,
+  .ar-chart-bar-group:focus-visible .ar-chart-bar-hit,
+  .ar-chart-refactor-row:focus-visible .ar-chart-row-hit {
+    outline: none;
+    stroke: var(--ar-accent);
+  }
+
+  .ar-chart-bar-group,
+  .ar-chart-refactor-row {
+    outline: none;
+  }
+
+  .ar-chart-pair-connector {
+    stroke: var(--ar-ink-4);
+    stroke-opacity: 0.5;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .ar-chart-legend-pair {
+    display: flex;
+    gap: 24px;
+  }
+
+  .ar-chart-bar {
+    fill: var(--chart-series);
+    pointer-events: none;
+  }
+
+  .ar-chart-bar-group:hover .ar-chart-bar,
+  .ar-chart-bar-group:focus-visible .ar-chart-bar {
+    fill-opacity: 0.8;
+  }
+
+  .ar-chart-panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .ar-chart-panel {
+    min-width: 0;
+  }
+
+  .ar-chart-panel-title {
+    margin: 0 0 8px;
+    font-family: var(--ar-sans);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .ar-chart-strategy {
+    fill: var(--ar-ink-2);
+  }
+
+  .ar-chart-value {
+    fill: var(--ar-ink);
+    font-weight: 600;
+  }
+
+  .ar-chart-tooltip {
+    position: absolute;
+    z-index: 5;
+    max-width: min(300px, 100%);
+    padding: 10px 12px;
+    background: var(--global-bg-color);
+    border: 1px solid var(--ar-rule);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ar-ink-2);
+    pointer-events: none;
+
+    strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+  }
+}
+
+html[data-theme="dark"] .ar-chart {
+  --chart-blue: #3987e5;
+  --chart-orange: #d95926;
+  --chart-green: #199e70;
+}
+
+@media (max-width: 600px) {
+  .ar-chart {
+    .ar-chart-legend {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      font-size: 11px;
+    }
+
+    .ar-chart-panels {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
+    }
+  }
+}
+
+@media print, (forced-colors: active) {
+  .ar-chart {
+    --chart-blue: currentColor;
+    --chart-orange: currentColor;
+    --chart-green: currentColor;
+  }
+}
+
 // ------------------------------------------------------------ footnotes ----
 // kramdown renders [^n] as <sup><a class="footnote"> and a trailing
 // <div class="footnotes">. article.js moves that list under a "Notes" heading
