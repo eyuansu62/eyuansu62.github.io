@@ -50,15 +50,40 @@
   const ordered = Array.from(main.querySelectorAll("h2, h3")).filter((h) => h.id && !h.closest(".footnotes, .publications"));
 
   // ---- contents list ------------------------------------------------------
+  // Entries are as short as the heading allows: the section number goes, and
+  // the label stops at the first break in the sentence (a colon, dash, comma,
+  // bracket or question mark), keeping a lead-in such as "Step 1:" or "第一步：".
+  // A post can name its own label per heading with toc_labels in front matter.
+  // The full heading is the link's tooltip.
+  const NUMBER = /^(?:\d+\s*[.、]\s*|\d+\s+[—–-]\s+|[〇一二三四五六七八九十]+、\s*)/;
+  const LEAD = /^(?:(?:step|finding|part)\s*\d+|第[一二三四五六七八九十\d]+[步部章节]|发现\s*\d+)\s*[:：]\s*/i;
+  const BREAK = /\s+[—–]\s+|——|[:：，]|,\s|\s?[（(]|[?？]/;
+  const shorten = (heading) => {
+    const text = heading.replace(NUMBER, "");
+    const lead = (text.match(LEAD) || [""])[0];
+    let rest = text.slice(lead.length);
+    const cut = rest.match(BREAK);
+    if (cut && cut.index > 0) rest = rest.slice(0, cut.index) + (/[?？]/.test(cut[0]) ? cut[0] : "");
+    return (lead + rest).trim() || heading;
+  };
+
   const toc = document.querySelector(".ar-toc");
+  // Keys are written in the source, where kramdown has not yet curled quotes.
+  const plain = (t) => t.replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
+  const labels = new Map();
+  try {
+    Object.entries(JSON.parse(toc?.dataset.labels || "{}")).forEach(([k, v]) => labels.set(plain(k), v));
+  } catch (e) {}
   if (toc && ordered.filter((h) => h.tagName === "H2").length >= 2) {
     const root = document.createElement("ol");
     let sub = null;
     ordered.forEach((h) => {
       const li = document.createElement("li");
       const a = document.createElement("a");
+      const full = h.textContent.trim();
       a.href = "#" + h.id;
-      a.textContent = h.textContent.trim();
+      a.textContent = labels.get(plain(full)) || shorten(full);
+      if (a.textContent !== full) a.title = full;
       li.appendChild(a);
       if (h.tagName === "H3" && root.lastElementChild) {
         if (!sub) {

@@ -8,6 +8,14 @@ lang: en
 translation_key: slopcodebench-erosion
 cite_key: qin2026slopcode
 dollar_math: false
+toc_labels:
+  "3. Claude Opus 5.5 Comparison & Where Complexity Accumulates": "Where complexity accumulates"
+  "1. Zero Spontaneous Refactoring Under Default Prompting": "Zero spontaneous refactoring"
+  "Finding 1: Mid-Course Refactoring Decays on Hard Tasks, and Periodic Refactoring Breaks Correctness": "Finding 1: Periodic refactoring backfires"
+  "Finding 2: Continuous anti_slop Flattens the Degradation Slope — Directly Contradicting the Paper's Conclusion": "Finding 2: anti_slop flattens the slope"
+  "4. Step 3: Counterfactual Checkpoint Splicing — Proving Path Dependence": "Step 3: Checkpoint Splicing"
+  "9. Conclusion & Takeaways for Practitioners": "Takeaways"
+  "8. Bonus: Three Upstream Harness Bugs Uncovered": "Bonus: Harness bugs"
 subtitle: "Five controlled experiments on code erosion in long-horizon coding agents"
 ---
 

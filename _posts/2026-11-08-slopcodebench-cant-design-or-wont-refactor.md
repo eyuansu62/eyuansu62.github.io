@@ -8,6 +8,12 @@ lang: zh
 translation_key: slopcodebench-erosion
 cite_key: qin2026slopcode
 dollar_math: false
+toc_labels:
+  "发现 2：全程 anti_slop 彻底锁死退化斜率，直接反驳原论文结论！": "发现 2：anti_slop 压平斜率"
+  "3. Claude Opus 5.5 上的对照与“复杂度淤积位置”差异": "复杂度淤积在哪里"
+  "1. 默认状态下的“绝对懒惰”": "默认状态下的“懒惰”"
+  "2. GLM-5.3-flash 上的 14 对配对实验（6 道题）": "14 对配对实验"
+  "八、附带收获：给开源评测基准捉虫（Harness Issues）": "附带收获：评测框架的 Bug"
 subtitle: "SlopCodeBench 复现与五组对照实验"
 ---
 

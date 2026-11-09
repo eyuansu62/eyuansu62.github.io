@@ -11,6 +11,8 @@ layout: default
     lang:            en | zh, switches the interface labels
     translation_key: shared by the translations of one post; adds an EN / 中文 switch
     cite: false      hides the BibTeX block; cite_key overrides the generated key
+    toc_labels:      short contents-list labels, keyed by the heading's text as
+                     written; other headings are shortened automatically
     dollar_math: false
                      leaves $ as plain text (prices) instead of inline math; wrap
                      a formula in <div class="mathjax_process"> to typeset it anyway
@@ -101,7 +103,14 @@ layout: default
     {% endif %}
   </header>
 
-  <aside class="ar-toc" aria-label="{% if is_zh %}目录{% else %}Contents{% endif %}" hidden>
+  <aside
+    class="ar-toc"
+    aria-label="{% if is_zh %}目录{% else %}Contents{% endif %}"
+    {% if page.toc_labels %}
+      data-labels="{{ page.toc_labels | jsonify | escape }}"
+    {% endif %}
+    hidden
+  >
     <h3>
       {% if is_zh %}目录{% else %}Contents{% endif %}
     </h3>
