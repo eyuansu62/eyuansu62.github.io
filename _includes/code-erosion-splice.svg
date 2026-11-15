@@ -1,0 +1,45 @@
+<!-- Generated from the preceding post table by _scripts/render_code_erosion_figures.py. -->
+<figure class="ar-chart" aria-labelledby="code-erosion-splice-caption">
+  <figcaption id="code-erosion-splice-caption">三向嫁接：终局复杂度与新增失败分别比较</figcaption>
+  <div style="overflow-x: auto; margin-top: 16px;" tabindex="0" role="region" aria-label="三向嫁接：终局复杂度与新增失败分别比较；窄屏可横向滚动">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 432" role="img" aria-labelledby="code-erosion-splice-title code-erosion-splice-desc" style="min-width: 600px; width: 100%; height: auto;">
+      <title id="code-erosion-splice-title">三向嫁接：终局复杂度与新增失败分别比较</title>
+      <desc id="code-erosion-splice-desc">forge · Claude Opus 5.5 · 各组 3 次运行均值。两幅图使用独立量纲，条形均从零起；完整数据与起点条件见上表。 数据以文字标注，并保留在相邻表格中。</desc>
+      <g fill="var(--ar-ink-3, #555)" font-size="14" font-family="sans-serif">
+        <text x="0" y="20" font-weight="600">第 8 关最高函数复杂度</text>
+<path d="M140,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="140" y="36" text-anchor="middle" font-size="12">0</text>
+<path d="M345,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="345" y="36" text-anchor="middle" font-size="12">25</text>
+<path d="M550,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="550" y="36" text-anchor="middle" font-size="12">50</text>
+<text x="128" y="69" text-anchor="end">A · 默认起点</text>
+<rect x="140" y="53" width="336.20" height="22" fill="#df693c"/>
+<text x="484.20" y="69">41.0</text>
+<text x="128" y="111" text-anchor="end">B′ · 修满测试</text>
+<rect x="140" y="95" width="281.26" height="22" fill="#327bce"/>
+<text x="429.26" y="111">34.3</text>
+<text x="128" y="153" text-anchor="end">B · 参考答案</text>
+<rect x="140" y="137" width="210.74" height="22" fill="#258e70"/>
+<text x="358.74" y="153">25.7</text>
+<text x="0" y="236" font-weight="600">第 8 关中来自第 5–8 关的失败测试数（个）</text>
+<path d="M140,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="140" y="252" text-anchor="middle" font-size="12">0</text>
+<path d="M345,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="345" y="252" text-anchor="middle" font-size="12">12.5</text>
+<path d="M550,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="550" y="252" text-anchor="middle" font-size="12">25</text>
+<text x="128" y="285" text-anchor="end">A · 默认起点</text>
+<rect x="140" y="269" width="311.60" height="22" fill="#df693c"/>
+<text x="459.60" y="285">19.0</text>
+<text x="128" y="327" text-anchor="end">B′ · 修满测试</text>
+<rect x="140" y="311" width="311.60" height="22" fill="#327bce"/>
+<text x="459.60" y="327">19.0</text>
+<text x="128" y="369" text-anchor="end">B · 参考答案</text>
+<rect x="140" y="353" width="86.92" height="22" fill="#258e70"/>
+<text x="234.92" y="369">5.3</text>
+      </g>
+    </svg>
+  </div>
+  <p class="ar-chart-note">forge · Claude Opus 5.5 · 各组 3 次运行均值。两幅图使用独立量纲，条形均从零起；完整数据与起点条件见上表。</p>
+</figure>

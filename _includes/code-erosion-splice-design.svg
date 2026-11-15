@@ -1,0 +1,51 @@
+<!-- Generated from the C3 starting conditions in the post's splicing table. -->
+<figure class="ar-chart" aria-labelledby="code-erosion-splice-design-caption">
+  <figcaption id="code-erosion-splice-design-caption">三向快照嫁接：三种起点，共用续跑协议</figcaption>
+  <div style="overflow-x: auto; margin-top: 16px;" tabindex="0" role="region" aria-label="三向快照嫁接：三种起点，共用续跑协议；窄屏可横向滚动">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 498" role="img" aria-labelledby="code-erosion-splice-design-title code-erosion-splice-design-desc" style="min-width: 600px; width: 100%; height: auto;">
+      <title id="code-erosion-splice-design-title">三向快照嫁接：三种起点，共用续跑协议</title>
+      <desc id="code-erosion-splice-design-desc">A · 自然起点: 单文件 · 高复杂度, 94.3/101, 29.7; B′ · 原位修补: 保留原有单文件与函数结构, 101/101, 29.7; B · 参考答案: 模块化参考实现, 101/101, 20.0. forge · Claude Opus 5.5 · 每组 3 次运行，C3 数值为均值。虚线表示由 A 原位修补得到 B′，实线表示各组独立续跑。B′ 将测试通过数对齐 B，同时保留 A 的结构；参考答案的规格理解差异仍是潜在混淆变量。</desc>
+      <g fill="var(--ar-ink-3, #555)" font-size="14" font-family="sans-serif">
+        <defs>
+  <marker id="code-erosion-splice-design-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M1,1 L7,4 L1,7" fill="none" stroke="context-stroke" stroke-width="1.3"/>
+  </marker>
+</defs>
+<text x="0" y="22" font-size="14" font-weight="600" text-anchor="start">第 3 关结束 · 三种工作区快照</text>
+<text x="210" y="53" font-size="12" font-weight="400" text-anchor="middle">仅修测试，保留结构</text>
+<path d="M100,89 V66 H320 V89" fill="none" stroke="#327bce" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<rect x="1" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<path d="M2,93 H198" stroke="#df693c" stroke-width="3"/>
+<text x="14" y="121" font-size="14" font-weight="600" text-anchor="start">A · 自然起点</text>
+<text x="14" y="151" font-size="13" font-weight="400" text-anchor="start">单文件 · 高复杂度</text>
+<text x="14" y="185" font-size="13" font-weight="400" text-anchor="start">测试通过：94.3 / 101</text>
+<text x="14" y="216" font-size="13" font-weight="400" text-anchor="start">最高复杂度：29.7</text>
+<path d="M100,245 V287" fill="none" stroke="#df693c" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<rect x="221" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<path d="M222,93 H418" stroke="#327bce" stroke-width="3"/>
+<text x="234" y="121" font-size="14" font-weight="600" text-anchor="start">B′ · 原位修补</text>
+<text x="234" y="151" font-size="13" font-weight="400" text-anchor="start">保留原有单文件与函数结构</text>
+<text x="234" y="185" font-size="13" font-weight="400" text-anchor="start">测试通过：101 / 101</text>
+<text x="234" y="216" font-size="13" font-weight="400" text-anchor="start">最高复杂度：29.7</text>
+<path d="M320,245 V287" fill="none" stroke="#327bce" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<rect x="441" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<path d="M442,93 H638" stroke="#258e70" stroke-width="3"/>
+<text x="454" y="121" font-size="14" font-weight="600" text-anchor="start">B · 参考答案</text>
+<text x="454" y="151" font-size="13" font-weight="400" text-anchor="start">模块化参考实现</text>
+<text x="454" y="185" font-size="13" font-weight="400" text-anchor="start">测试通过：101 / 101</text>
+<text x="454" y="216" font-size="13" font-weight="400" text-anchor="start">最高复杂度：20.0</text>
+<path d="M540,245 V287" fill="none" stroke="#258e70" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<rect x="1" y="291" width="638" height="100" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="320" y="319" font-size="14" font-weight="600" text-anchor="middle">第 4 → 8 关 · 相同的续跑协议</text>
+<text x="320" y="346" font-size="14" font-weight="400" text-anchor="middle">Claude Opus 5.5 · just-solve</text>
+<text x="320" y="372" font-size="13" font-weight="400" text-anchor="middle">各组工作区独立续跑 · 每组 3 次</text>
+<path d="M100,392 V429" fill="none" stroke="#df693c" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<path d="M320,392 V429" fill="none" stroke="#327bce" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<path d="M540,392 V429" fill="none" stroke="#258e70" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-arrow)"/>
+<text x="320" y="456" font-size="14" font-weight="600" text-anchor="middle">第 8 关 · 分别评估各组结果</text>
+<text x="320" y="482" font-size="13" font-weight="400" text-anchor="middle">最高复杂度 · 高复杂度函数数 · 后续关卡失败测试数</text>
+      </g>
+    </svg>
+  </div>
+  <p class="ar-chart-note">forge · Claude Opus 5.5 · 每组 3 次运行，C3 数值为均值。虚线表示由 A 原位修补得到 B′，实线表示各组独立续跑。B′ 将测试通过数对齐 B，同时保留 A 的结构；参考答案的规格理解差异仍是潜在混淆变量。</p>
+</figure>

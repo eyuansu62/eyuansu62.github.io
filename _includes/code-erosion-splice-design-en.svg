@@ -1,0 +1,51 @@
+<!-- Generated from the C3 starting conditions in the post's splicing table. -->
+<figure class="ar-chart" aria-labelledby="code-erosion-splice-design-en-caption">
+  <figcaption id="code-erosion-splice-design-en-caption">Three-way snapshot splicing: three starts, one continuation protocol</figcaption>
+  <div style="overflow-x: auto; margin-top: 16px;" tabindex="0" role="region" aria-label="Three-way snapshot splicing: three starts, one continuation protocol; scroll horizontally on narrow screens">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 498" role="img" aria-labelledby="code-erosion-splice-design-en-title code-erosion-splice-design-en-desc" style="min-width: 600px; width: 100%; height: auto;">
+      <title id="code-erosion-splice-design-en-title">Three-way snapshot splicing: three starts, one continuation protocol</title>
+      <desc id="code-erosion-splice-design-en-desc">A · Default start: Single file · high complexity, 94.3/101, 29.7; B′ · Patched control: Original single-file layout, 101/101, 29.7; B · Reference start: Modular reference solution, 101/101, 20.0. forge · Claude Opus 5.5 · 3 runs per group; C3 values are means. The dashed arrow shows how B′ is patched from A; solid arrows show independent continuation. B′ matches B&#x27;s tested correctness while retaining A&#x27;s structure. Reference-solution semantics remain a potential confounder.</desc>
+      <g fill="var(--ar-ink-3, #555)" font-size="14" font-family="sans-serif">
+        <defs>
+  <marker id="code-erosion-splice-design-en-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M1,1 L7,4 L1,7" fill="none" stroke="context-stroke" stroke-width="1.3"/>
+  </marker>
+</defs>
+<text x="0" y="22" font-size="14" font-weight="600" text-anchor="start">C3 · Starting workspace snapshots</text>
+<text x="210" y="53" font-size="12" font-weight="400" text-anchor="middle">Patch tests; preserve structure</text>
+<path d="M100,89 V66 H320 V89" fill="none" stroke="#327bce" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<rect x="1" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<path d="M2,93 H198" stroke="#df693c" stroke-width="3"/>
+<text x="14" y="121" font-size="14" font-weight="600" text-anchor="start">A · Default start</text>
+<text x="14" y="151" font-size="13" font-weight="400" text-anchor="start">Single file · high complexity</text>
+<text x="14" y="185" font-size="13" font-weight="400" text-anchor="start">Tests passed: 94.3 / 101</text>
+<text x="14" y="216" font-size="13" font-weight="400" text-anchor="start">Peak complexity: 29.7</text>
+<path d="M100,245 V287" fill="none" stroke="#df693c" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<rect x="221" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<path d="M222,93 H418" stroke="#327bce" stroke-width="3"/>
+<text x="234" y="121" font-size="14" font-weight="600" text-anchor="start">B′ · Patched control</text>
+<text x="234" y="151" font-size="13" font-weight="400" text-anchor="start">Original single-file layout</text>
+<text x="234" y="185" font-size="13" font-weight="400" text-anchor="start">Tests passed: 101 / 101</text>
+<text x="234" y="216" font-size="13" font-weight="400" text-anchor="start">Peak complexity: 29.7</text>
+<path d="M320,245 V287" fill="none" stroke="#327bce" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<rect x="441" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<path d="M442,93 H638" stroke="#258e70" stroke-width="3"/>
+<text x="454" y="121" font-size="14" font-weight="600" text-anchor="start">B · Reference start</text>
+<text x="454" y="151" font-size="13" font-weight="400" text-anchor="start">Modular reference solution</text>
+<text x="454" y="185" font-size="13" font-weight="400" text-anchor="start">Tests passed: 101 / 101</text>
+<text x="454" y="216" font-size="13" font-weight="400" text-anchor="start">Peak complexity: 20.0</text>
+<path d="M540,245 V287" fill="none" stroke="#258e70" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<rect x="1" y="291" width="638" height="100" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="320" y="319" font-size="14" font-weight="600" text-anchor="middle">C4 → C8 · Identical continuation protocol</text>
+<text x="320" y="346" font-size="14" font-weight="400" text-anchor="middle">Claude Opus 5.5 · just-solve</text>
+<text x="320" y="372" font-size="13" font-weight="400" text-anchor="middle">Separate workspaces · 3 runs per group</text>
+<path d="M100,392 V429" fill="none" stroke="#df693c" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<path d="M320,392 V429" fill="none" stroke="#327bce" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<path d="M540,392 V429" fill="none" stroke="#258e70" stroke-width="1.6" marker-end="url(#code-erosion-splice-design-en-arrow)"/>
+<text x="320" y="456" font-size="14" font-weight="600" text-anchor="middle">C8 · Evaluate each group separately</text>
+<text x="320" y="482" font-size="13" font-weight="400" text-anchor="middle">Peak complexity · Large functions · New test failures</text>
+      </g>
+    </svg>
+  </div>
+  <p class="ar-chart-note">forge · Claude Opus 5.5 · 3 runs per group; C3 values are means. The dashed arrow shows how B′ is patched from A; solid arrows show independent continuation. B′ matches B&#x27;s tested correctness while retaining A&#x27;s structure. Reference-solution semantics remain a potential confounder.</p>
+</figure>

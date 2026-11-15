@@ -295,6 +295,12 @@ body:has(.ar-page) {
   }
 
   // Headings in the sans, like the title; the text itself stays serif.
+  h2,
+  h3,
+  h4 {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
   h2 {
     margin: 48px 0 16px;
     padding-top: 20px;
@@ -321,12 +327,12 @@ body:has(.ar-page) {
 
   h4 {
     margin: 26px 0 10px;
-    font-family: var(--ar-mono);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ar-ink-3);
+    font-family: var(--ar-sans);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    color: var(--ar-ink);
   }
 
   a {
@@ -370,8 +376,9 @@ body:has(.ar-page) {
   }
 
   ol > li::marker {
-    font-family: var(--ar-mono);
-    font-size: 0.8em;
+    font-family: var(--ar-sans);
+    font-size: 1em;
+    font-variant-numeric: lining-nums tabular-nums;
     color: var(--ar-accent);
   }
 

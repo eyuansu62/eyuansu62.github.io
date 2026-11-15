@@ -1,0 +1,45 @@
+<!-- Generated from the preceding post table by _scripts/render_code_erosion_figures.py. -->
+<figure class="ar-chart" aria-labelledby="code-erosion-forge-en-caption">
+  <figcaption id="code-erosion-forge-en-caption">forge: in-session gating, complexity, and cost</figcaption>
+  <div style="overflow-x: auto; margin-top: 16px;" tabindex="0" role="region" aria-label="forge: in-session gating, complexity, and cost; scroll horizontally on narrow screens">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 432" role="img" aria-labelledby="code-erosion-forge-en-title code-erosion-forge-en-desc" style="min-width: 600px; width: 100%; height: auto;">
+      <title id="code-erosion-forge-en-title">forge: in-session gating, complexity, and cost</title>
+      <desc id="code-erosion-forge-en-desc">Claude Opus 5.5 · Means of 3 runs per group. Test pass rates: 91.1%, 91.5%, and 92.1%, respectively. Complexity and cost use separate scales. Values are labeled and retained in the adjacent table.</desc>
+      <g fill="var(--ar-ink-3, #555)" font-size="14" font-family="sans-serif">
+        <text x="0" y="20" font-weight="600">Checkpoint 8 peak function complexity</text>
+<path d="M140,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="140" y="36" text-anchor="middle" font-size="12">0</text>
+<path d="M345,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="345" y="36" text-anchor="middle" font-size="12">25</text>
+<path d="M550,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="550" y="36" text-anchor="middle" font-size="12">50</text>
+<text x="128" y="69" text-anchor="end">A · Default</text>
+<rect x="140" y="53" width="336.20" height="22" fill="#df693c"/>
+<text x="484.20" y="69">41.0</text>
+<text x="128" y="111" text-anchor="end">G · AST gate</text>
+<rect x="140" y="95" width="112.34" height="22" fill="#327bce"/>
+<text x="260.34" y="111">13.7</text>
+<text x="128" y="153" text-anchor="end">C · anti_slop</text>
+<rect x="140" y="137" width="82.00" height="22" fill="#258e70"/>
+<text x="230.00" y="153">10.0</text>
+<text x="0" y="236" font-weight="600">Total cost for all 8 checkpoints (USD)</text>
+<path d="M140,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="140" y="252" text-anchor="middle" font-size="12">0</text>
+<path d="M345,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="345" y="252" text-anchor="middle" font-size="12">2.5</text>
+<path d="M550,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="550" y="252" text-anchor="middle" font-size="12">5</text>
+<text x="128" y="285" text-anchor="end">A · Default</text>
+<rect x="140" y="269" width="147.60" height="22" fill="#df693c"/>
+<text x="295.60" y="285">$1.80</text>
+<text x="128" y="327" text-anchor="end">G · AST gate</text>
+<rect x="140" y="311" width="175.48" height="22" fill="#327bce"/>
+<text x="323.48" y="327">$2.14</text>
+<text x="128" y="369" text-anchor="end">C · anti_slop</text>
+<rect x="140" y="353" width="339.48" height="22" fill="#258e70"/>
+<text x="487.48" y="369">$4.14</text>
+      </g>
+    </svg>
+  </div>
+  <p class="ar-chart-note">Claude Opus 5.5 · Means of 3 runs per group. Test pass rates: 91.1%, 91.5%, and 92.1%, respectively. Complexity and cost use separate scales.</p>
+</figure>

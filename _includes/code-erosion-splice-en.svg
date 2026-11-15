@@ -1,0 +1,45 @@
+<!-- Generated from the preceding post table by _scripts/render_code_erosion_figures.py. -->
+<figure class="ar-chart" aria-labelledby="code-erosion-splice-en-caption">
+  <figcaption id="code-erosion-splice-en-caption">Three-way splicing: final complexity and new test failures</figcaption>
+  <div style="overflow-x: auto; margin-top: 16px;" tabindex="0" role="region" aria-label="Three-way splicing: final complexity and new test failures; scroll horizontally on narrow screens">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 432" role="img" aria-labelledby="code-erosion-splice-en-title code-erosion-splice-en-desc" style="min-width: 600px; width: 100%; height: auto;">
+      <title id="code-erosion-splice-en-title">Three-way splicing: final complexity and new test failures</title>
+      <desc id="code-erosion-splice-en-desc">forge · Claude Opus 5.5 · Means of 3 runs per group. Panels use separate units; bars start at zero. Starting conditions and full data appear in the preceding table. Values are labeled and retained in the adjacent table.</desc>
+      <g fill="var(--ar-ink-3, #555)" font-size="14" font-family="sans-serif">
+        <text x="0" y="20" font-weight="600">Checkpoint 8 peak function complexity</text>
+<path d="M140,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="140" y="36" text-anchor="middle" font-size="12">0</text>
+<path d="M345,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="345" y="36" text-anchor="middle" font-size="12">25</text>
+<path d="M550,40V186" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="550" y="36" text-anchor="middle" font-size="12">50</text>
+<text x="128" y="69" text-anchor="end">A · Default</text>
+<rect x="140" y="53" width="336.20" height="22" fill="#df693c"/>
+<text x="484.20" y="69">41.0</text>
+<text x="128" y="111" text-anchor="end">B′ · Patched</text>
+<rect x="140" y="95" width="281.26" height="22" fill="#327bce"/>
+<text x="429.26" y="111">34.3</text>
+<text x="128" y="153" text-anchor="end">B · Reference</text>
+<rect x="140" y="137" width="210.74" height="22" fill="#258e70"/>
+<text x="358.74" y="153">25.7</text>
+<text x="0" y="236" font-weight="600">Failed C5–C8 tests at Checkpoint 8 (count)</text>
+<path d="M140,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="140" y="252" text-anchor="middle" font-size="12">0</text>
+<path d="M345,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="345" y="252" text-anchor="middle" font-size="12">12.5</text>
+<path d="M550,256V402" stroke="var(--ar-rule, #d9d9d9)"/>
+<text x="550" y="252" text-anchor="middle" font-size="12">25</text>
+<text x="128" y="285" text-anchor="end">A · Default</text>
+<rect x="140" y="269" width="311.60" height="22" fill="#df693c"/>
+<text x="459.60" y="285">19.0</text>
+<text x="128" y="327" text-anchor="end">B′ · Patched</text>
+<rect x="140" y="311" width="311.60" height="22" fill="#327bce"/>
+<text x="459.60" y="327">19.0</text>
+<text x="128" y="369" text-anchor="end">B · Reference</text>
+<rect x="140" y="353" width="86.92" height="22" fill="#258e70"/>
+<text x="234.92" y="369">5.3</text>
+      </g>
+    </svg>
+  </div>
+  <p class="ar-chart-note">forge · Claude Opus 5.5 · Means of 3 runs per group. Panels use separate units; bars start at zero. Starting conditions and full data appear in the preceding table.</p>
+</figure>
