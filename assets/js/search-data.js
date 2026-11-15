@@ -37,7 +37,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-是-不会设计-还是-懒得重构-我们复现并解构了-slopcodebench-的代码腐烂之谜",
+        },{id: "post-为什么再强的-coding-agent-也会把代码写成-屎山",
+        
+          title: "为什么再强的 Coding Agent 也会把代码写成“屎山”？",
+        
+        description: "从三向快照嫁接、公开跨语言编码轨迹，到会话内 AST 门禁与 CLAUDE.md 契约，追踪 Coding Agent 的代码复杂度演化。",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/coding-agent-code-erosion-counterfactuals-and-governance/";
+          
+        },
+      },{id: "post-why-even-frontier-coding-agents-write-quot-slop-quot-root-causes-and-how-to-fix-it",
+        
+          title: "Why Even Frontier Coding Agents Write &quot;Slop&quot;: Root Causes and How to Fix...",
+        
+        description: "Counterfactual snapshot splicing, public multi-language coding trajectories, and live evaluations of AST gates and persistent workspace contracts.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/coding-agent-code-erosion-counterfactuals-and-governance-en/";
+          
+        },
+      },{id: "post-是-不会设计-还是-懒得重构-我们复现并解构了-slopcodebench-的代码腐烂之谜",
         
           title: "是“不会设计”还是“懒得重构”？我们复现并解构了 SlopCodeBench 的代码腐烂之谜",
         
