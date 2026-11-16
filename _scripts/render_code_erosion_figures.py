@@ -42,65 +42,88 @@ def panel(title, labels, numbers, maximum, offset, currency=False):
 
 
 def splicing_diagram(table, english):
-    """Show snapshot construction and independent continuation, using C3 table data."""
+    """Render the plain-language overview from the article's starting/result rows."""
     anchor = "code-erosion-splice-design" + ("-en" if english else "")
-    title = ("Three-way snapshot splicing: three starts, one continuation protocol" if english
-             else "三向快照嫁接：三种起点，共用续跑协议")
-    peaks = values(table, "C3 Start: Peak Function Complexity" if english else "第 3 关起点：最高函数复杂度")
+    title = ("Fixing existing bugs did not reduce test failures for new requirements" if english
+             else "只修复已有 Bug，未减少新增需求的测试失败")
+    failures = values(table, "Failed Tests from C5–C8" if english else "来自第 5–8 关的失败测试数")
     tests = [re.search(r"(\d+(?:\.\d+)?)\s*/\s*(\d+)", cell).groups() for cell in table[0][1:]]
-    names = (["A · Default start", "B′ · Patched control", "B · Reference start"] if english
-             else ["A · 自然起点", "B′ · 原位修补", "B · 参考答案"])
-    structures = (["Single file · high complexity", "Original single-file layout", "Modular reference solution"] if english
-                  else ["单文件 · 高复杂度", "保留原有单文件与函数结构", "模块化参考实现"])
+    if len(failures) != 3 or len(tests) != 3:
+        raise ValueError("Splicing overview requires three starting/result conditions")
+    names = (["Original code", "Bugs fixed", "Modular code"] if english
+             else ["原始代码", "仅修复 Bug", "模块化代码"])
+    statuses = [("All pass" if english else "全部通过") if float(passed) == float(total)
+                else ("Some fail" if english else "部分失败") for passed, total in tests]
     colors = ("#df693c", "#327bce", "#258e70")
-    if len(peaks) != 3 or len(tests) != 3:
-        raise ValueError("Splicing diagram requires three C3 starting conditions")
-    note = ("forge · Claude Opus 5.5 · 3 runs per group; C3 values are means. The dashed arrow shows how B′ is patched from A; solid arrows show independent continuation. B′ matches B's tested correctness while retaining A's structure. Reference-solution semantics remain a potential confounder."
-            if english else "forge · Claude Opus 5.5 · 每组 3 次运行，C3 数值为均值。虚线表示由 A 原位修补得到 B′，实线表示各组独立续跑。B′ 将测试通过数对齐 B，同时保留 A 的结构；参考答案的规格理解差异仍是潜在混淆变量。")
-    description = "; ".join(f"{name}: {structure}, {passed}/{total}, {peak:.1f}"
-                            for name, structure, (passed, total), peak in zip(names, structures, tests, peaks, strict=True))
+    ink = "var(--ar-ink-3, #555)"
+    rule = "var(--ar-rule, #d9d9d9)"
+    note = ("forge · Claude Opus 5.5 · 3 runs per starting version. Values are mean failed tests for Checkpoints 5–8, evaluated after Checkpoint 8. Bug fixes preserve the original structure; the modular version uses the official reference implementation. Differences in specification semantics remain a potential confounder."
+            if english else "forge · Claude Opus 5.5 · 每种起点运行 3 次。数值为完成第 8 关后、第 5–8 关测试的平均失败数。修复 Bug 后保留原结构；模块化代码采用官方参考实现，规格理解差异仍是潜在混淆变量。")
+    description = "; ".join(f"{name}: {status}, {failed:.1f}" for name, status, failed
+                            in zip(names, statuses, failures, strict=True))
     parts = [f'''<defs>
   <marker id="{anchor}-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
     <path d="M1,1 L7,4 L1,7" fill="none" stroke="context-stroke" stroke-width="1.3"/>
   </marker>
 </defs>''']
 
-    def text(x, y, label, size=14, weight=400, align="start"):
-        parts.append(f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" text-anchor="{align}">{escape(label)}</text>')
+    def text(x, y, label, size=14, weight=400, align="start", color=None):
+        style = f' style="fill: {color}"' if color else ""
+        parts.append(f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" text-anchor="{align}"{style}>{escape(label)}</text>')
 
-    def arrow(path, color, dashed=False):
-        dash = ' stroke-dasharray="5 4"' if dashed else ""
-        parts.append(f'<path d="{path}" fill="none" stroke="{color}" stroke-width="1.6"{dash} marker-end="url(#{anchor}-arrow)"/>')
+    def line(path, color=ink, arrow=False):
+        marker = f' marker-end="url(#{anchor}-arrow)"' if arrow else ""
+        parts.append(f'<path d="{path}" fill="none" stroke="{color}" stroke-width="1.4"{marker}/>')
 
-    text(0, 22, "C3 · Starting workspace snapshots" if english else "第 3 关结束 · 三种工作区快照", weight=600)
-    text(210, 53, "Patch tests; preserve structure" if english else "仅修测试，保留结构", size=12, align="middle")
-    arrow("M100,89 V66 H320 V89", colors[1], dashed=True)
-    for i, (name, structure, (passed, total), peak, color) in enumerate(zip(names, structures, tests, peaks, colors, strict=True)):
-        x = i * 220
-        parts.append(f'<rect x="{x + 1}" y="92" width="198" height="152" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>')
-        parts.append(f'<path d="M{x + 2},93 H{x + 198}" stroke="{color}" stroke-width="3"/>')
-        text(x + 14, 121, name, weight=600)
-        text(x + 14, 151, structure, size=13)
-        text(x + 14, 185, ("Tests passed: " if english else "测试通过：") + passed + " / " + total, size=13)
-        text(x + 14, 216, ("Peak complexity: " if english else "最高复杂度：") + f"{peak:.1f}", size=13)
-        arrow(f"M{x + 100},245 V287", color)
+    def code_picture(x, color, modular):
+        structure = "modular" if modular else "single-file"
+        parts.append(f'<g transform="translate({x},54)" data-code-structure="{structure}">')
+        if modular:
+            line("M66,34 V54 M17,70 V54 H115 V70 M66,54 V70")
+            files = [(42, 0, 48, 34), (0, 70, 34, 34), (49, 70, 34, 34), (98, 70, 34, 34)]
+            for px, py, width, height in files:
+                line(f"M{px},{py} H{px + width - 9} L{px + width},{py + 9} V{py + height} H{px} Z M{px + width - 9},{py} V{py + 9} H{px + width}")
+                line(f"M{px + 7},{py + 16} H{px + width - 7} M{px + 7},{py + 23} H{px + width - 12}", color)
+        else:
+            line("M0,0 H112 L132,20 V112 H0 Z M112,0 V20 H132")
+            line("M46,29 C110,46 30,62 95,89 M79,29 C12,49 117,61 46,89 M29,39 C3,66 105,105 94,70 C76,43 0,68 28,89 M63,58 C111,53 121,93 72,105")
+            for px, py in [(12, 18), (79, 18), (46, 48), (12, 80), (79, 80)]:
+                parts.append(f'<rect x="{px}" y="{py}" width="34" height="20" rx="2" fill="var(--ar-paper, var(--global-bg-color, #fff))" stroke="{ink}" stroke-width="1.2"/>')
+                line(f"M{px + 6},{py + 6} H{px + 25} M{px + 6},{py + 11} H{px + 20} M{px + 6},{py + 16} H{px + 23}", color)
+        parts.append("</g>")
 
-    parts.append('<rect x="1" y="291" width="638" height="100" rx="2" fill="none" stroke="var(--ar-rule, #d9d9d9)"/>')
-    text(320, 319, "C4 → C8 · Identical continuation protocol" if english else "第 4 → 8 关 · 相同的续跑协议", weight=600, align="middle")
-    text(320, 346, "Claude Opus 5.5 · just-solve", align="middle")
-    text(320, 372, "Separate workspaces · 3 runs per group" if english else "各组工作区独立续跑 · 每组 3 次", size=13, align="middle")
-    for i, color in enumerate(colors):
-        arrow(f"M{100 + 220 * i},392 V429", color)
-    text(320, 456, "C8 · Evaluate each group separately" if english else "第 8 关 · 分别评估各组结果", weight=600, align="middle")
-    text(320, 482, "Peak complexity · Large functions · New test failures" if english else "最高复杂度 · 高复杂度函数数 · 后续关卡失败测试数", size=13, align="middle")
-    return f'''<!-- Generated from the C3 starting conditions in the post's splicing table. -->
+    for i, (name, color) in enumerate(zip(names, colors, strict=True)):
+        center = 100 + 220 * i
+        text(center, 22, name, size=16, weight=600, align="middle")
+        line(f"M{center - 79},35 H{center + 79}", color)
+        code_picture(center - 66, color, i == 2)
+    line("M181,112 H232", arrow=True)
+    line("M48,180 V186 H372 V180")
+    text(210, 207, "Same structure" if english else "保留相同结构", size=13, align="middle")
+    text(0, 236, "Same test suite" if english else "同一套测试", size=13, weight=600)
+    for i, ((passed, total), status) in enumerate(zip(tests, statuses, strict=True)):
+        center = 100 + 220 * i
+        passing = float(passed) == float(total)
+        color = "#258e70" if passing else "#c43f38"
+        if passing:
+            line(f"M{center - 50},253 l4,4 l8,-10", color)
+        else:
+            line(f"M{center - 50},248 l10,10 M{center - 50},258 l10,-10", color)
+        text(center + 8, 259, status, weight=600, align="middle")
+        line(f"M{center},274 V292", arrow=True)
+    text(320, 318, "Ask the AI to add more features" if english else "让 AI 继续实现相同的新功能", align="middle")
+    line("M0,334 H640", rule)
+    text(0, 357, "Failed tests for new requirements (average)" if english else "新增需求的失败测试数（平均）", size=14, weight=600)
+    for i, (number, color) in enumerate(zip(failures, colors, strict=True)):
+        text(100 + 220 * i, 399, f"{number:.1f}", size=30, weight=600, align="middle", color=color)
+    return f'''<!-- Generated from the starting conditions and result rows in the post's splicing table. -->
 <figure class="ar-chart" aria-labelledby="{anchor}-caption">
   <figcaption id="{anchor}-caption">{escape(title)}</figcaption>
   <div style="overflow-x: auto; margin-top: 16px;" tabindex="0" role="region" aria-label="{escape(title)}{'; scroll horizontally on narrow screens' if english else '；窄屏可横向滚动'}">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 498" role="img" aria-labelledby="{anchor}-title {anchor}-desc" style="min-width: 600px; width: 100%; height: auto;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 414" role="img" aria-labelledby="{anchor}-title {anchor}-desc" style="min-width: 600px; width: 100%; height: auto;">
       <title id="{anchor}-title">{escape(title)}</title>
       <desc id="{anchor}-desc">{escape(description + '. ' + note)}</desc>
-      <g fill="var(--ar-ink-3, #555)" font-size="14" font-family="sans-serif">
+      <g fill="{ink}" font-size="14" font-family="sans-serif">
         {chr(10).join(parts)}
       </g>
     </svg>
